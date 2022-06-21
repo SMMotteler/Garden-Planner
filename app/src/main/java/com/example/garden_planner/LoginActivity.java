@@ -11,9 +11,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.garden_planner.databinding.ActivityLoginBinding;
 import com.parse.ParseUser;
 
 public class LoginActivity extends AppCompatActivity {
+    private ActivityLoginBinding binding;
 
     private static final String TAG = "LoginActivity";
     EditText etUsername;

@@ -4,7 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.example.garden_planner.databinding.ActivityEditGardenBinding;
+
 public class EditGardenActivity extends AppCompatActivity {
+    private ActivityEditGardenBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

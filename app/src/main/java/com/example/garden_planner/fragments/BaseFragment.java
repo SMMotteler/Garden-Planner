@@ -14,6 +14,7 @@ import com.parse.BuildConfig;
 import java.io.File;
 
 public class BaseFragment extends Fragment {
+
     public static final String TAG = "BaseFragment";
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
     public String photoFileName = "photo.jpg";

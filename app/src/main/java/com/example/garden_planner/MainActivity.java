@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.garden_planner.databinding.ActivityMainBinding;
 import com.example.garden_planner.fragments.RemindersFragment;
 import com.example.garden_planner.fragments.GardenFeedFragment;
 import com.example.garden_planner.fragments.ProfileFragment;
@@ -22,6 +23,7 @@ import com.parse.ParseUser;
 
 public class MainActivity extends AppCompatActivity {
 
+    private ActivityMainBinding binding;
     final FragmentManager fragmentManager = getSupportFragmentManager();
     public BottomNavigationView bottomNavigationView;
     final GardenFeedFragment feedFragment = new GardenFeedFragment();

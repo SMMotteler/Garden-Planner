@@ -8,8 +8,11 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 
 import com.example.garden_planner.R;
+import com.example.garden_planner.databinding.FragmentRemindersBinding;
 
 public class RemindersFragment extends Fragment {
+
+    FragmentRemindersBinding binding;
 
     public RemindersFragment(){
 

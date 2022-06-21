@@ -5,7 +5,7 @@
       <map>
         <entry key="app/src/main/res/drawable/login_register_gradient.xml" value="0.207" />
         <entry key="app/src/main/res/layout/activity_create_garden.xml" value="0.14427083333333332" />
-        <entry key="app/src/main/res/layout/activity_login.xml" value="0.16979166666666667" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.5555694580078125" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_picture_handler.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_plant_addition.xml" value="0.14427083333333332" />

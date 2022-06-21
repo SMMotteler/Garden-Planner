@@ -4,10 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".LoginActivity"
+    android:background="@drawable/login_register_gradient">
 
     <EditText
         android:id="@+id/etUsername"
+        android:backgroundTint="@color/white"
+        android:textColor="@color/white"
+        android:textColorHighlight="#FFD3D3D3"
+        android:textColorHint="@color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -20,6 +25,10 @@
 
     <EditText
         android:id="@+id/etPassword"
+        android:backgroundTint="@color/white"
+        android:textColor="@color/white"
+        android:textColorHighlight="#FFD3D3D3"
+        android:textColorHint="@color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -31,6 +40,7 @@
         app:layout_constraintTop_toBottomOf="@+id/etUsername" />
 
     <TextView
+        android:textColor="@color/white"
         android:id="@+id/tvLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

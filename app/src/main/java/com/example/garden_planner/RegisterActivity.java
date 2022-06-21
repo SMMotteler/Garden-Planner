@@ -11,11 +11,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.garden_planner.databinding.ActivityRegisterBinding;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
 public class RegisterActivity extends AppCompatActivity {
+
+    private ActivityRegisterBinding binding;
 
     public static final String TAG = "RegisterActivity";
     EditText etEmail;

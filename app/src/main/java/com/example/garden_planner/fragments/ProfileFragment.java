@@ -20,6 +20,7 @@ import com.example.garden_planner.GardenMethodHelper;
 import com.example.garden_planner.LoginActivity;
 import com.example.garden_planner.MainActivity;
 import com.example.garden_planner.R;
+import com.example.garden_planner.databinding.FragmentProfileBinding;
 import com.parse.GetCallback;
 import com.parse.LogOutCallback;
 import com.parse.ParseException;
@@ -32,6 +33,7 @@ import java.util.Calendar;
 
 public class ProfileFragment extends BaseFragment {
 
+    private FragmentProfileBinding binding;
     private Button btLogout;
     private TextView tvUsername;
     private TextView tvUserSince;

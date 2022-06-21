@@ -1,5 +1,9 @@
 package com.example.garden_planner;
 
+import com.example.garden_planner.models.Garden;
+import com.example.garden_planner.models.Plant;
+import com.example.garden_planner.models.Reminder;
+import com.example.garden_planner.models.User;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
@@ -13,9 +17,10 @@ public class ParseApplication extends Application {
         super.onCreate();
 
         // Register your parse models
-        // ParseObject.registerSubclass(User.class);
-        // ParseObject.registerSubclass(Post.class);
-        // ParseObject.registerSubclass(Comment.class);
+        ParseObject.registerSubclass(Garden.class);
+        ParseObject.registerSubclass(Reminder.class);
+        ParseObject.registerSubclass(Plant.class);
+        ParseObject.registerSubclass(User.class);
 
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId("RTH8Hw1oEOxBaGszQpER4K4kqxewblDq6OTy6Ocr")

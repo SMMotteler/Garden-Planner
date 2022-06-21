@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 public class GardenMethodHelper {
@@ -28,6 +29,14 @@ public class GardenMethodHelper {
                 goMainActivity(activity);
             }
         });
+    }
+
+    public static String profilePic(ParseUser user){
+        ParseFile image = (ParseFile)user.get("profilePic");
+        if (image == null){
+            return "android.resource://com.example.parsetagram/"+R.drawable.default_pic;
+        }
+        return image.getUrl();
     }
 
 }

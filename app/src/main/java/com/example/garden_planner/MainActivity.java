@@ -22,7 +22,6 @@ import com.parse.ParseUser;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button btLogout;
     final FragmentManager fragmentManager = getSupportFragmentManager();
     public BottomNavigationView bottomNavigationView;
     final GardenFeedFragment feedFragment = new GardenFeedFragment();
@@ -34,15 +33,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btLogout = findViewById(R.id.btLogout);
         bottomNavigationView = findViewById(R.id.bottomNavigation);
 
-        btLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goLoginActivity();
-            }
-        });
 
         bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
             @Override
@@ -62,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                         fragment = feedFragment;
                         break;
                 }
-                // fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
                 return true;
 
             }
@@ -70,12 +62,6 @@ public class MainActivity extends AppCompatActivity {
         // Set default selection
         bottomNavigationView.setSelectedItemId(R.id.action_gardens);
     }
-
-    private void goLoginActivity() {
-        MainActivity activity = MainActivity.this;
-        activity.performLogout();
-    }
-
     public void performLogout() {
         ParseUser.logOutInBackground(new LogOutCallback() {
             @Override
@@ -89,5 +75,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+
 
 }

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PictureHandlerActivity">
+
+    <TextView
+        android:id="@+id/tvPhotoText"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Upload a photo to _" />
+
+    <Button
+        android:id="@+id/btTakePhoto"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:text="Take a Photo"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="264dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvPhotoText"
+        />
+
+    <Button
+        android:id="@+id/btChoosePhoto"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:text="Choose a photo from your gallery"
+        tools:layout_editor_absoluteX="225dp"
+        tools:layout_editor_absoluteY="232dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvOr"
+        />
+
+    <ImageView
+        android:id="@+id/ivPhotoToUpload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="40dp"
+        tools:layout_editor_absoluteY="301dp"
+        tools:srcCompat="@tools:sample/avatars"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvYourPhoto"
+        />
+
+    <TextView
+        android:id="@+id/tvYourPhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your Photo:"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btChoosePhoto"
+        />
+
+    <Button
+        android:id="@+id/btUpload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Upload"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivPhotoToUpload"
+        />
+
+    <TextView
+        android:id="@+id/tvOr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OR"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btTakePhoto"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -46,16 +46,20 @@ public class ProfileFragment extends BaseFragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         // Defines the xml file for the fragment
-        return inflater.inflate(R.layout.fragment_profile, parent, false);
+        binding = FragmentProfileBinding.inflate(getLayoutInflater(), parent, false);
+
+        View view = binding.getRoot();
+
+        return view;
     }
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        btLogout = view.findViewById(R.id.btLogout);
-        tvUsername = view.findViewById(R.id.tvUsername);
-        tvUserSince = view.findViewById(R.id.tvUserSince);
-        ivProfilePic = view.findViewById(R.id.ivProfilePic);
+        btLogout = binding.btLogout;
+        tvUsername = binding.tvUsername;
+        tvUserSince = binding.tvUserSince;
+        ivProfilePic = binding.ivProfilePic;
 
         // prevents logout button from appearing before anything else
         btLogout.setVisibility(View.GONE);

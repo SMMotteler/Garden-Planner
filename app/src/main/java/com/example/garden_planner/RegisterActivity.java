@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.garden_planner.databinding.ActivityMainBinding;
 import com.example.garden_planner.databinding.ActivityRegisterBinding;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -32,15 +33,18 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        binding = ActivityRegisterBinding.inflate(getLayoutInflater());
 
-        etEmail = findViewById(R.id.etEmail);
-        etUsername = findViewById(R.id.etUsername);
-        etPassword = findViewById(R.id.etPassword);
-        etConfirmPassword = findViewById(R.id.etConfirmPassword);
-        tvMessage = findViewById(R.id.tvMessage);
-        btCreateAccount = findViewById(R.id.btCreateAccount);
-        ivLogo = findViewById(R.id.ivLogo);
+        View view = binding.getRoot();
+        setContentView(view);
+
+        etEmail = binding.etEmail;
+        etUsername = binding.etUsername;
+        etPassword = binding.etPassword;
+        etConfirmPassword = binding.etConfirmPassword;
+        tvMessage = binding.tvMessage;
+        btCreateAccount = binding.btCreateAccount;
+        ivLogo = binding.ivLogo;
 
         btCreateAccount.setOnClickListener(new View.OnClickListener() {
             @Override

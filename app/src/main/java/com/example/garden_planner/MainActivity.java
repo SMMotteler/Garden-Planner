@@ -5,12 +5,14 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.garden_planner.databinding.ActivityEditGardenBinding;
 import com.example.garden_planner.databinding.ActivityMainBinding;
 import com.example.garden_planner.fragments.RemindersFragment;
 import com.example.garden_planner.fragments.GardenFeedFragment;
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     final FragmentManager fragmentManager = getSupportFragmentManager();
     public BottomNavigationView bottomNavigationView;
+    public FrameLayout flContainer;
     final GardenFeedFragment feedFragment = new GardenFeedFragment();
     final RemindersFragment remindersFragment = new RemindersFragment();
     final ProfileFragment profileFragment = new ProfileFragment();
@@ -33,10 +36,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
 
-        bottomNavigationView = findViewById(R.id.bottomNavigation);
+        View view = binding.getRoot();
+        setContentView(view);
 
+        bottomNavigationView = binding.bottomNavigation;
+        flContainer = binding.flContainer;
 
         bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
             @Override

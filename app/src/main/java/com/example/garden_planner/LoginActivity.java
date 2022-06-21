@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.garden_planner.databinding.ActivityEditGardenBinding;
 import com.example.garden_planner.databinding.ActivityLoginBinding;
 import com.parse.ParseUser;
 
@@ -27,18 +28,21 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+
+        View view = binding.getRoot();
+        setContentView(view);
 
         if (ParseUser.getCurrentUser() != null){
             GardenMethodHelper.goMainActivity(LoginActivity.this);
         }
 
         // find the views and reference them here
-        etUsername = findViewById(R.id.etUsername);
-        etPassword = findViewById(R.id.etPassword);
-        btLogin = findViewById(R.id.btLogin);
-        btRegister = findViewById(R.id.btRegister);
-        tvLogin = findViewById(R.id.tvLogin);
+        etUsername = binding.etUsername;
+        etPassword = binding.etPassword;
+        btLogin = binding.btLogin;
+        btRegister = binding.btRegister;
+        tvLogin = binding.tvLogin;
 
 
         btLogin.setOnClickListener(new View.OnClickListener() {
@@ -50,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
                 GardenMethodHelper.loginUser(username, password, LoginActivity.this);
             }
         });
+
         btRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -19,6 +19,7 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.example.garden_planner.GardenMethodHelper;
 import com.example.garden_planner.LoginActivity;
 import com.example.garden_planner.MainActivity;
+import com.example.garden_planner.PictureHandlerActivity;
 import com.example.garden_planner.R;
 import com.example.garden_planner.databinding.FragmentProfileBinding;
 import com.parse.GetCallback;
@@ -81,9 +82,12 @@ public class ProfileFragment extends BaseFragment {
                     ivProfilePic.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            // take new photo
-                            //launchCamera();
-                            getPictures();
+                            // allow user to change their profile photo
+                            MainActivity activity = (MainActivity)getContext();
+                            Intent i = new Intent(getContext(), PictureHandlerActivity.class);
+                            activity.startActivity(i);
+                            Glide.with(getContext()).load(GardenMethodHelper.profilePic(user)).transform(new CircleCrop()).into(ivProfilePic);
+
                         }
                     });
 

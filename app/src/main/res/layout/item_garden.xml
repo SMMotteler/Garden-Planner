@@ -29,6 +29,13 @@
 
     </LinearLayout>
 
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:id="@+id/ivGardenImage"
+        android:layout_gravity="center"
+        tools:src="@drawable/garden_icon"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvPlants"
         android:layout_width="match_parent"

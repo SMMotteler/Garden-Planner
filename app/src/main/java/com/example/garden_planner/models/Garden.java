@@ -24,12 +24,12 @@ public class Garden extends ParseObject {
 
     public void setLongitude(Long longitude){put(KEY_LONGITUDE, longitude);}
 
-    public List<Plant> getPlants(){return getList(KEY_PLANTS);}
+    public List<PlantInBed> getPlants(){return getList(KEY_PLANTS);}
 
-    public void setPlants(List<Plant> plants){ put(KEY_PLANTS, plants);}
+    public void setPlants(List<PlantInBed> plants){ put(KEY_PLANTS, plants);}
 
-    public void addPlant(Plant plant){
-        List<Plant> currentPlants = getPlants();
+    public void addPlant(PlantInBed plant){
+        List<PlantInBed> currentPlants = getPlants();
         currentPlants.add(plant);
         setPlants(currentPlants);
     }

@@ -53,7 +53,7 @@
                         <ImageView
                             android:id="@+id/ivPlantPic"
                             android:layout_width="match_parent"
-                            android:layout_height="100dp"
+                            android:layout_height="80dp"
                             tools:srcCompat="@tools:sample/avatars" />
 
                         <TextView

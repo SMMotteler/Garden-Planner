@@ -41,7 +41,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
         binding = ItemReminderBinding.inflate( LayoutInflater.from(context), parent, false);
         View view = binding.getRoot();
 
-        return  new ViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override

@@ -6,7 +6,9 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.garden_planner.adapters.GardenFeedAdapter;
+import com.example.garden_planner.adapters.ReminderAdapter;
 import com.example.garden_planner.models.Garden;
+import com.example.garden_planner.models.Reminder;
 import com.parse.FindCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
@@ -70,6 +72,42 @@ public class GardenMethodHelper {
                 // save user garden to list and notify adapter of new data
                 userGardens.clear();
                 userGardens.addAll(gardens);
+
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+    }
+
+    public void queryReminders(List<Reminder> userReminders, ReminderAdapter adapter, ParseUser user, Boolean byTime){
+        ParseQuery<Reminder> query = ParseQuery.getQuery(Reminder.class);
+
+        query.whereEqualTo(Reminder.KEY_REMIND_WHO, user);
+        if(byTime){
+            query.addAscendingOrder(Reminder.KEY_REMINDER_START);
+        }
+        else{
+            query.addAscendingOrder(Reminder.KEY_REMIND_WHAT);
+        }
+        query.include(Reminder.KEY_REMINDER_MESSAGE);
+        // start an asynchronous call for comments
+        query.findInBackground(new FindCallback<Reminder>() {
+            @Override
+            public void done(List<Reminder> reminders, ParseException e) {
+                // check for errors
+                if (e != null) {
+                    Log.e("Detail Activity", "Issue with getting gardens", e);
+                    return;
+                }
+
+                // for debugging purposes let's print every garden name to LogCat
+                for (Reminder reminder : reminders) {
+                    Log.i("Reminder Query", "Reminder: " + reminder.getReminderTitle());
+                }
+
+                // save user garden to list and notify adapter of new data
+                userReminders.clear();
+                userReminders.addAll(reminders);
 
                 adapter.notifyDataSetChanged();
             }

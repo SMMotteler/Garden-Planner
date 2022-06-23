@@ -1,7 +1,6 @@
 package com.example.garden_planner.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,10 +11,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.garden_planner.databinding.FragmentRemindersBinding;
+import com.bumptech.glide.Glide;
 import com.example.garden_planner.databinding.ItemReminderBinding;
+import com.example.garden_planner.models.Garden;
 import com.example.garden_planner.models.Reminder;
 
+import java.util.Date;
 import java.util.List;
 
 public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHolder> {
@@ -40,7 +41,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
         binding = ItemReminderBinding.inflate( LayoutInflater.from(context), parent, false);
         View view = binding.getRoot();
 
-        return  new ViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
@@ -73,6 +74,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
             int position = getAdapterPosition();
             if (position != RecyclerView.NO_POSITION) {
                 Reminder reminder = reminders.get(position);
+                Garden garden = reminder.getRemindWhat();
                 // TODO: open up the garden that the reminder pertains to
             }
         }
@@ -86,12 +88,22 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
             tvReminderText = binding.tvReminderText;
 
             tvGardenName.setText(reminder.getRemindWhat().getName());
+
             if (reminder.getReminderStart().equals(reminder.getReminderEnd())){
                 tvToDoDate.setText(reminder.getReminderStart().toString());
             }
             else {
                 tvToDoDate.setText(reminder.getReminderStart().toString() + " to " + reminder.getReminderEnd().toString());
             }
+
+            Glide.with(context).load(reminder.getRemindWhichPlant().getPlantType().getPhoto()).into(ivPlantPic);
+
+            tvPlantName.setText(reminder.getRemindWhichPlant().getThisPlantName());
+
+            tvReminderTitle.setText(reminder.getReminderTitle());
+
+            tvReminderText.setText(reminder.getReminderMessage());
+
         }
 
     }

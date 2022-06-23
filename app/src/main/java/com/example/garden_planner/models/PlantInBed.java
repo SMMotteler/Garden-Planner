@@ -9,6 +9,7 @@ import java.util.Date;
 public class PlantInBed extends ParseObject {
     public static final String KEY_DATE = "PlantDate";
     public static final String KEY_TYPE = "PlantType";
+    public static final String KEY_NAME = "ThisPlantName";
 
     // TODO: implement when Frost Zone API is set up
     // public Date toPlantByDate;
@@ -21,4 +22,9 @@ public class PlantInBed extends ParseObject {
     public Plant getPlantType(){return (Plant)get(KEY_TYPE);}
 
     public void setPlantType(Plant plantType){put(KEY_TYPE, plantType);}
+
+    public String getThisPlantName(){return getString(KEY_NAME);}
+
+    public void setThisPlantName(String plantName){put(KEY_NAME, plantName);}
+
 }

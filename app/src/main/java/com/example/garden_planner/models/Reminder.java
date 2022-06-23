@@ -40,4 +40,8 @@ public class Reminder extends ParseObject {
 
     public void setRemindWhichPlant(PlantInBed remindWhichPlant){put(KEY_REMIND_WHICH_PLANT, remindWhichPlant);}
 
+    public String getReminderTitle(){return getString(KEY_REMINDER_TITLE);}
+
+    public void setReminderTitle(String reminderTitle){put(KEY_REMINDER_TITLE, reminderTitle);}
+
 }

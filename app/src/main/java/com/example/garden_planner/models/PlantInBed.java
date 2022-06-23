@@ -10,6 +10,7 @@ public class PlantInBed extends ParseObject {
     public static final String KEY_DATE = "PlantDate";
     public static final String KEY_TYPE = "PlantType";
     public static final String KEY_NAME = "ThisPlantName";
+    public static final String KEY_GARDEN= "plantedInGarden";
 
     // TODO: implement when Frost Zone API is set up
     // public Date toPlantByDate;
@@ -26,5 +27,9 @@ public class PlantInBed extends ParseObject {
     public String getThisPlantName(){return getString(KEY_NAME);}
 
     public void setThisPlantName(String plantName){put(KEY_NAME, plantName);}
+
+    public Garden getGarden(){return (Garden)get(KEY_GARDEN);}
+
+    public void setGarden(Garden garden){put(KEY_GARDEN, garden);}
 
 }

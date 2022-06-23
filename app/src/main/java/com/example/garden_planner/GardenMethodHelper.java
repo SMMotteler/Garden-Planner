@@ -6,8 +6,11 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.garden_planner.adapters.GardenFeedAdapter;
+import com.example.garden_planner.adapters.PlantInBedAdapter;
 import com.example.garden_planner.adapters.ReminderAdapter;
 import com.example.garden_planner.models.Garden;
+import com.example.garden_planner.models.Plant;
+import com.example.garden_planner.models.PlantInBed;
 import com.example.garden_planner.models.Reminder;
 import com.parse.FindCallback;
 import com.parse.LogInCallback;
@@ -54,7 +57,7 @@ public class GardenMethodHelper {
         query.whereEqualTo(Garden.KEY_USER, user);
         query.addDescendingOrder("createdAt");
         query.include(Garden.KEY_NAME);
-        // start an asynchronous call for comments
+        // start an asynchronous call for gardens
         query.findInBackground(new FindCallback<Garden>() {
             @Override
             public void done(List<Garden> gardens, ParseException e) {
@@ -90,7 +93,7 @@ public class GardenMethodHelper {
             query.addAscendingOrder(Reminder.KEY_REMIND_WHAT);
         }
         query.include(Reminder.KEY_REMINDER_MESSAGE);
-        // start an asynchronous call for comments
+        // start an asynchronous call for reminders
         query.findInBackground(new FindCallback<Reminder>() {
             @Override
             public void done(List<Reminder> reminders, ParseException e) {
@@ -100,14 +103,46 @@ public class GardenMethodHelper {
                     return;
                 }
 
-                // for debugging purposes let's print every garden name to LogCat
+                // for debugging purposes let's print every reminder title to LogCat
                 for (Reminder reminder : reminders) {
                     Log.i("Reminder Query", "Reminder: " + reminder.getReminderTitle());
                 }
 
-                // save user garden to list and notify adapter of new data
+                // save user's reminders to list and notify adapter of new data
                 userReminders.clear();
                 userReminders.addAll(reminders);
+
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+    }
+
+    public void queryPlantInBed(List<PlantInBed> plantsInTheBed, PlantInBedAdapter adapter, Garden garden){
+        ParseQuery<PlantInBed> query = ParseQuery.getQuery(PlantInBed.class);
+
+        query.whereEqualTo(PlantInBed.KEY_GARDEN, garden);
+
+        query.addAscendingOrder("createdAt");
+
+        // start an asynchronous call for PlantInBed objects
+        query.findInBackground(new FindCallback<PlantInBed>() {
+            @Override
+            public void done(List<PlantInBed> plantsInBed, ParseException e) {
+                // check for errors
+                if (e != null) {
+                    Log.e("Detail Activity", "Issue with getting plants", e);
+                    return;
+                }
+
+                // for debugging purposes let's print every PlantInBed name to LogCat
+                for (PlantInBed plantInBed : plantsInBed) {
+                    Log.i("plantinbed Query", "name: " + plantInBed.getThisPlantName());
+                }
+
+                // save garden's plantsInBed to list and notify adapter of new data
+                plantsInTheBed.clear();
+                plantsInTheBed.addAll(plantsInBed);
 
                 adapter.notifyDataSetChanged();
             }

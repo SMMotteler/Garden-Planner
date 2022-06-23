@@ -11,7 +11,7 @@ public class Reminder extends ParseObject {
     public static final String KEY_REMINDER_START = "ReminderStart";
     public static final String KEY_REMINDER_END = "ReminderEnd";
     public static final String KEY_REMINDER_MESSAGE = "ReminderMessage";
-    public static final String KEY_REMIND_WHAT = "RemindWhat";
+    public static final String KEY_REMIND_WHAT = "remindWhat";
     public static final String KEY_REMIND_WHO = "RemindWho";
     public static final String KEY_REMIND_WHICH_PLANT = "RemindWhichPlant";
     public static final String KEY_REMINDER_TITLE = "ReminderTitle";

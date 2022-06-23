@@ -75,7 +75,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
             if (position != RecyclerView.NO_POSITION) {
                 Reminder reminder = reminders.get(position);
                 Garden garden = reminder.getRemindWhat();
-                // TODO: open up the garden that the reminder pertains to
+                // TODO: go to the detail view of garden
             }
         }
 

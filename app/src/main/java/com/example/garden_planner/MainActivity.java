@@ -17,6 +17,7 @@ import com.example.garden_planner.databinding.ActivityMainBinding;
 import com.example.garden_planner.fragments.RemindersFragment;
 import com.example.garden_planner.fragments.GardenFeedFragment;
 import com.example.garden_planner.fragments.ProfileFragment;
+import com.example.garden_planner.models.Garden;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.LogOutCallback;
 import com.parse.ParseException;
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
                         fragment = profileFragment;
                         break;
                     case R.id.action_gardens:
+
                     default:
                         fragment = feedFragment;
                         break;
@@ -82,6 +84,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void goToDetailGardenView(Garden garden){
+        bottomNavigationView.setSelectedItemId(R.id.action_gardens);
+
+        // TODO: I want the selected item to be the garden icon, but I want the fragment to be the detail garden view
     }
 
 

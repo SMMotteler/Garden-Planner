@@ -5,21 +5,29 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.garden_planner.databinding.ItemGardenBinding;
 import com.example.garden_planner.databinding.ItemReminderBinding;
 import com.example.garden_planner.models.Garden;
+import com.example.garden_planner.models.PlantInBed;
 import com.example.garden_planner.models.Reminder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GardenFeedAdapter extends RecyclerView.Adapter<GardenFeedAdapter.ViewHolder> {
     public static final String TAG = "GardenAdapter";
     private Context context;
     private List<Garden> gardens;
+    private PlantInBedAdapter adapter;
+    private List<PlantInBed> somePlants;
 
     ItemGardenBinding binding;
 
@@ -54,17 +62,51 @@ public class GardenFeedAdapter extends RecyclerView.Adapter<GardenFeedAdapter.Vi
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        private ImageView ivGardenIcon;
+        private TextView tvGardenName;
+        private ImageView ivGardenImage;
+        private RecyclerView rvPlants;
+        private TextView tvGardenLocation;
+
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
         }
 
         @Override
         public void onClick(View v) {
+            int position = getAdapterPosition();
+            if (position != RecyclerView.NO_POSITION) {
+                Garden garden = gardens.get(position);
+                // TODO: go to the detail view of garden
+            }
 
         }
 
         public void bind(Garden garden){
+            ivGardenIcon = binding.ivGardenIcon;
+            tvGardenName = binding.tvGardenName;
+            ivGardenImage = binding.ivGardenImage;
+            rvPlants = binding.rvPlants;
+            tvGardenLocation = binding.tvGardenLocation;
 
+            tvGardenName.setText(garden.getName());
+            tvGardenLocation.setText(garden.toString()); // placeholder until I set up the garden location attribute
+
+            if (garden.has("photo")){
+                Glide.with(context).load(garden.getParseFile("photo")).into(ivGardenImage);
+            }
+
+            LinearLayoutManager horizontalLayoutManager
+                    = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+
+            somePlants = new ArrayList<>();
+            adapter = new PlantInBedAdapter(context, somePlants);
+
+            rvPlants.setAdapter(adapter);
+            rvPlants.setLayoutManager(horizontalLayoutManager);
+
+            // add query plants method
         }
     }
 }

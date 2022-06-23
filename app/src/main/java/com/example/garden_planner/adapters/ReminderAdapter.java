@@ -85,6 +85,13 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
             tvReminderTitle = binding.tvReminderTitle;
             tvReminderText = binding.tvReminderText;
 
+            tvGardenName.setText(reminder.getRemindWhat().getName());
+            if (reminder.getReminderStart().equals(reminder.getReminderEnd())){
+                tvToDoDate.setText(reminder.getReminderStart().toString());
+            }
+            else {
+                tvToDoDate.setText(reminder.getReminderStart().toString() + " to " + reminder.getReminderEnd().toString());
+            }
         }
 
     }

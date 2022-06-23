@@ -13,6 +13,8 @@ public class Reminder extends ParseObject {
     public static final String KEY_REMINDER_MESSAGE = "ReminderMessage";
     public static final String KEY_REMIND_WHAT = "RemindWhat";
     public static final String KEY_REMIND_WHO = "RemindWho";
+    public static final String KEY_REMIND_WHICH_PLANT = "RemindWhichPlant";
+    public static final String KEY_REMINDER_TITLE = "ReminderTitle";
 
     public Date getReminderStart(){return getDate(KEY_REMINDER_START);}
 
@@ -33,4 +35,9 @@ public class Reminder extends ParseObject {
     public ParseUser getRemindWho(){return getParseUser(KEY_REMIND_WHO);}
 
     public void setRemindWho(ParseUser remindWho){put(KEY_REMIND_WHO, remindWho);}
+
+    public PlantInBed getRemindWhichPlant(){return (PlantInBed) get(KEY_REMIND_WHICH_PLANT);}
+
+    public void setRemindWhichPlant(PlantInBed remindWhichPlant){put(KEY_REMIND_WHICH_PLANT, remindWhichPlant);}
+
 }

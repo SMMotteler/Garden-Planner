@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.garden_planner.databinding.FragmentRemindersBinding;
 import com.example.garden_planner.databinding.ItemReminderBinding;
+import com.example.garden_planner.models.Garden;
 import com.example.garden_planner.models.Reminder;
 
 import java.util.List;
@@ -73,6 +74,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
             int position = getAdapterPosition();
             if (position != RecyclerView.NO_POSITION) {
                 Reminder reminder = reminders.get(position);
+                Garden garden = reminder.getRemindWhat();
                 // TODO: open up the garden that the reminder pertains to
             }
         }

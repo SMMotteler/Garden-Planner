@@ -96,7 +96,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
                 tvToDoDate.setText(reminder.getReminderStart().toString() + " to " + reminder.getReminderEnd().toString());
             }
 
-            Glide.with(context).load(reminder.getRemindWhichPlant().getPlantType().getPhoto()).into(ivPlantPic);
+            Glide.with(context).load(reminder.getRemindWhichPlant().getPlantType().getPhoto().getUrl()).into(ivPlantPic);
 
             tvPlantName.setText(reminder.getRemindWhichPlant().getThisPlantName());
 

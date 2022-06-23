@@ -51,7 +51,7 @@ public class GardenMethodHelper {
         return image.getUrl();
     }
 
-    public void queryGarden(List<Garden> userGardens, GardenFeedAdapter adapter, ParseUser user){
+    public static void queryGarden(List<Garden> userGardens, GardenFeedAdapter adapter, ParseUser user){
         ParseQuery<Garden> query = ParseQuery.getQuery(Garden.class);
 
         query.whereEqualTo(Garden.KEY_USER, user);
@@ -82,7 +82,7 @@ public class GardenMethodHelper {
 
     }
 
-    public void queryReminders(List<Reminder> userReminders, ReminderAdapter adapter, ParseUser user, Boolean byTime){
+    public static void queryReminders(List<Reminder> userReminders, ReminderAdapter adapter, ParseUser user, Boolean byTime){
         ParseQuery<Reminder> query = ParseQuery.getQuery(Reminder.class);
 
         query.whereEqualTo(Reminder.KEY_REMIND_WHO, user);
@@ -93,6 +93,13 @@ public class GardenMethodHelper {
             query.addAscendingOrder(Reminder.KEY_REMIND_WHAT);
         }
         query.include(Reminder.KEY_REMINDER_MESSAGE);
+        query.include(Reminder.KEY_REMINDER_TITLE);
+        query.include(Reminder.KEY_REMINDER_START);
+        query.include(Reminder.KEY_REMINDER_END);
+        query.include(Reminder.KEY_REMIND_WHAT);
+        query.include(Reminder.KEY_REMIND_WHICH_PLANT);
+        query.include("RemindWhichPlant.PlantType");
+
         // start an asynchronous call for reminders
         query.findInBackground(new FindCallback<Reminder>() {
             @Override
@@ -118,7 +125,7 @@ public class GardenMethodHelper {
 
     }
 
-    public void queryPlantInBed(List<PlantInBed> plantsInTheBed, PlantInBedAdapter adapter, Garden garden){
+    public static void queryPlantInBed(List<PlantInBed> plantsInTheBed, PlantInBedAdapter adapter, Garden garden){
         ParseQuery<PlantInBed> query = ParseQuery.getQuery(PlantInBed.class);
 
         query.whereEqualTo(PlantInBed.KEY_GARDEN, garden);

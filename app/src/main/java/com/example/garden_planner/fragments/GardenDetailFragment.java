@@ -24,5 +24,7 @@ public class GardenDetailFragment extends Fragment {
 
         View view = binding.getRoot();
 
-        return view;    }
+        return view;
+    }
+
 }

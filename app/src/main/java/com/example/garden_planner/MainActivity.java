@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.example.garden_planner.databinding.ActivityEditGardenBinding;
 import com.example.garden_planner.databinding.ActivityMainBinding;
+import com.example.garden_planner.fragments.GardenDetailFragment;
 import com.example.garden_planner.fragments.RemindersFragment;
 import com.example.garden_planner.fragments.GardenFeedFragment;
 import com.example.garden_planner.fragments.ProfileFragment;
@@ -88,6 +89,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void goToDetailGardenView(Garden garden){
         bottomNavigationView.setSelectedItemId(R.id.action_gardens);
+
+        GardenDetailFragment detailFragment = new GardenDetailFragment();
+
+        detailFragment.garden = garden;
+
+        fragmentManager.beginTransaction().replace(R.id.flContainer, detailFragment).commit();
 
         // TODO: I want the selected item to be the garden icon, but I want the fragment to be the detail garden view
     }

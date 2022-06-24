@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.garden_planner.GardenMethodHelper;
+import com.example.garden_planner.MainActivity;
 import com.example.garden_planner.databinding.ItemGardenBinding;
 import com.example.garden_planner.databinding.ItemReminderBinding;
 import com.example.garden_planner.models.Garden;
@@ -76,10 +77,13 @@ public class GardenFeedAdapter extends RecyclerView.Adapter<GardenFeedAdapter.Vi
 
         @Override
         public void onClick(View v) {
+            Log.i("click", "click");
             int position = getAdapterPosition();
             if (position != RecyclerView.NO_POSITION) {
                 Garden garden = gardens.get(position);
-                // TODO: go to the detail view of garden
+                Log.i("clicked", "clicked "+garden.getName());
+                MainActivity activity = new MainActivity();
+                activity.goToDetailGardenView(garden);
             }
 
         }

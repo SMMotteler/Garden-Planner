@@ -16,6 +16,7 @@ import com.parse.FindCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
@@ -82,10 +83,10 @@ public class GardenMethodHelper {
 
     }
 
-    public static void queryReminders(List<Reminder> userReminders, ReminderAdapter adapter, ParseUser user, Boolean byTime){
+    public static void queryReminders(List<Reminder> userReminders, ReminderAdapter adapter, String key, ParseObject object, Boolean byTime){
         ParseQuery<Reminder> query = ParseQuery.getQuery(Reminder.class);
 
-        query.whereEqualTo(Reminder.KEY_REMIND_WHO, user);
+        query.whereEqualTo(key, object);
         if(byTime){
             query.addAscendingOrder(Reminder.KEY_REMINDER_START);
         }

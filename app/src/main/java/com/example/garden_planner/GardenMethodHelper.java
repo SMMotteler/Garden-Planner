@@ -131,6 +131,7 @@ public class GardenMethodHelper {
         query.whereEqualTo(PlantInBed.KEY_GARDEN, garden);
 
         query.addAscendingOrder("createdAt");
+        query.include(PlantInBed.KEY_TYPE);
 
         // start an asynchronous call for PlantInBed objects
         query.findInBackground(new FindCallback<PlantInBed>() {

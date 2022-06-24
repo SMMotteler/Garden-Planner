@@ -92,7 +92,7 @@ public class GardenFeedAdapter extends RecyclerView.Adapter<GardenFeedAdapter.Vi
             tvGardenLocation = binding.tvGardenLocation;
 
             tvGardenName.setText(garden.getName());
-            tvGardenLocation.setText(garden.getLocation());
+            tvGardenLocation.setText("Location: "+garden.getLocation());
 
             if (garden.has("photo")){
                 Glide.with(context).load(garden.getParseFile("photo").getUrl()).into(ivGardenImage);

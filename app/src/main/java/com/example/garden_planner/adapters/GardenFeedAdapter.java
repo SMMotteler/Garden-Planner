@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.garden_planner.GardenMethodHelper;
 import com.example.garden_planner.databinding.ItemGardenBinding;
 import com.example.garden_planner.databinding.ItemReminderBinding;
 import com.example.garden_planner.models.Garden;
@@ -91,10 +92,10 @@ public class GardenFeedAdapter extends RecyclerView.Adapter<GardenFeedAdapter.Vi
             tvGardenLocation = binding.tvGardenLocation;
 
             tvGardenName.setText(garden.getName());
-            tvGardenLocation.setText(garden.toString()); // placeholder until I set up the garden location attribute
+            tvGardenLocation.setText(garden.getLocation());
 
             if (garden.has("photo")){
-                Glide.with(context).load(garden.getParseFile("photo")).into(ivGardenImage);
+                Glide.with(context).load(garden.getParseFile("photo").getUrl()).into(ivGardenImage);
             }
 
             LinearLayoutManager horizontalLayoutManager
@@ -106,7 +107,7 @@ public class GardenFeedAdapter extends RecyclerView.Adapter<GardenFeedAdapter.Vi
             rvPlants.setAdapter(adapter);
             rvPlants.setLayoutManager(horizontalLayoutManager);
 
-            // add query plants method
+            GardenMethodHelper.queryPlantInBed(somePlants, adapter, garden);
         }
     }
 }

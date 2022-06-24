@@ -1,15 +1,19 @@
 package com.example.garden_planner.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.garden_planner.CreateGardenActivity;
 import com.example.garden_planner.GardenMethodHelper;
+import com.example.garden_planner.MainActivity;
 import com.example.garden_planner.R;
 import com.example.garden_planner.adapters.GardenFeedAdapter;
 import com.example.garden_planner.adapters.ReminderAdapter;
@@ -27,6 +31,7 @@ public class GardenFeedFragment extends Fragment {
     RecyclerView rvGardens;
     ArrayList<Garden> userGardens;
     GardenFeedAdapter adapter;
+    Button btNewGarden;
 
     public GardenFeedFragment()
     {
@@ -46,6 +51,7 @@ public class GardenFeedFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         rvGardens = binding.rvGardens;
+        btNewGarden = binding.btNewGarden;
 
         userGardens = new ArrayList<>();
         adapter = new GardenFeedAdapter(getContext(), userGardens);
@@ -56,6 +62,14 @@ public class GardenFeedFragment extends Fragment {
         rvGardens.setLayoutManager(linearLayoutManager);
 
         GardenMethodHelper.queryGarden(userGardens, adapter, ParseUser.getCurrentUser());
+
+        btNewGarden.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getContext(), CreateGardenActivity.class);
+                getContext().startActivity(i);
+            }
+        });
     }
 
 }

@@ -22,4 +22,9 @@ public class FrostDateClient {
             String url = getApiUrl("/stations/?lat="+latitude+"&lon="+longitude);
             client.get(url, handler);
     }
+
+    public void getFrostDate(final String stationID, final int season, JsonHttpResponseHandler handler){
+        String url = getApiUrl("/probabilities/?station="+stationID+"&season="+season);
+        client.get(url, handler);
+    }
 }

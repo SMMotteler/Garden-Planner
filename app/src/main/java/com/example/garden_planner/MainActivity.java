@@ -24,6 +24,10 @@ import com.parse.LogOutCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
+import org.json.JSONException;
+
+import java.io.IOException;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -72,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         });
         // Set default selection
         bottomNavigationView.setSelectedItemId(R.id.action_gardens);
+
     }
     public void performLogout() {
         ParseUser.logOutInBackground(new LogOutCallback() {

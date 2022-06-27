@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,10 +27,13 @@ public class RemindersFragment extends Fragment {
     FragmentRemindersBinding binding;
 
     RecyclerView rvReminders;
+    RadioGroup rdReminderOrder;
+    RadioButton rbByTime;
+    RadioButton rbByGarden;
     ReminderAdapter adapter;
     List<Reminder> userReminders;
 
-    public RemindersFragment(){
+    public RemindersFragment() {
 
     }
 
@@ -48,6 +53,9 @@ public class RemindersFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         rvReminders = binding.rvReminders;
+        rdReminderOrder = binding.rdReminderOrder;
+        rbByGarden = binding.rbByGarden;
+        rbByTime = binding.rbByTime;
 
         userReminders = new ArrayList<>();
         adapter = new ReminderAdapter(getContext(), userReminders);
@@ -58,5 +66,25 @@ public class RemindersFragment extends Fragment {
         rvReminders.setLayoutManager(linearLayoutManager);
 
         GardenMethodHelper.queryReminders(userReminders, adapter, Reminder.KEY_REMIND_WHO, ParseUser.getCurrentUser(), true);
+
+        rbByTime.setChecked(true);
+
+        rdReminderOrder.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                // Is the button now checked?
+                boolean checked = rbByTime.isChecked();
+
+                // Check which radio button was clicked
+                        if (checked) {
+                            GardenMethodHelper.queryReminders(userReminders, adapter, Reminder.KEY_REMIND_WHO, ParseUser.getCurrentUser(), true);
+                        }
+                        else {
+                            GardenMethodHelper.queryReminders(userReminders, adapter, Reminder.KEY_REMIND_WHO, ParseUser.getCurrentUser(), false);
+                        }
+
+                }
+        });
+
     }
 }

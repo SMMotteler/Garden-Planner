@@ -4,25 +4,29 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <RadioGroup
+        android:background="@color/white"
         android:id="@+id/rdReminderOrder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        >
 
         <RadioButton
             android:id="@+id/rbByTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sort By Time"
-            android:paddingRight="40dp"/>
+            android:paddingRight="40dp"
+            />
 
         <RadioButton
             android:id="@+id/rbByGarden"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sort by Garden" />
+            android:text="Sort by Garden"
+            />
     </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

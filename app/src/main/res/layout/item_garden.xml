@@ -35,7 +35,11 @@
         android:id="@+id/ivGardenImage"
         android:layout_gravity="center"
         tools:src="@drawable/garden_icon"/>
-
+<Button
+    android:id="@+id/btDetailView"
+    android:text="temp button"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvPlants"
         android:layout_width="match_parent"

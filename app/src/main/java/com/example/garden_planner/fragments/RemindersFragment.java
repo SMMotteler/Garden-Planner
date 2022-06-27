@@ -57,6 +57,6 @@ public class RemindersFragment extends Fragment {
         rvReminders.setAdapter(adapter);
         rvReminders.setLayoutManager(linearLayoutManager);
 
-        GardenMethodHelper.queryReminders(userReminders, adapter, ParseUser.getCurrentUser(), true);
+        GardenMethodHelper.queryReminders(userReminders, adapter, Reminder.KEY_REMIND_WHO, ParseUser.getCurrentUser(), true);
     }
 }

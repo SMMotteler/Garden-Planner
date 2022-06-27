@@ -1,10 +1,10 @@
+plugins {
+    id 'com.android.application'
+}
 def apikeyPropertiesFile = rootProject.file("apikey.properties")
 def apikeyProperties = new Properties()
 apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
 
-plugins {
-    id 'com.android.application'
-}
 
 android {
     compileSdk 32
@@ -15,9 +15,9 @@ android {
         targetSdk 32
         versionCode 1
         versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "API_ACCESS_KEY", apikeyProperties['API_ACCESS_KEY'])
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {

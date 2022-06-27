@@ -72,4 +72,9 @@ public class GardenFeedFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        GardenMethodHelper.queryGarden(userGardens, adapter, ParseUser.getCurrentUser());
+    }
 }

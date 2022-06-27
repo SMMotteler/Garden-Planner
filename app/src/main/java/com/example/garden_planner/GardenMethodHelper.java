@@ -2,6 +2,7 @@ package com.example.garden_planner;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.location.Location;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -157,6 +158,12 @@ public class GardenMethodHelper {
             }
         });
 
+    }
+
+    // information for this method is from https://github.com/waldoj/frostline
+    public static void initializeGardenInformation(int latitude, int longitude) {
+        String url = "https://api.farmsense.net/v1/frostdates/stations/?lat="+latitude+"&lon="+longitude;
+        ReadJson reader = new ReadJson();
     }
 
 }

@@ -10,6 +10,7 @@ import com.example.garden_planner.adapters.GardenFeedAdapter;
 import com.example.garden_planner.adapters.PlantInBedAdapter;
 import com.example.garden_planner.adapters.ReminderAdapter;
 import com.example.garden_planner.models.Garden;
+import com.example.garden_planner.models.JsonReader;
 import com.example.garden_planner.models.Plant;
 import com.example.garden_planner.models.PlantInBed;
 import com.example.garden_planner.models.Reminder;
@@ -21,6 +22,10 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.List;
 
 public class GardenMethodHelper {
@@ -161,9 +166,12 @@ public class GardenMethodHelper {
     }
 
     // information for this method is from https://github.com/waldoj/frostline
-    public static void initializeGardenInformation(int latitude, int longitude) {
+    public static void initializeGardenInformation(double latitude, double longitude) throws JSONException, IOException {
         String url = "https://api.farmsense.net/v1/frostdates/stations/?lat="+latitude+"&lon="+longitude;
-        ReadJson reader = new ReadJson();
+        JSONObject stations = JsonReader.readJsonFromUrl(url);
+        Log.i("getting location", stations.toString());
+        // the API for the stations list them in order of increasing distance, so we can always
+        // take the first JSONObject
     }
 
 }

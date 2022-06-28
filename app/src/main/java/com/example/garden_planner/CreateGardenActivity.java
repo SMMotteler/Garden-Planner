@@ -55,10 +55,11 @@ public class CreateGardenActivity extends AppCompatActivity {
 
     private EditText etGardenName;
     private EditText etGardenLocation;
-    private EditText etLatitude;
-    private EditText etLongitude;
+    private Button btFindLocation;
     private Button btCreate;
     public static final int  REQUEST_CHECK_SETTING = 1001;
+    private double latitude;
+    private double longitude;
     private GeocodingClient client;
 
     LocationRequest locationRequest;
@@ -73,8 +74,7 @@ public class CreateGardenActivity extends AppCompatActivity {
 
         etGardenName = binding.etGardenName;
         etGardenLocation = binding.etGardenLocation;
-        etLatitude = binding.etLatitude;
-        etLongitude = binding.etLongitude;
+        btFindLocation = binding.btFindLocation;
         btCreate = binding.btCreate;
 
         locationRequest = LocationRequest.create();
@@ -89,22 +89,39 @@ public class CreateGardenActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String gardenName = etGardenName.getText().toString();
                 String gardenLocation = etGardenLocation.getText().toString();
-                String longitudeText = etLongitude.getText().toString();
-                String latitudeText = etLatitude.getText().toString();
 
-                if(gardenName.isEmpty() || gardenLocation.isEmpty()
-                        || longitudeText.isEmpty() || latitudeText.isEmpty()){
+                if(gardenName.isEmpty() || gardenLocation.isEmpty()){
                     Toast.makeText(CreateGardenActivity.this, "You're missing a field!",
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
 
+                client.forwardGeocoding(gardenLocation, new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Headers headers, JSON json) {
+                        try {
+                            latitude = json.jsonObject.getJSONArray("data").getJSONObject(1).getDouble("latitude");
+                            longitude = json.jsonObject.getJSONArray("data").getJSONObject(1).getDouble("latitude");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            return;
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                        Log.e("create garden", response, throwable);
+                        Toast.makeText(CreateGardenActivity.this, "Error with finding location! Please try again", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                });
+
                 Garden garden = new Garden();
-                garden.setLatitude(Long.parseLong(latitudeText));
-                garden.setLongitude(Long.parseLong(longitudeText));
                 garden.setLocation(gardenLocation);
                 garden.setName(gardenName);
                 garden.setUser(ParseUser.getCurrentUser());
+                garden.setLongitude((long) longitude);
+                garden.setLongitude((long) latitude);
 
                 garden.saveInBackground(new SaveCallback() {
                     @Override
@@ -117,6 +134,13 @@ public class CreateGardenActivity extends AppCompatActivity {
                         finish();
                     }
                 });
+            }
+        });
+
+        btFindLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                findLocation();
             }
         });
 

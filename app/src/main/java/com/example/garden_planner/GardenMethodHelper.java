@@ -1,23 +1,10 @@
 package com.example.garden_planner;
 
-import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationManager;
 
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.api.ResolvableApiException;
-import com.google.android.gms.location.LocationRequest;
-import android.os.Build;
 import android.util.Log;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.core.app.ActivityCompat;
 
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.garden_planner.adapters.GardenFeedAdapter;
@@ -25,16 +12,8 @@ import com.example.garden_planner.adapters.PlantInBedAdapter;
 import com.example.garden_planner.adapters.ReminderAdapter;
 import com.example.garden_planner.models.FrostDateClient;
 import com.example.garden_planner.models.Garden;
-import com.example.garden_planner.models.JsonReader;
-import com.example.garden_planner.models.Plant;
 import com.example.garden_planner.models.PlantInBed;
 import com.example.garden_planner.models.Reminder;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationSettingsRequest;
-import com.google.android.gms.location.LocationSettingsResponse;
-import com.google.android.gms.location.LocationSettingsStatusCodes;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.parse.FindCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
@@ -177,7 +156,7 @@ public class GardenMethodHelper {
 
                 // for debugging purposes let's print every PlantInBed name to LogCat
                 for (PlantInBed plantInBed : plantsInBed) {
-                    Log.i("plantinbed Query", "name: " + plantInBed.getThisPlantName());
+                    Log.i("plantinbed Query", "name: " + plantInBed.getDisplayName());
                 }
 
                 // save garden's plantsInBed to list and notify adapter of new data

@@ -16,7 +16,6 @@ import com.example.garden_planner.databinding.ItemReminderBinding;
 import com.example.garden_planner.models.Garden;
 import com.example.garden_planner.models.Reminder;
 
-import java.util.Date;
 import java.util.List;
 
 public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHolder> {
@@ -98,7 +97,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
 
             Glide.with(context).load(reminder.getRemindWhichPlant().getPlantType().getPhoto().getUrl()).into(ivPlantPic);
 
-            tvPlantName.setText(reminder.getRemindWhichPlant().getThisPlantName());
+            tvPlantName.setText(reminder.getRemindWhichPlant().getDisplayName());
 
             tvReminderTitle.setText(reminder.getReminderTitle());
 

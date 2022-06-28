@@ -100,8 +100,8 @@ public class CreateGardenActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(int statusCode, Headers headers, JSON json) {
                         try {
-                            latitude = json.jsonObject.getJSONArray("data").getJSONObject(1).getDouble("latitude");
-                            longitude = json.jsonObject.getJSONArray("data").getJSONObject(1).getDouble("latitude");
+                            latitude = json.jsonObject.getJSONArray("data").getJSONObject(0).getDouble("latitude");
+                            longitude = json.jsonObject.getJSONArray("data").getJSONObject(0).getDouble("longitude");
                         } catch (JSONException e) {
                             e.printStackTrace();
                             return;
@@ -111,7 +111,7 @@ public class CreateGardenActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
                         Log.e("create garden", response, throwable);
-                        Toast.makeText(CreateGardenActivity.this, "Error with finding location! Please try again", Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(CreateGardenActivity.this, "Error with finding location! Please try again", Toast.LENGTH_SHORT).show();
                         return;
                     }
                 });
@@ -120,8 +120,8 @@ public class CreateGardenActivity extends AppCompatActivity {
                 garden.setLocation(gardenLocation);
                 garden.setName(gardenName);
                 garden.setUser(ParseUser.getCurrentUser());
-                garden.setLongitude((long) longitude);
-                garden.setLongitude((long) latitude);
+                garden.setLongitude(Double.valueOf(longitude).longValue());
+                garden.setLatitude(Double.valueOf(latitude).longValue());
 
                 garden.saveInBackground(new SaveCallback() {
                     @Override
@@ -163,8 +163,10 @@ public class CreateGardenActivity extends AppCompatActivity {
 
                             if(locationResult != null && locationResult.getLocations().size()>0){
                                 int index = locationResult.getLocations().size() -1;
-                                double latitude = locationResult.getLocations().get(index).getLatitude();
-                                double longitude = locationResult.getLocations().get(index).getLongitude();
+                                latitude = locationResult.getLocations().get(index).getLatitude();
+                                longitude = locationResult.getLocations().get(index).getLongitude();
+
+                                Log.i("create garden", "latitude "+latitude+" longitude "+longitude);
 
                                 // TODO: use this latitude and longitude to set the location of the garden
                                 client = new GeocodingClient();
@@ -172,7 +174,7 @@ public class CreateGardenActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(int statusCode, Headers headers, JSON json) {
                                         try {
-                                            String address = json.jsonObject.getJSONObject("data").getJSONArray("results")
+                                            String address = json.jsonObject.getJSONArray("data")
                                                     .getJSONObject(1).getString("label");
                                             etGardenLocation.setText(address);
                                         } catch (JSONException e) {

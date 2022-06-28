@@ -64,13 +64,7 @@ public class ProfileFragment extends BaseFragment {
         tvUsername = binding.tvUsername;
         tvUserSince = binding.tvUserSince;
         ivProfilePic = binding.ivProfilePic;
-        try {
-            GardenMethodHelper.initializeGardenInformation(47.606209, -122.332069);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
         // prevents logout button from appearing before anything else
         btLogout.setVisibility(View.GONE);
 

@@ -169,46 +169,6 @@ public class GardenMethodHelper {
 
     }
 
-    // information for this method is from https://github.com/waldoj/frostline
-    public static void initializeGardenInformation(double latitude, double longitude) throws JSONException, IOException {
-        client.getStations(latitude, longitude, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Headers headers, JSON json) {
-                // the API for the stations list them in order of increasing distance, so we can always
-                // take the first JSONObject
-                try {
-                    JSONObject station = json.jsonArray.getJSONObject(0);
-                    client.getFrostDate(station.getString("id"), 1, new JsonHttpResponseHandler() {
-                        @Override
-                        public void onSuccess(int statusCode, Headers headers, JSON json) {
-                            // the API for the frost dates has the 32 deg. threshold as the second entry in
-                            // the array every time, which we are using as the temperature where no more frost
-                            // will occur
-                            try {
-                                JSONObject lastFrostDateInfo = json.jsonArray.getJSONObject(1);
-                                String lastFrostDateDay = lastFrostDateInfo.getString("prob_50");
-                                // return the last frost date
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                            Log.e("initializeGardenInformation", "error with getting frost dates", throwable);
-                        }
-                    });
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                Log.e("initializeGardenInformation", "error with getting stations", throwable);
-            }
-        });
-    }
 
 }
 

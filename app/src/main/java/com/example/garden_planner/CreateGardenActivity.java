@@ -163,7 +163,7 @@ public class CreateGardenActivity extends AppCompatActivity {
                 .addLocationRequest(locationRequest);
         builder.setAlwaysShow(true);
 
-        Task<LocationSettingsResponse> result = LocationServices.getSettingsClient(context)
+        Task<LocationSettingsResponse> result = LocationServices.getSettingsClient(this)
                 .checkLocationSettings(builder.build());
 
         result.addOnCompleteListener(new OnCompleteListener<LocationSettingsResponse>() {

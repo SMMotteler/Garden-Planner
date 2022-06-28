@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.garden_planner.databinding.ItemPlantInBedBinding;
-import com.example.garden_planner.models.Garden;
 import com.example.garden_planner.models.PlantInBed;
 
 import java.util.List;
@@ -77,7 +76,7 @@ public class PlantInBedAdapter extends RecyclerView.Adapter<PlantInBedAdapter.Vi
             ivPlantPic = binding.ivPlantPic;
             tvPlantName = binding.tvPlantName;
 
-            tvPlantName.setText(plant.getThisPlantName());
+            tvPlantName.setText(plant.getDisplayName());
 
             if (plant.getPlantType().has("photo")){
                 Glide.with(context).load(plant.getPlantType().getPhoto().getUrl()).into(ivPlantPic);

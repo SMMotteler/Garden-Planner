@@ -24,9 +24,9 @@ public class PlantInBed extends ParseObject {
 
     public void setPlantType(Plant plantType){put(KEY_TYPE, plantType);}
 
-    public String getThisPlantName(){return getString(KEY_NAME);}
+    public String getDisplayName(){return getString(KEY_NAME);}
 
-    public void setThisPlantName(String plantName){put(KEY_NAME, plantName);}
+    public void setDisplayName(String displayName){put(KEY_NAME, displayName);}
 
     public Garden getGarden(){return (Garden)get(KEY_GARDEN);}
 

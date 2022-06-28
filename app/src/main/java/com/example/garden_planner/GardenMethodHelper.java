@@ -2,7 +2,7 @@ package com.example.garden_planner;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.location.Location;
+
 import android.util.Log;
 import android.widget.Toast;
 
@@ -12,8 +12,6 @@ import com.example.garden_planner.adapters.PlantInBedAdapter;
 import com.example.garden_planner.adapters.ReminderAdapter;
 import com.example.garden_planner.models.FrostDateClient;
 import com.example.garden_planner.models.Garden;
-import com.example.garden_planner.models.JsonReader;
-import com.example.garden_planner.models.Plant;
 import com.example.garden_planner.models.PlantInBed;
 import com.example.garden_planner.models.Reminder;
 import com.parse.FindCallback;
@@ -158,7 +156,7 @@ public class GardenMethodHelper {
 
                 // for debugging purposes let's print every PlantInBed name to LogCat
                 for (PlantInBed plantInBed : plantsInBed) {
-                    Log.i("plantinbed Query", "name: " + plantInBed.getThisPlantName());
+                    Log.i("plantinbed Query", "name: " + plantInBed.getDisplayName());
                 }
 
                 // save garden's plantsInBed to list and notify adapter of new data
@@ -213,3 +211,4 @@ public class GardenMethodHelper {
     }
 
 }
+

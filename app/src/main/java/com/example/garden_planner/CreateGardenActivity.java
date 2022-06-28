@@ -22,8 +22,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.codepath.asynchttpclient.AsyncHttpClient;
+import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.garden_planner.databinding.ActivityCreateGardenBinding;
 import com.example.garden_planner.models.Garden;
+import com.example.garden_planner.models.GeocodingClient;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.LocationAvailability;
@@ -40,7 +43,12 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.net.Authenticator;
+
+import okhttp3.Headers;
 
 public class CreateGardenActivity extends AppCompatActivity {
     private ActivityCreateGardenBinding binding;
@@ -51,6 +59,7 @@ public class CreateGardenActivity extends AppCompatActivity {
     private EditText etLongitude;
     private Button btCreate;
     public static final int  REQUEST_CHECK_SETTING = 1001;
+    private GeocodingClient client;
 
     LocationRequest locationRequest;
 
@@ -110,6 +119,8 @@ public class CreateGardenActivity extends AppCompatActivity {
                 });
             }
         });
+
+
     }
 
     public void findLocation() {
@@ -132,6 +143,24 @@ public class CreateGardenActivity extends AppCompatActivity {
                                 double longitude = locationResult.getLocations().get(index).getLongitude();
 
                                 // TODO: use this latitude and longitude to set the location of the garden
+                                client = new GeocodingClient();
+                                client.reverseGeocoding(latitude, longitude, new JsonHttpResponseHandler() {
+                                    @Override
+                                    public void onSuccess(int statusCode, Headers headers, JSON json) {
+                                        try {
+                                            String address = json.jsonObject.getJSONObject("data").getJSONArray("results")
+                                                    .getJSONObject(1).getString("label");
+                                            etGardenLocation.setText(address);
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                                        Log.e("create garden", response, throwable);
+                                    }
+                                });
                             }
                         }
                     }, Looper.getMainLooper());

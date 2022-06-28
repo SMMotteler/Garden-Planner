@@ -1,9 +1,11 @@
 package com.example.garden_planner.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,7 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.garden_planner.EditGardenActivity;
 import com.example.garden_planner.GardenMethodHelper;
+import com.example.garden_planner.MainActivity;
 import com.example.garden_planner.R;
 import com.example.garden_planner.adapters.GardenFeedAdapter;
 import com.example.garden_planner.adapters.PlantInBedAdapter;
@@ -42,6 +46,7 @@ public class GardenDetailFragment extends Fragment {
     private TextView tvGardenLocation;
     private TextView tvReminderTitle;
     private RecyclerView rvReminders;
+    private Button btEditGarden;
 
     public GardenDetailFragment(){
 
@@ -63,6 +68,7 @@ public class GardenDetailFragment extends Fragment {
         ivGardenImage = binding.ivGardenImage;
         rvPlants = binding.rvPlants;
         tvGardenLocation = binding.tvGardenLocation;
+        btEditGarden = binding.btEditGarden;
 
         tvGardenName.setText(garden.getName());
         tvGardenLocation.setText("Location: "+garden.getLocation());
@@ -96,7 +102,13 @@ public class GardenDetailFragment extends Fragment {
 
         GardenMethodHelper.queryReminders(userReminders, reminderAdapter, Reminder.KEY_REMIND_WHAT, garden, true);
 
-
+        btEditGarden.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getContext(), EditGardenActivity.class);
+                getContext().startActivity(i);
+            }
+        });
     }
 
 

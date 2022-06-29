@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.garden_planner.MainActivity;
 import com.example.garden_planner.databinding.ItemReminderBinding;
 import com.example.garden_planner.models.Garden;
 import com.example.garden_planner.models.Reminder;
@@ -77,6 +78,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
         }
 
         @Override
@@ -85,11 +87,14 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
             if (position != RecyclerView.NO_POSITION) {
                 Reminder reminder = reminders.get(position);
                 Garden garden = reminder.getRemindWhat();
+                MainActivity activity = (MainActivity) context;
+                activity.goToDetailGardenView(garden);
                 // TODO: go to the detail view of garden
             }
         }
 
         public void bind(Reminder reminder){
+            Log.i(TAG, "binding "+reminder.getReminderTitle());
             tvGardenName = binding.tvGardenName;
             tvToDoDate = binding.tvToDoDate;
             ivPlantPic = binding.ivPlantPic;

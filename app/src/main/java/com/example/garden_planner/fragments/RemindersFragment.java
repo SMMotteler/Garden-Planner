@@ -1,6 +1,7 @@
 package com.example.garden_planner.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RemindersFragment extends Fragment {
+
+    // TODO: figure out the issue with repeating posts in binding
 
     FragmentRemindersBinding binding;
 
@@ -59,21 +62,23 @@ public class RemindersFragment extends Fragment {
 
         userReminders = new ArrayList<>();
         adapter = new ReminderAdapter(getContext(), userReminders);
+        adapter.setHasStableIds(true);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
 
         rvReminders.setAdapter(adapter);
         rvReminders.setLayoutManager(linearLayoutManager);
 
-        GardenMethodHelper.queryReminders(userReminders, adapter, Reminder.KEY_REMIND_WHO, ParseUser.getCurrentUser(), true);
+        GardenMethodHelper.queryReminders(userReminders, adapter, Reminder.KEY_REMIND_WHO, ParseUser.getCurrentUser(), false);
 
-        rbByTime.setChecked(true);
+        rbByGarden.setChecked(true);
 
         rdReminderOrder.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 // Is the button now checked?
                 boolean checked = rbByTime.isChecked();
+                userReminders.clear();
 
                 // Check which radio button was clicked
                         if (checked) {
@@ -82,6 +87,9 @@ public class RemindersFragment extends Fragment {
                         else {
                             GardenMethodHelper.queryReminders(userReminders, adapter, Reminder.KEY_REMIND_WHO, ParseUser.getCurrentUser(), false);
                         }
+                for (Reminder reminder : userReminders){
+                    Log.i("reminderFragment", "reminder: "+reminder.getReminderTitle());
+                }
 
                 }
         });

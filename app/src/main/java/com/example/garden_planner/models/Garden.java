@@ -4,18 +4,20 @@ import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
+import com.parse.ParseGeoPoint;
 
 import java.util.List;
 
 @ParseClassName("Garden")
 public class Garden extends ParseObject {
     public static final String KEY_NAME = "name";
-    public static final String KEY_LATITUDE = "Latitude";
-    public static final String KEY_LONGITUDE = "Longitude";
+    public static final String KEY_LATITUDE = "latitude";
+    public static final String KEY_LONGITUDE = "longitude";
     public static final String KEY_PLANTS = "plants";
     public static final String KEY_LOCATION = "location";
     public static final String KEY_PHOTO = "photo";
     public static final String KEY_USER = "whoseGarden";
+    public static final String KEY_LATLONG = "latLong";
 
     public String getName(){return getString(KEY_NAME);}
 
@@ -24,6 +26,14 @@ public class Garden extends ParseObject {
     public double getLatitude(){return Double.valueOf(getString(KEY_LATITUDE));}
 
     public void setLatitude(double latitude){put(KEY_LATITUDE, ""+latitude);}
+
+    public double[] getLatLong(){
+        double[] location = {getParseGeoPoint(KEY_LATLONG).getLatitude(), getParseGeoPoint(KEY_LATLONG).getLongitude()};
+        return location;
+    }
+
+    public void setLatLong(double latitude, double longitude){put(KEY_LATLONG, new ParseGeoPoint(latitude, longitude));}
+
 
     public double getLongitude(){return Double.valueOf(getString(KEY_LONGITUDE));}
 

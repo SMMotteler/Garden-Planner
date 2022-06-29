@@ -25,7 +25,7 @@ import java.util.List;
 
 public class RemindersFragment extends Fragment {
 
-    // TODO: figure out the issue with repeating posts in binding
+    // TODO: figure out the issue with repeating posts in binding - the items don't change appearance
 
     FragmentRemindersBinding binding;
 

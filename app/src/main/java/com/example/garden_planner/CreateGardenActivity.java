@@ -38,6 +38,7 @@ import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -121,6 +122,7 @@ public class CreateGardenActivity extends AppCompatActivity {
                 garden.setUser(ParseUser.getCurrentUser());
                 garden.setLongitude(longitude);
                 garden.setLatitude(latitude);
+                garden.setLatLong(latitude, longitude);
 
                 garden.saveInBackground(new SaveCallback() {
                     @Override

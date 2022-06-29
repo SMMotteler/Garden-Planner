@@ -46,6 +46,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import okhttp3.Headers;
 
@@ -59,6 +61,7 @@ public class CreateGardenActivity extends AppCompatActivity {
     public static final int  REQUEST_CHECK_SETTING = 1001;
     private double latitude;
     private double longitude;
+    private Date frostDate;
     private GeocodingClient geocodingClient;
     private FrostDateClient frostDateClient;
 
@@ -68,6 +71,7 @@ public class CreateGardenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityCreateGardenBinding.inflate(getLayoutInflater());
+        frostDateClient = new FrostDateClient();
 
         View view = binding.getRoot();
         setContentView(view);
@@ -82,7 +86,7 @@ public class CreateGardenActivity extends AppCompatActivity {
         locationRequest.setInterval(5000);
         locationRequest.setFastestInterval(2000);
 
-
+        geocodingClient = new GeocodingClient();
 
         btCreate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,13 +120,67 @@ public class CreateGardenActivity extends AppCompatActivity {
                     }
                 });
 
+                Log.i("CreateGardenActivity", "lat/long: "+latitude+" "+longitude);
+
+                frostDateClient.getStations(latitude, longitude, new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Headers headers, JSON json) {
+                        Log.i("FROST DATE", "in onsuccess 1");
+                        // the API for the stations list them in order of increasing distance, so we can always
+                        // take the first JSONObject
+                        try {
+                            JSONObject station = json.jsonArray.getJSONObject(0);
+                            Log.i("FROST DATE", "in try 1");
+
+                            frostDateClient.getFrostDate(station.getString("id"), 1, new JsonHttpResponseHandler() {
+                                @Override
+                                public void onSuccess(int statusCode, Headers headers, JSON json) {
+                                    // the API for the frost dates has the 32 deg. threshold as the second entry in
+                                    // the array every time, which we are using as the temperature where no more frost
+                                    // will occur
+                                    Log.i("FROST DATE", "in onsuccess 2");
+
+                                    try {
+                                        Log.i("FROST DATE", "in try 2");
+
+                                        Date today = new Date();
+                                        JSONObject lastFrostDateInfo = json.jsonArray.getJSONObject(1);
+                                        String lastFrostDateDay = lastFrostDateInfo.getString("prob_50")+today.getYear();
+                                        SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyy");
+                                        frostDate = formatter.parse(lastFrostDateDay);
+                                        Log.i("FROST DATE", "this is the frost date "+frostDate.toString());
+                                        // return the last frost date
+                                    } catch (JSONException | java.text.ParseException e) {
+                                        Log.e("FROST DATE", e.getMessage());
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                                    Log.e("initializeGardenInformation", "error with getting frost dates", throwable);
+                                }
+                            });
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.e("FROST DATE", e.getMessage());
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                        Log.e("initializeGardenInformation", "error with getting stations", throwable);
+                    }
+                });
+
                 Garden garden = new Garden();
                 garden.setLocation(gardenLocation);
                 garden.setName(gardenName);
                 garden.setUser(ParseUser.getCurrentUser());
-                garden.setLongitude(longitude);
-                garden.setLatitude(latitude);
                 garden.setLatLong(latitude, longitude);
+                Log.i("frostDate", frostDate.toString());
+                garden.setLastFrostDate(frostDate);
 
                 garden.saveInBackground(new SaveCallback() {
                     @Override
@@ -170,7 +228,6 @@ public class CreateGardenActivity extends AppCompatActivity {
                                 Log.i("create garden", "latitude "+latitude+" longitude "+longitude);
 
                                 // TODO: use this latitude and longitude to set the location of the garden
-                                geocodingClient = new GeocodingClient();
                                 geocodingClient.reverseGeocoding(latitude, longitude, new JsonHttpResponseHandler() {
                                     @Override
                                     public void onSuccess(int statusCode, Headers headers, JSON json) {
@@ -266,44 +323,8 @@ public class CreateGardenActivity extends AppCompatActivity {
     }
 
     // information for this method is from https://github.com/waldoj/frostline
-    public  void initializeGardenInformation(double latitude, double longitude) throws JSONException, IOException {
-        frostDateClient.getStations(latitude, longitude, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Headers headers, JSON json) {
-                // the API for the stations list them in order of increasing distance, so we can always
-                // take the first JSONObject
-                try {
-                    JSONObject station = json.jsonArray.getJSONObject(0);
-                    frostDateClient.getFrostDate(station.getString("id"), 1, new JsonHttpResponseHandler() {
-                        @Override
-                        public void onSuccess(int statusCode, Headers headers, JSON json) {
-                            // the API for the frost dates has the 32 deg. threshold as the second entry in
-                            // the array every time, which we are using as the temperature where no more frost
-                            // will occur
-                            try {
-                                JSONObject lastFrostDateInfo = json.jsonArray.getJSONObject(1);
-                                String lastFrostDateDay = lastFrostDateInfo.getString("prob_50");
-                                // return the last frost date
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
+    public void initializeGardenInformation(double latitude, double longitude, JsonHttpResponseHandler handler) throws JSONException, IOException {
 
-                        @Override
-                        public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                            Log.e("initializeGardenInformation", "error with getting frost dates", throwable);
-                        }
-                    });
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                Log.e("initializeGardenInformation", "error with getting stations", throwable);
-            }
-        });
     }
 
 }

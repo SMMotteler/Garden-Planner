@@ -8,7 +8,7 @@ import java.net.URLEncoder;
 
 public class FrostDateClient {
     private static final String API_BASE_URL = "https://api.farmsense.net/v1/frostdates";
-    private AsyncHttpClient client = new AsyncHttpClient();
+    private AsyncHttpClient client;
 
     public FrostDateClient() {
         this.client = new AsyncHttpClient();

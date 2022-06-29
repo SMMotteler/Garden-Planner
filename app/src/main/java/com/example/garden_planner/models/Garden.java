@@ -6,13 +6,13 @@ import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.ParseGeoPoint;
 
+import java.util.Date;
 import java.util.List;
 
 @ParseClassName("Garden")
 public class Garden extends ParseObject {
     public static final String KEY_NAME = "name";
-    public static final String KEY_LATITUDE = "latitude";
-    public static final String KEY_LONGITUDE = "longitude";
+    public static final String KEY_LAST_FROST_DATE = "lastFrostDate";
     public static final String KEY_PLANTS = "plants";
     public static final String KEY_LOCATION = "location";
     public static final String KEY_PHOTO = "photo";
@@ -23,21 +23,12 @@ public class Garden extends ParseObject {
 
     public void setName(String name){put(KEY_NAME, name);}
 
-    public double getLatitude(){return Double.valueOf(getString(KEY_LATITUDE));}
-
-    public void setLatitude(double latitude){put(KEY_LATITUDE, ""+latitude);}
-
     public double[] getLatLong(){
         double[] location = {getParseGeoPoint(KEY_LATLONG).getLatitude(), getParseGeoPoint(KEY_LATLONG).getLongitude()};
         return location;
     }
 
     public void setLatLong(double latitude, double longitude){put(KEY_LATLONG, new ParseGeoPoint(latitude, longitude));}
-
-
-    public double getLongitude(){return Double.valueOf(getString(KEY_LONGITUDE));}
-
-    public void setLongitude(double longitude){put(KEY_LONGITUDE, ""+longitude);}
 
     public List<PlantInBed> getPlants(){return getList(KEY_PLANTS);}
 
@@ -61,5 +52,8 @@ public class Garden extends ParseObject {
 
     public void setUser(ParseUser user){put(KEY_USER, user);}
 
+    public Date getLastFrostDate(){return getDate(KEY_LAST_FROST_DATE);}
+
+    public void setLastFrostDate(Date lastFrostDate){put(KEY_LAST_FROST_DATE, lastFrostDate);}
 
 }

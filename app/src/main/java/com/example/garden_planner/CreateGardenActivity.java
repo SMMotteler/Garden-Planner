@@ -119,8 +119,8 @@ public class CreateGardenActivity extends AppCompatActivity {
                 garden.setLocation(gardenLocation);
                 garden.setName(gardenName);
                 garden.setUser(ParseUser.getCurrentUser());
-                garden.setLongitude(Double.valueOf(longitude).longValue());
-                garden.setLatitude(Double.valueOf(latitude).longValue());
+                garden.setLongitude(longitude);
+                garden.setLatitude(latitude);
 
                 garden.saveInBackground(new SaveCallback() {
                     @Override

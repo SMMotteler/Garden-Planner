@@ -53,6 +53,16 @@ public class PlantInBedAdapter extends RecyclerView.Adapter<PlantInBedAdapter.Vi
         return plants.size();
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private ImageView ivPlantPic;

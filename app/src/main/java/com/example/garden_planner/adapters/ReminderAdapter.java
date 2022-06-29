@@ -47,12 +47,23 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
     public void onBindViewHolder(@NonNull ReminderAdapter.ViewHolder holder, int position) {
         Log.i(TAG, "onBindViewHolder " + position);
         Reminder reminder = reminders.get(position);
+        Log.i(TAG, "reminder "+reminder.getReminderTitle());
         holder.bind(reminder);
     }
 
     @Override
     public int getItemCount() {
         return reminders.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -85,6 +96,8 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
             tvPlantName = binding.tvPlantName;
             tvReminderTitle = binding.tvReminderTitle;
             tvReminderText = binding.tvReminderText;
+
+            Log.i(TAG, "binding "+reminder.getReminderTitle());
 
             tvGardenName.setText(reminder.getRemindWhat().getName());
 

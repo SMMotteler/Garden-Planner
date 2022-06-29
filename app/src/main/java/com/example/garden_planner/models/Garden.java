@@ -21,13 +21,13 @@ public class Garden extends ParseObject {
 
     public void setName(String name){put(KEY_NAME, name);}
 
-    public Long getLatitude(){return getLong(KEY_LATITUDE);}
+    public double getLatitude(){return Double.valueOf(getString(KEY_LATITUDE));}
 
-    public void setLatitude(Long latitude){put(KEY_LATITUDE, latitude);}
+    public void setLatitude(double latitude){put(KEY_LATITUDE, ""+latitude);}
 
-    public Long getLongitude(){return getLong(KEY_LONGITUDE);}
+    public double getLongitude(){return Double.valueOf(getString(KEY_LONGITUDE));}
 
-    public void setLongitude(Long longitude){put(KEY_LONGITUDE, longitude);}
+    public void setLongitude(double longitude){put(KEY_LONGITUDE, ""+longitude);}
 
     public List<PlantInBed> getPlants(){return getList(KEY_PLANTS);}
 

@@ -11,22 +11,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.example.garden_planner.databinding.ItemPlantBinding;
 import com.example.garden_planner.databinding.ItemPlantInBedBinding;
 import com.example.garden_planner.models.Plant;
-
+import com.example.garden_planner.models.PlantInBed;
 
 import java.util.List;
 
-public class PlantAdditionAdapter extends RecyclerView.Adapter<PlantAdditionAdapter.ViewHolder> {
-    public static final String TAG = "PlantAdditionAdapter";
+public class PlantDeletionAdapter  extends RecyclerView.Adapter<PlantDeletionAdapter.ViewHolder> {
+    public static final String TAG = "PlantDeletionAdapter";
     private Context context;
-    private List<Plant> plants;
+    private List<PlantInBed> plants;
 
-    ItemPlantBinding binding;
+    ItemPlantInBedBinding binding;
 
-    public PlantAdditionAdapter(Context context, List<Plant> plants){
+    public PlantDeletionAdapter(Context context, List<PlantInBed> plants){
         Log.i(TAG, "making PlantInBedAdapter");
         this.context = context;
         this.plants = plants;
@@ -34,22 +32,21 @@ public class PlantAdditionAdapter extends RecyclerView.Adapter<PlantAdditionAdap
 
     @NonNull
     @Override
-    public PlantAdditionAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public PlantDeletionAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Log.i(TAG, "onCreateViewHolder ");
 
-        binding = ItemPlantBinding.inflate( LayoutInflater.from(context), parent, false);
+        binding = ItemPlantInBedBinding.inflate( LayoutInflater.from(context), parent, false);
         View view = binding.getRoot();
 
-        return new PlantAdditionAdapter.ViewHolder(view);
+        return new PlantDeletionAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PlantAdditionAdapter.ViewHolder holder, int position) {
-        Plant plant = plants.get(position);
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        PlantInBed plant = plants.get(position);
         holder.bind(plant);
 
     }
-
 
     @Override
     public int getItemCount() {
@@ -79,13 +76,13 @@ public class PlantAdditionAdapter extends RecyclerView.Adapter<PlantAdditionAdap
         public void onClick(View v) {
             int position = getAdapterPosition();
             if (position != RecyclerView.NO_POSITION) {
-                Plant plant = plants.get(position);
+                PlantInBed plant = plants.get(position);
                 // TODO: add a plant item of that kind to the garden
             }
 
         }
 
-        public void bind(Plant plant){
+        public void bind(PlantInBed plant){
             ivPlantPic = binding.ivPlantPic;
             tvPlantName = binding.tvPlantName;
 

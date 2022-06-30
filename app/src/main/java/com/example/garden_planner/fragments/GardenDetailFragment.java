@@ -106,6 +106,7 @@ public class GardenDetailFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getContext(), EditGardenActivity.class);
+                i.putExtra("garden", garden);
                 getContext().startActivity(i);
             }
         });

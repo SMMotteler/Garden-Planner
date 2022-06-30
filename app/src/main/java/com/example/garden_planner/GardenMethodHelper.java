@@ -8,10 +8,12 @@ import android.widget.Toast;
 
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.garden_planner.adapters.GardenFeedAdapter;
+import com.example.garden_planner.adapters.PlantAdditionAdapter;
 import com.example.garden_planner.adapters.PlantInBedAdapter;
 import com.example.garden_planner.adapters.ReminderAdapter;
 import com.example.garden_planner.models.FrostDateClient;
 import com.example.garden_planner.models.Garden;
+import com.example.garden_planner.models.Plant;
 import com.example.garden_planner.models.PlantInBed;
 import com.example.garden_planner.models.Reminder;
 import com.parse.FindCallback;
@@ -26,6 +28,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.Headers;
@@ -167,6 +170,35 @@ public class GardenMethodHelper {
             }
         });
 
+    }
+
+    public static List<Plant> queryPlants(){
+        List<Plant> returnPlants = new ArrayList<>();
+        ParseQuery<Plant> query = ParseQuery.getQuery(Plant.class);
+
+        query.addAscendingOrder("createdAt");
+
+        // start an asynchronous call for Plant objects
+        query.findInBackground(new FindCallback<Plant>() {
+            @Override
+            public void done(List<Plant> plants, ParseException e) {
+                // check for errors
+                if (e != null) {
+                    Log.e("Detail Activity", "Issue with getting plants", e);
+                    return;
+                }
+
+                // for debugging purposes let's print every PlantInBed name to LogCat
+                for (Plant plant : plants) {
+                    Log.i("plantinbed Query", "name: " + plant.getName());
+                }
+
+                // save garden's plantsInBed to list and notify adapter of new data
+                returnPlants.addAll(plants);
+
+            }
+        });
+    return returnPlants;
     }
 
 

@@ -1,5 +1,6 @@
 package com.example.garden_planner;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -16,13 +17,14 @@ public class EditGardenActivity extends AppCompatActivity {
     private Button btAddPlant;
     private Button btDeletePlant;
     private Garden garden;
+    public static final int ACTIVITY_RESULT = 1001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityEditGardenBinding.inflate(getLayoutInflater());
 
-        garden = savedInstanceState.getParcelable("garden");
+        garden = getIntent().getParcelableExtra("garden");
 
         View view = binding.getRoot();
         setContentView(view);
@@ -35,7 +37,7 @@ public class EditGardenActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(EditGardenActivity.this, PlantAdditionActivity.class);
                 i.putExtra("garden", garden);
-                startActivity(i);
+                startActivityForResult(i, ACTIVITY_RESULT);
             }
         });
 
@@ -44,8 +46,15 @@ public class EditGardenActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(EditGardenActivity.this, PlantDeletionActivity.class);
                 i.putExtra("garden", garden);
-                startActivity(i);
+                startActivityForResult(i, ACTIVITY_RESULT);
+
             }
         });
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+        finish();
     }
 }

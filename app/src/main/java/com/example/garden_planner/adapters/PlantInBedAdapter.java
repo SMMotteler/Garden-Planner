@@ -70,6 +70,7 @@ public class PlantInBedAdapter extends RecyclerView.Adapter<PlantInBedAdapter.Vi
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
         }
 
         @Override

@@ -29,7 +29,7 @@ public class PlantDeletionActivity extends AppCompatActivity {
 
         rvPlants = binding.rvPlants;
 
-        garden = savedInstanceState.getParcelable("garden");
+        garden = getIntent().getParcelableExtra("garden");
 
     }
 }

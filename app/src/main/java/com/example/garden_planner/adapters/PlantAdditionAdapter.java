@@ -26,6 +26,7 @@ public class PlantAdditionAdapter extends RecyclerView.Adapter<PlantAdditionAdap
     public static final String TAG = "PlantAdditionAdapter";
     private Context context;
     private List<Plant> plants;
+    private Plant plantType = null;
 
     ItemPlantBinding binding;
 
@@ -69,6 +70,10 @@ public class PlantAdditionAdapter extends RecyclerView.Adapter<PlantAdditionAdap
         return position;
     }
 
+    public Plant getPlantType(){
+        return plantType;
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private ImageView ivPlantPic;
@@ -80,6 +85,7 @@ public class PlantAdditionAdapter extends RecyclerView.Adapter<PlantAdditionAdap
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
         }
 
         @Override
@@ -87,6 +93,7 @@ public class PlantAdditionAdapter extends RecyclerView.Adapter<PlantAdditionAdap
             int position = getAdapterPosition();
             if (position != RecyclerView.NO_POSITION) {
                 Plant plant = plants.get(position);
+                plantType = plant;
                 // TODO: set the type of the PlantInBed object to be of type plant
                 // TODO: if there is another plant that has already been clicked,
                 // TODO: change its background back to white

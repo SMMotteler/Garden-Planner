@@ -179,8 +179,8 @@ public class CreateGardenActivity extends AppCompatActivity {
                 garden.setName(gardenName);
                 garden.setUser(ParseUser.getCurrentUser());
                 garden.setLatLong(latitude, longitude);
-//                Log.i("frostDate", frostDate.toString());
-//                garden.setLastFrostDate(frostDate);
+                Log.i("frostDate", frostDate.toString());
+                garden.setLastFrostDate(frostDate);
 
                 garden.saveInBackground(new SaveCallback() {
                     @Override

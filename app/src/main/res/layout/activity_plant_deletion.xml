@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    tools:context=".PlantDeletionActivity">
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvPlants"
         android:layout_width="0dp"
@@ -21,7 +21,7 @@
         android:id="@+id/tvWhichOne"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Which kind of plant do you want to add?"
+        android:text="Which plant should be deleted?"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         app:layout_constraintEnd_toEndOf="parent"

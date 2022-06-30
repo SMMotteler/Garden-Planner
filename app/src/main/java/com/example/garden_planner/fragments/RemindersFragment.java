@@ -78,7 +78,11 @@ public class RemindersFragment extends Fragment {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 // Is the button now checked?
                 boolean checked = rbByTime.isChecked();
-                userReminders.clear();
+                userReminders = new ArrayList<>();
+                adapter = new ReminderAdapter(getContext(), userReminders);
+                rvReminders.setAdapter(adapter);
+                rvReminders.setLayoutManager(linearLayoutManager);
+
 
                 // Check which radio button was clicked
                         if (checked) {

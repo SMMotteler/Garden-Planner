@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CreateGardenActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="10dp">
 
     <EditText
         android:id="@+id/etGardenName"
@@ -23,22 +24,12 @@
         android:hint="Garden Location"
         android:inputType="textPersonName" />
 
-    <EditText
-        android:id="@+id/etLatitude"
+    <Button
+        android:id="@+id/btFindLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Garden Latitude"
-        android:inputType="number" />
+        android:text="Click here to set garden location as current location"/>
 
-
-    <EditText
-        android:id="@+id/etLongitude"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Garden Longitude"
-        android:inputType="number" />
 
     <Button
         android:id="@+id/btCreate"

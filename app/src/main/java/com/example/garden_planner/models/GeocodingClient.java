@@ -1,5 +1,7 @@
 package com.example.garden_planner.models;
 
+import android.util.Log;
+
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.garden_planner.BuildConfig;
@@ -23,19 +25,18 @@ public class GeocodingClient {
 
     public void forwardGeocoding(String address, JsonHttpResponseHandler handler) {
         try {
-            String url = getApiUrl("forward?"+ACCESS_KEY+"&");
-            client.get(url + URLEncoder.encode(address, "utf-8"), handler);
+            String url = getApiUrl("forward?access_key="+ACCESS_KEY+"&query=");
+            client.get(url + URLEncoder.encode(address, "utf-8")+"&limit=1", handler);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
     }
 
     public void reverseGeocoding(double latitude, double longitude, JsonHttpResponseHandler handler){
-        try {
-            String url = getApiUrl("reverse?"+ACCESS_KEY+"&");
-            client.get(url + URLEncoder.encode(latitude+","+longitude, "utf-8"), handler);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+
+            String url = getApiUrl("reverse?access_key="+ACCESS_KEY+"&query=");
+            Log.i("Geocoding client", url + latitude+","+longitude+"&limit=1");
+            client.get(url + latitude+","+longitude, handler);
+
     }
 }

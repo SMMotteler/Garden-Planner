@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.garden_planner.MainActivity;
 import com.example.garden_planner.databinding.ItemReminderBinding;
 import com.example.garden_planner.models.Garden;
 import com.example.garden_planner.models.Reminder;
@@ -47,12 +48,23 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
     public void onBindViewHolder(@NonNull ReminderAdapter.ViewHolder holder, int position) {
         Log.i(TAG, "onBindViewHolder " + position);
         Reminder reminder = reminders.get(position);
+        Log.i(TAG, "reminder "+reminder.getReminderTitle());
         holder.bind(reminder);
     }
 
     @Override
     public int getItemCount() {
         return reminders.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -66,6 +78,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
         }
 
         @Override
@@ -74,17 +87,22 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
             if (position != RecyclerView.NO_POSITION) {
                 Reminder reminder = reminders.get(position);
                 Garden garden = reminder.getRemindWhat();
+                MainActivity activity = (MainActivity) context;
+                activity.goToDetailGardenView(garden);
                 // TODO: go to the detail view of garden
             }
         }
 
         public void bind(Reminder reminder){
+            Log.i(TAG, "binding "+reminder.getReminderTitle());
             tvGardenName = binding.tvGardenName;
             tvToDoDate = binding.tvToDoDate;
             ivPlantPic = binding.ivPlantPic;
             tvPlantName = binding.tvPlantName;
             tvReminderTitle = binding.tvReminderTitle;
             tvReminderText = binding.tvReminderText;
+
+            Log.i(TAG, "binding "+reminder.getReminderTitle());
 
             tvGardenName.setText(reminder.getRemindWhat().getName());
 

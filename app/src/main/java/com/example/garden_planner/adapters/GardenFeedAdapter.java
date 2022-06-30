@@ -38,11 +38,12 @@ public class GardenFeedAdapter extends RecyclerView.Adapter<GardenFeedAdapter.Vi
         Log.i(TAG, "making GardenFeedAdapter");
         this.context = context;
         this.gardens = gardens;
+
     }
 
     @NonNull
     @Override
-    public GardenFeedAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Log.i(TAG, "onCreateViewHolder ");
 
         binding = ItemGardenBinding.inflate( LayoutInflater.from(context), parent, false);
@@ -55,12 +56,23 @@ public class GardenFeedAdapter extends RecyclerView.Adapter<GardenFeedAdapter.Vi
     public void onBindViewHolder(@NonNull GardenFeedAdapter.ViewHolder holder, int position) {
         Log.i(TAG, "onBindViewHolder " + position);
         Garden garden = gardens.get(position);
+        Log.i(TAG, "garden " + garden.getName());
         holder.bind(garden);
     }
 
     @Override
     public int getItemCount() {
         return gardens.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -75,6 +87,7 @@ public class GardenFeedAdapter extends RecyclerView.Adapter<GardenFeedAdapter.Vi
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
         }
 
         @Override
@@ -84,13 +97,16 @@ public class GardenFeedAdapter extends RecyclerView.Adapter<GardenFeedAdapter.Vi
             if (position != RecyclerView.NO_POSITION) {
                 Garden garden = gardens.get(position);
                 Log.i("clicked", "clicked "+garden.getName());
-                MainActivity activity = new MainActivity();
+                MainActivity activity = (MainActivity) context;
                 activity.goToDetailGardenView(garden);
             }
 
         }
 
         public void bind(Garden garden){
+
+            Log.i(TAG, "binding "+garden.getName());
+
             ivGardenIcon = binding.ivGardenIcon;
             tvGardenName = binding.tvGardenName;
             ivGardenImage = binding.ivGardenImage;
@@ -126,5 +142,6 @@ public class GardenFeedAdapter extends RecyclerView.Adapter<GardenFeedAdapter.Vi
                 }
             });
         }
+
     }
 }

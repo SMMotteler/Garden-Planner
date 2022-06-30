@@ -2,7 +2,6 @@ package com.example.garden_planner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -22,11 +21,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.garden_planner.databinding.ActivityCreateGardenBinding;
+import com.example.garden_planner.models.FrostDateClient;
 import com.example.garden_planner.models.Garden;
+import com.example.garden_planner.models.GeocodingClient;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.ResolvableApiException;
-import com.google.android.gms.location.LocationAvailability;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
@@ -37,20 +38,32 @@ import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
-import java.net.Authenticator;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import okhttp3.Headers;
 
 public class CreateGardenActivity extends AppCompatActivity {
     private ActivityCreateGardenBinding binding;
 
     private EditText etGardenName;
     private EditText etGardenLocation;
-    private EditText etLatitude;
-    private EditText etLongitude;
+    private Button btFindLocation;
     private Button btCreate;
     public static final int  REQUEST_CHECK_SETTING = 1001;
+    private double latitude;
+    private double longitude;
+    private Date frostDate;
+    private GeocodingClient geocodingClient;
+    private FrostDateClient frostDateClient;
 
     LocationRequest locationRequest;
 
@@ -58,14 +71,14 @@ public class CreateGardenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityCreateGardenBinding.inflate(getLayoutInflater());
+        frostDateClient = new FrostDateClient();
 
         View view = binding.getRoot();
         setContentView(view);
 
         etGardenName = binding.etGardenName;
         etGardenLocation = binding.etGardenLocation;
-        etLatitude = binding.etLatitude;
-        etLongitude = binding.etLongitude;
+        btFindLocation = binding.btFindLocation;
         btCreate = binding.btCreate;
 
         locationRequest = LocationRequest.create();
@@ -73,29 +86,101 @@ public class CreateGardenActivity extends AppCompatActivity {
         locationRequest.setInterval(5000);
         locationRequest.setFastestInterval(2000);
 
-
+        geocodingClient = new GeocodingClient();
 
         btCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String gardenName = etGardenName.getText().toString();
                 String gardenLocation = etGardenLocation.getText().toString();
-                String longitudeText = etLongitude.getText().toString();
-                String latitudeText = etLatitude.getText().toString();
 
-                if(gardenName.isEmpty() || gardenLocation.isEmpty()
-                        || longitudeText.isEmpty() || latitudeText.isEmpty()){
+                if(gardenName.isEmpty() || gardenLocation.isEmpty()){
                     Toast.makeText(CreateGardenActivity.this, "You're missing a field!",
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
 
+                geocodingClient.forwardGeocoding(gardenLocation, new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Headers headers, JSON json) {
+                        try {
+                            latitude = json.jsonObject.getJSONArray("data").getJSONObject(0).getDouble("latitude");
+                            longitude = json.jsonObject.getJSONArray("data").getJSONObject(0).getDouble("longitude");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            return;
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                        Log.e("create garden", response, throwable);
+                        // Toast.makeText(CreateGardenActivity.this, "Error with finding location! Please try again", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                });
+
+                Log.i("CreateGardenActivity", "lat/long: "+latitude+" "+longitude);
+
+                frostDateClient.getStations(latitude, longitude, new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Headers headers, JSON json) {
+                        Log.i("FROST DATE", "in onsuccess 1");
+                        // the API for the stations list them in order of increasing distance, so we can always
+                        // take the first JSONObject
+                        try {
+                            JSONObject station = json.jsonArray.getJSONObject(0);
+                            Log.i("FROST DATE", "in try 1");
+
+                            frostDateClient.getFrostDate(station.getString("id"), 1, new JsonHttpResponseHandler() {
+                                @Override
+                                public void onSuccess(int statusCode, Headers headers, JSON json) {
+                                    // the API for the frost dates has the 32 deg. threshold as the second entry in
+                                    // the array every time, which we are using as the temperature where no more frost
+                                    // will occur
+                                    Log.i("FROST DATE", "in onsuccess 2");
+
+                                    try {
+                                        Log.i("FROST DATE", "in try 2");
+
+                                        Date today = new Date();
+                                        JSONObject lastFrostDateInfo = json.jsonArray.getJSONObject(1);
+                                        String lastFrostDateDay = lastFrostDateInfo.getString("prob_50")+today.getYear();
+                                        SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyy");
+                                        frostDate = formatter.parse(lastFrostDateDay);
+                                        Log.i("FROST DATE", "this is the frost date "+frostDate.toString());
+                                        // return the last frost date
+                                    } catch (JSONException | java.text.ParseException e) {
+                                        Log.e("FROST DATE", e.getMessage());
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                                    Log.e("initializeGardenInformation", "error with getting frost dates", throwable);
+                                }
+                            });
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.e("FROST DATE", e.getMessage());
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                        Log.e("initializeGardenInformation", "error with getting stations", throwable);
+                    }
+                });
+
                 Garden garden = new Garden();
-                garden.setLatitude(Long.parseLong(latitudeText));
-                garden.setLongitude(Long.parseLong(longitudeText));
                 garden.setLocation(gardenLocation);
                 garden.setName(gardenName);
                 garden.setUser(ParseUser.getCurrentUser());
+                garden.setLatLong(latitude, longitude);
+//                Log.i("frostDate", frostDate.toString());
+//                garden.setLastFrostDate(frostDate);
 
                 garden.saveInBackground(new SaveCallback() {
                     @Override
@@ -110,6 +195,15 @@ public class CreateGardenActivity extends AppCompatActivity {
                 });
             }
         });
+
+        btFindLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                findLocation();
+            }
+        });
+
+
     }
 
     public void findLocation() {
@@ -128,10 +222,29 @@ public class CreateGardenActivity extends AppCompatActivity {
 
                             if(locationResult != null && locationResult.getLocations().size()>0){
                                 int index = locationResult.getLocations().size() -1;
-                                double latitude = locationResult.getLocations().get(index).getLatitude();
-                                double longitude = locationResult.getLocations().get(index).getLongitude();
+                                latitude = locationResult.getLocations().get(index).getLatitude();
+                                longitude = locationResult.getLocations().get(index).getLongitude();
+
+                                Log.i("create garden", "latitude "+latitude+" longitude "+longitude);
 
                                 // TODO: use this latitude and longitude to set the location of the garden
+                                geocodingClient.reverseGeocoding(latitude, longitude, new JsonHttpResponseHandler() {
+                                    @Override
+                                    public void onSuccess(int statusCode, Headers headers, JSON json) {
+                                        try {
+                                            String address = json.jsonObject.getJSONArray("data")
+                                                    .getJSONObject(1).getString("label");
+                                            etGardenLocation.setText(address);
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                                        Log.e("create garden", response, throwable);
+                                    }
+                                });
                             }
                         }
                     }, Looper.getMainLooper());
@@ -208,4 +321,10 @@ public class CreateGardenActivity extends AppCompatActivity {
             }
         }
     }
+
+    // information for this method is from https://github.com/waldoj/frostline
+    public void initializeGardenInformation(double latitude, double longitude, JsonHttpResponseHandler handler) throws JSONException, IOException {
+
+    }
+
 }

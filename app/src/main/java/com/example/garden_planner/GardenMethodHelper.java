@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.garden_planner.adapters.GardenFeedAdapter;
 import com.example.garden_planner.adapters.PlantAdditionAdapter;
@@ -139,7 +141,7 @@ public class GardenMethodHelper {
 
     }
 
-    public static void queryPlantInBed(List<PlantInBed> plantsInTheBed, PlantInBedAdapter adapter, Garden garden){
+    public static void queryPlantInBed(List<PlantInBed> plantsInTheBed, RecyclerView.Adapter adapter, Garden garden){
         ParseQuery<PlantInBed> query = ParseQuery.getQuery(PlantInBed.class);
 
         query.whereEqualTo(PlantInBed.KEY_GARDEN, garden);

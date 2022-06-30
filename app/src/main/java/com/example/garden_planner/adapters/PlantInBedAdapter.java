@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -67,6 +68,7 @@ public class PlantInBedAdapter extends RecyclerView.Adapter<PlantInBedAdapter.Vi
 
         private ImageView ivPlantPic;
         private TextView tvPlantName;
+        private Button btDelete;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -86,12 +88,17 @@ public class PlantInBedAdapter extends RecyclerView.Adapter<PlantInBedAdapter.Vi
         public void bind(PlantInBed plant){
             ivPlantPic = binding.ivPlantPic;
             tvPlantName = binding.tvPlantName;
+            btDelete = binding.btDelete;
 
             tvPlantName.setText(plant.getDisplayName());
 
+            if (plant.has(PlantInBed.KEY_TYPE)){
             if (plant.getPlantType().has("photo")){
                 Glide.with(context).load(plant.getPlantType().getPhoto().getUrl()).into(ivPlantPic);
             }
+            }
+
+            btDelete.setVisibility(View.GONE);
         }
     }
 }

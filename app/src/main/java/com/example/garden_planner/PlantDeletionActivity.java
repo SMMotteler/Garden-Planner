@@ -53,7 +53,7 @@ public class PlantDeletionActivity extends AppCompatActivity {
 
         btSetPlants.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 List<PlantInBed> plantsToDelete = adapter.getPlantsToDelete();
                 for (PlantInBed plant : plantsToDelete){
                     plant.deleteInBackground();

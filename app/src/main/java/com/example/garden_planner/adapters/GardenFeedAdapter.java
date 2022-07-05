@@ -91,7 +91,7 @@ public class GardenFeedAdapter extends RecyclerView.Adapter<GardenFeedAdapter.Vi
         }
 
         @Override
-        public void onClick(View v) {
+        public void onClick(View view) {
             Log.i("click", "click");
             int position = getAdapterPosition();
             if (position != RecyclerView.NO_POSITION) {
@@ -134,7 +134,7 @@ public class GardenFeedAdapter extends RecyclerView.Adapter<GardenFeedAdapter.Vi
 
             btDetailView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View view) {
                     Log.i("click", "click");
                     MainActivity activity = (MainActivity) context;
                     activity.goToDetailGardenView(garden);

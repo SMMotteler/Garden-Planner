@@ -90,7 +90,7 @@ public class CreateGardenActivity extends AppCompatActivity {
 
         btCreate.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 String gardenName = etGardenName.getText().toString();
                 String gardenLocation = etGardenLocation.getText().toString();
 
@@ -198,7 +198,7 @@ public class CreateGardenActivity extends AppCompatActivity {
 
         btFindLocation.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 findLocation();
             }
         });

@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
 
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 Log.i(TAG, "onClick login button");
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
@@ -57,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
 
         btRegister.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 Log.i(TAG, "onClick register button");
                 goRegister();
             }

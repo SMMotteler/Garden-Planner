@@ -104,7 +104,7 @@ public class GardenDetailFragment extends Fragment {
 
         btEditGarden.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 Intent i = new Intent(getContext(), EditGardenActivity.class);
                 i.putExtra("garden", garden);
                 getContext().startActivity(i);

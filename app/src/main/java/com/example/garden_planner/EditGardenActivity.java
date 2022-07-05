@@ -34,7 +34,7 @@ public class EditGardenActivity extends AppCompatActivity {
 
         btAddPlant.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 Intent i = new Intent(EditGardenActivity.this, PlantAdditionActivity.class);
                 i.putExtra("garden", garden);
                 startActivityForResult(i, ACTIVITY_RESULT);
@@ -43,7 +43,7 @@ public class EditGardenActivity extends AppCompatActivity {
 
         btDeletePlant.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 Intent i = new Intent(EditGardenActivity.this, PlantDeletionActivity.class);
                 i.putExtra("garden", garden);
                 startActivityForResult(i, ACTIVITY_RESULT);

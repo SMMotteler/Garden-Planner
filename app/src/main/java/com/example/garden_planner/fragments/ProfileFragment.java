@@ -71,7 +71,7 @@ public class ProfileFragment extends BaseFragment {
 
         btLogout.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 goLoginActivity();
             }
         });
@@ -85,7 +85,7 @@ public class ProfileFragment extends BaseFragment {
                     btLogout.setVisibility(View.VISIBLE);
                     ivProfilePic.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onClick(View v) {
+                        public void onClick(View view) {
                             // allow user to change their profile photo
                             MainActivity activity = (MainActivity)getContext();
                             Intent i = new Intent(getContext(), PictureHandlerActivity.class);

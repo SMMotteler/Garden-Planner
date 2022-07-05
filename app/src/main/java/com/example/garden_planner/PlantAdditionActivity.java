@@ -62,7 +62,7 @@ public class PlantAdditionActivity extends AppCompatActivity {
 
         btCreatePlant.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 Plant plantType = adapter.getPlantType();
                 String name = etPlantName.getText().toString();
 

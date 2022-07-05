@@ -76,14 +76,14 @@ public class PictureHandlerActivity extends AppCompatActivity {
 
         btTakePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 launchCamera();
             }
         });
 
         btChoosePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 getPictures();
             }
         });
@@ -224,7 +224,7 @@ public class PictureHandlerActivity extends AppCompatActivity {
 
             btUpload.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View view) {
                     ParseUser.getCurrentUser().put("profilePic", new ParseFile(resizedFile));
                     ParseUser.getCurrentUser().saveInBackground(new SaveCallback() {
                         @Override

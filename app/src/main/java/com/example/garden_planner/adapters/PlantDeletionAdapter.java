@@ -89,7 +89,7 @@ public class PlantDeletionAdapter  extends RecyclerView.Adapter<PlantDeletionAda
         }
 
         @Override
-        public void onClick(View v) {
+        public void onClick(View view) {
             int position = getAdapterPosition();
             if (position != RecyclerView.NO_POSITION) {
                 PlantInBed plant = plants.get(position);
@@ -110,7 +110,7 @@ public class PlantDeletionAdapter  extends RecyclerView.Adapter<PlantDeletionAda
 
             btDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View view) {
                     // TODO: change background of this plant object to red, add it to the removed list
                     // TODO: if clicked again, maybe "unremove" it? (remove from removed list, and change
                     // TODO: the background back

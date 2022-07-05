@@ -48,7 +48,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         btCreateAccount.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 Log.i(TAG, "onClick login button");
                 String email = etEmail.getText().toString();
                 String username = etUsername.getText().toString();

@@ -1,9 +1,5 @@
 package com.example.garden_planner;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,9 +7,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.garden_planner.adapters.PlantAdditionAdapter;
-import com.example.garden_planner.adapters.PlantInBedAdapter;
-import com.example.garden_planner.databinding.ActivityMainBinding;
 import com.example.garden_planner.databinding.ActivityPlantAdditionBinding;
 import com.example.garden_planner.models.Garden;
 import com.example.garden_planner.models.Plant;

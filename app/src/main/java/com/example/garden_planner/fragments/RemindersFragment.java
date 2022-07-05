@@ -13,9 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.garden_planner.GardenMethodHelper;
-import com.example.garden_planner.R;
 import com.example.garden_planner.adapters.ReminderAdapter;
-import com.example.garden_planner.databinding.FragmentProfileBinding;
 import com.example.garden_planner.databinding.FragmentRemindersBinding;
 import com.example.garden_planner.models.Reminder;
 import com.parse.ParseUser;

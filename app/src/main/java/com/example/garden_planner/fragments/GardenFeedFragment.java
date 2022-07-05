@@ -13,12 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.garden_planner.CreateGardenActivity;
 import com.example.garden_planner.GardenMethodHelper;
-import com.example.garden_planner.MainActivity;
-import com.example.garden_planner.R;
 import com.example.garden_planner.adapters.GardenFeedAdapter;
-import com.example.garden_planner.adapters.ReminderAdapter;
 import com.example.garden_planner.databinding.FragmentGardenFeedBinding;
-import com.example.garden_planner.databinding.FragmentProfileBinding;
 import com.example.garden_planner.models.Garden;
 import com.parse.ParseUser;
 

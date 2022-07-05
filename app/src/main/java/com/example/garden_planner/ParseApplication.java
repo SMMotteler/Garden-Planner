@@ -1,5 +1,7 @@
 package com.example.garden_planner;
 
+import android.app.Application;
+
 import com.example.garden_planner.models.Garden;
 import com.example.garden_planner.models.Plant;
 import com.example.garden_planner.models.PlantInBed;
@@ -7,9 +9,6 @@ import com.example.garden_planner.models.Reminder;
 import com.example.garden_planner.models.User;
 import com.parse.Parse;
 import com.parse.ParseObject;
-
-import android.app.Application;
-import android.util.Log;
 
 public class ParseApplication extends Application {
 

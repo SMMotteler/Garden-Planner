@@ -17,10 +17,8 @@ import com.bumptech.glide.Glide;
 import com.example.garden_planner.GardenMethodHelper;
 import com.example.garden_planner.MainActivity;
 import com.example.garden_planner.databinding.ItemGardenBinding;
-import com.example.garden_planner.databinding.ItemReminderBinding;
 import com.example.garden_planner.models.Garden;
 import com.example.garden_planner.models.PlantInBed;
-import com.example.garden_planner.models.Reminder;
 
 import java.util.ArrayList;
 import java.util.List;

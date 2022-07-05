@@ -16,10 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.garden_planner.databinding.ItemPlantBinding;
 import com.example.garden_planner.databinding.ItemPlantInBedBinding;
-import com.example.garden_planner.models.Garden;
-import com.example.garden_planner.models.Plant;
 import com.example.garden_planner.models.PlantInBed;
 
 import java.util.ArrayList;

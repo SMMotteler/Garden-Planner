@@ -16,17 +16,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.garden_planner.EditGardenActivity;
 import com.example.garden_planner.GardenMethodHelper;
-import com.example.garden_planner.MainActivity;
-import com.example.garden_planner.R;
-import com.example.garden_planner.adapters.GardenFeedAdapter;
 import com.example.garden_planner.adapters.PlantInBedAdapter;
 import com.example.garden_planner.adapters.ReminderAdapter;
 import com.example.garden_planner.databinding.FragmentGardenDetailBinding;
-import com.example.garden_planner.databinding.FragmentProfileBinding;
 import com.example.garden_planner.models.Garden;
 import com.example.garden_planner.models.PlantInBed;
 import com.example.garden_planner.models.Reminder;
-import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;

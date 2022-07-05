@@ -2,16 +2,12 @@ package com.example.garden_planner;
 
 import android.app.Activity;
 import android.content.Intent;
-
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.garden_planner.adapters.GardenFeedAdapter;
-import com.example.garden_planner.adapters.PlantAdditionAdapter;
-import com.example.garden_planner.adapters.PlantInBedAdapter;
 import com.example.garden_planner.adapters.ReminderAdapter;
 import com.example.garden_planner.models.FrostDateClient;
 import com.example.garden_planner.models.Garden;
@@ -26,14 +22,8 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import okhttp3.Headers;
 
 public class GardenMethodHelper {
 

@@ -12,6 +12,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_picture_handler.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_plant_addition.xml" value="0.14427083333333332" />
+        <entry key="app/src/main/res/layout/activity_plant_deletion.xml" value="0.16893115942028986" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.16979166666666667" />
         <entry key="app/src/main/res/layout/fragmenet_profile.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_garden_detail.xml" value="0.1" />
@@ -20,6 +21,7 @@
         <entry key="app/src/main/res/layout/fragment_reminders.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_choose_reminder_order.xml" value="0.335" />
         <entry key="app/src/main/res/layout/item_garden.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/item_plant.xml" value="0.16893115942028986" />
         <entry key="app/src/main/res/layout/item_plant_in_bed.xml" value="0.335" />
         <entry key="app/src/main/res/layout/item_reminder.xml" value="0.25" />
         <entry key="app/src/main/res/menu/menu_bottom_navigation.xml" value="0.15729166666666666" />

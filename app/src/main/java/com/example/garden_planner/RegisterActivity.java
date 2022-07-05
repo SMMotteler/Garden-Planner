@@ -1,7 +1,5 @@
 package com.example.garden_planner;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,7 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.garden_planner.databinding.ActivityMainBinding;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.garden_planner.databinding.ActivityRegisterBinding;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -48,7 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         btCreateAccount.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 Log.i(TAG, "onClick login button");
                 String email = etEmail.getText().toString();
                 String username = etUsername.getText().toString();

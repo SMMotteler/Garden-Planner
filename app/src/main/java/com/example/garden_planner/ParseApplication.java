@@ -9,6 +9,7 @@ import com.parse.Parse;
 import com.parse.ParseObject;
 
 import android.app.Application;
+import android.util.Log;
 
 public class ParseApplication extends Application {
 

@@ -226,6 +226,7 @@ public class CreateGardenActivity extends AppCompatActivity {
                     loadingImageView.setVisibility(View.VISIBLE);
                     gettingLocationTextView.setVisibility(View.VISIBLE);
                     animationDrawable.start();
+                    animationDrawable.setFilterBitmap(false);
 
                     LocationServices.getFusedLocationProviderClient(this).requestLocationUpdates(locationRequest, new LocationCallback() {
                         @Override

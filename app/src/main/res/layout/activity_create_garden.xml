@@ -14,7 +14,8 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Garden Name"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:fontFamily="@font/stardew_valley"/>
 
     <EditText
         android:id="@+id/etGardenLocation"
@@ -22,12 +23,14 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Garden Location"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:fontFamily="@font/stardew_valley"/>
 
     <Button
         android:id="@+id/btFindLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/stardew_valley"
         android:text="Click here to set garden location as current location"/>
 
 
@@ -35,5 +38,6 @@
         android:id="@+id/btCreate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/stardew_valley"
         android:text="Create Garden" />
 </LinearLayout>

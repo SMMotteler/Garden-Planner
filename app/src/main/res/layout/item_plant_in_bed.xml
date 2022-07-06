@@ -13,6 +13,7 @@
         tools:srcCompat="@drawable/default_pic" />
 
     <TextView
+        android:fontFamily="@font/stardew_valley"
         android:id="@+id/tvPlantName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,6 +21,7 @@
         tools:text="hello! my name is Sarah" />
 
     <Button
+        android:fontFamily="@font/stardew_valley"
         android:id="@+id/btDelete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -7,10 +7,12 @@ import java.util.Date;
 
 @ParseClassName("PlantInBed")
 public class PlantInBed extends ParseObject {
-    public static final String KEY_DATE = "PlantDate";
+    public static final String KEY_DATE = "whenActuallyPlanted";
     public static final String KEY_TYPE = "PlantType";
     public static final String KEY_NAME = "ThisPlantName";
     public static final String KEY_GARDEN= "plantedInGarden";
+    public static final String KEY_SHOULD_PLANT_DATE = "whenShouldPlant";
+    public static final String KEY_HARVEST_DATE = "whenHarvest";
 
     // TODO: implement when Frost Zone API is set up
     // public Date toPlantByDate;
@@ -19,6 +21,14 @@ public class PlantInBed extends ParseObject {
     public Date getPlantDate(){return getDate(KEY_DATE);}
 
     public void setPlantDate(Date plantDate){put(KEY_DATE, plantDate);}
+
+    public Date getShouldPlantDate(){return getDate(KEY_SHOULD_PLANT_DATE);}
+
+    public void setShouldPlantDate(Date shouldPlantDate){put(KEY_SHOULD_PLANT_DATE, shouldPlantDate);}
+
+    public Date getHarvestDate(){return getDate(KEY_HARVEST_DATE);}
+
+    public void getHarvestDate(Date harvestDate){put(KEY_HARVEST_DATE, harvestDate);}
 
     public Plant getPlantType(){return (Plant)get(KEY_TYPE);}
 

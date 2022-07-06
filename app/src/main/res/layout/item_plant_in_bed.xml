@@ -15,6 +15,7 @@
         tools:srcCompat="@drawable/default_pic" />
 
     <TextView
+        android:fontFamily="@font/odin"
         android:id="@+id/tvPlantName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,6 +23,7 @@
         tools:text="hello! my name is Sarah" />
 
     <Button
+        android:fontFamily="@font/odin"
         android:id="@+id/btDelete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

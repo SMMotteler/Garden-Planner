@@ -13,6 +13,7 @@
         android:orientation="horizontal">
 
         <RadioButton
+            android:fontFamily="@font/odin"
             android:id="@+id/rbByTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -21,6 +22,7 @@
             />
 
         <RadioButton
+            android:fontFamily="@font/odin"
             android:id="@+id/rbByGarden"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

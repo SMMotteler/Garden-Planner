@@ -7,6 +7,7 @@
     tools:context=".PictureHandlerActivity">
 
     <TextView
+        android:fontFamily="@font/odin"
         android:id="@+id/tvPhotoText"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
@@ -17,6 +18,7 @@
         tools:text="Upload a photo to _" />
 
     <Button
+        android:fontFamily="@font/odin"
         android:id="@+id/btTakePhoto"
         android:layout_width="125dp"
         android:layout_height="wrap_content"
@@ -29,6 +31,7 @@
         />
 
     <Button
+        android:fontFamily="@font/odin"
         android:id="@+id/btChoosePhoto"
         android:layout_width="125dp"
         android:layout_height="wrap_content"
@@ -50,6 +53,7 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
+        android:fontFamily="@font/odin"
         android:id="@+id/tvYourPhoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -60,6 +64,7 @@
         />
 
     <Button
+        android:fontFamily="@font/odin"
         android:id="@+id/btUpload"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -70,6 +75,7 @@
         />
 
     <TextView
+        android:fontFamily="@font/odin"
         android:id="@+id/tvOr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

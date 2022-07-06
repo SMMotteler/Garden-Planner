@@ -67,6 +67,9 @@ public class GardenDetailFragment extends Fragment {
 
         tvGardenName.setText(garden.getName());
         tvGardenLocation.setText("Location: "+garden.getLocation());
+        if(garden.has("lastFrostDate")){
+            tvGardenLocation.setText("Location: "+garden.getLocation()+"\nFrost date: "+garden.getLastFrostDate());
+        }
 
         if (garden.has("photo")){
             Glide.with(getContext()).load(garden.getParseFile("photo").getUrl()).into(ivGardenImage);

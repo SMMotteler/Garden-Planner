@@ -65,7 +65,7 @@ public class CreateGardenActivity extends AppCompatActivity {
     public static final int  REQUEST_CHECK_SETTING = 1001;
     private double latitude;
     private double longitude;
-    private Date frostDate;
+    public Date frostDate;
     private GeocodingClient geocodingClient;
     private FrostDateClient frostDateClient;
 
@@ -78,6 +78,7 @@ public class CreateGardenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityCreateGardenBinding.inflate(getLayoutInflater());
         frostDateClient = new FrostDateClient();
+        // final Date frostDate;
 
         View view = binding.getRoot();
         setContentView(view);
@@ -99,6 +100,8 @@ public class CreateGardenActivity extends AppCompatActivity {
         locationRequest.setFastestInterval(2000);
 
         geocodingClient = new GeocodingClient();
+
+        frostDate = new Date();
 
         btCreate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,6 +137,12 @@ public class CreateGardenActivity extends AppCompatActivity {
 
                 Log.i("CreateGardenActivity", "lat/long: "+latitude+" "+longitude);
 
+                Garden garden = new Garden();
+                garden.setLocation(gardenLocation);
+                garden.setName(gardenName);
+                garden.setUser(ParseUser.getCurrentUser());
+                garden.setLatLong(latitude, longitude);
+
                 frostDateClient.getStations(latitude, longitude, new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Headers headers, JSON json) {
@@ -158,10 +167,22 @@ public class CreateGardenActivity extends AppCompatActivity {
                                         Date today = new Date();
                                         JSONObject lastFrostDateInfo = json.jsonArray.getJSONObject(1);
                                         String lastFrostDateDay = lastFrostDateInfo.getString("prob_50")+today.getYear();
-                                        SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyy");
-                                        frostDate = formatter.parse(lastFrostDateDay);
-                                        Log.i("FROST DATE", "this is the frost date "+frostDate.toString());
+                                        // Log.i("FROST DATE", "this is the frost date "+frostDate.toString());
                                         // return the last frost date
+                                        SimpleDateFormat formatter = new SimpleDateFormat("ddMMyy");
+                                        frostDate = formatter.parse(lastFrostDateDay);
+                                        garden.setLastFrostDate(frostDate);
+                                        garden.saveInBackground(new SaveCallback() {
+                                            @Override
+                                            public void done(ParseException e) {
+                                                if(e != null){
+                                                    Log.e("yikes", e.getMessage());
+                                                    Toast.makeText(CreateGardenActivity.this, "Error in making a garden!!", Toast.LENGTH_SHORT).show();
+                                                    return;
+                                                }
+                                                finish();
+                                            }
+                                        });
                                     } catch (JSONException | java.text.ParseException e) {
                                         Log.e("FROST DATE", e.getMessage());
                                         e.printStackTrace();
@@ -186,25 +207,7 @@ public class CreateGardenActivity extends AppCompatActivity {
                     }
                 });
 
-                Garden garden = new Garden();
-                garden.setLocation(gardenLocation);
-                garden.setName(gardenName);
-                garden.setUser(ParseUser.getCurrentUser());
-                garden.setLatLong(latitude, longitude);
-//                Log.i("frostDate", frostDate.toString());
-//                garden.setLastFrostDate(frostDate);
 
-                garden.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        if(e != null){
-                            Log.e("yikes", e.getMessage());
-                            Toast.makeText(CreateGardenActivity.this, "Error in making a garden!!", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        finish();
-                    }
-                });
             }
         });
 

@@ -80,7 +80,6 @@ public class GardenFeedAdapter extends RecyclerView.Adapter<GardenFeedAdapter.Vi
         private ImageView ivGardenImage;
         private RecyclerView rvPlants;
         private TextView tvGardenLocation;
-        private Button btDetailView;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -110,7 +109,6 @@ public class GardenFeedAdapter extends RecyclerView.Adapter<GardenFeedAdapter.Vi
             ivGardenImage = binding.ivGardenImage;
             rvPlants = binding.rvPlants;
             tvGardenLocation = binding.tvGardenLocation;
-            btDetailView = binding.btDetailView;
 
             tvGardenName.setText(garden.getName());
             tvGardenLocation.setText("Location: "+garden.getLocation());
@@ -129,16 +127,6 @@ public class GardenFeedAdapter extends RecyclerView.Adapter<GardenFeedAdapter.Vi
             rvPlants.setLayoutManager(horizontalLayoutManager);
 
             GardenMethodHelper.queryPlantInBed(somePlants, adapter, garden);
-
-            btDetailView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Log.i("click", "click");
-                    MainActivity activity = (MainActivity) context;
-                    activity.goToDetailGardenView(garden);
-
-                }
-            });
         }
 
     }

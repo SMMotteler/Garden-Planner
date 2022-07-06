@@ -19,6 +19,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
+                    android:fontFamily="@font/odin"
                     android:id="@+id/tvToDoDate"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
@@ -28,6 +29,7 @@
                     tools:text="June 20th" />
 
                 <TextView
+                    android:fontFamily="@font/odin"
                     android:id="@+id/tvGardenName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -59,6 +61,7 @@
                             tools:srcCompat="@tools:sample/avatars" />
 
                         <TextView
+                            android:fontFamily="@font/odin"
                             android:id="@+id/tvPlantName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -73,6 +76,7 @@
                     android:paddingRight="0dp">
 
                         <TextView
+                            android:fontFamily="@font/odin"
                             android:id="@+id/tvReminderTitle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -81,6 +85,7 @@
                             tools:text="Water your plants" />
 
                         <TextView
+                            android:fontFamily="@font/odin"
                             android:id="@+id/tvReminderText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

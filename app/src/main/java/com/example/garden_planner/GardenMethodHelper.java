@@ -2,16 +2,16 @@ package com.example.garden_planner;
 
 import android.app.Activity;
 import android.content.Intent;
-
 import android.util.Log;
 import android.widget.Toast;
 
-import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.garden_planner.adapters.GardenFeedAdapter;
-import com.example.garden_planner.adapters.PlantInBedAdapter;
 import com.example.garden_planner.adapters.ReminderAdapter;
 import com.example.garden_planner.models.FrostDateClient;
 import com.example.garden_planner.models.Garden;
+import com.example.garden_planner.models.Plant;
 import com.example.garden_planner.models.PlantInBed;
 import com.example.garden_planner.models.Reminder;
 import com.parse.FindCallback;
@@ -22,13 +22,8 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
-
-import okhttp3.Headers;
 
 public class GardenMethodHelper {
 
@@ -136,7 +131,7 @@ public class GardenMethodHelper {
 
     }
 
-    public static void queryPlantInBed(List<PlantInBed> plantsInTheBed, PlantInBedAdapter adapter, Garden garden){
+    public static void queryPlantInBed(List<PlantInBed> plantsInTheBed, RecyclerView.Adapter adapter, Garden garden){
         ParseQuery<PlantInBed> query = ParseQuery.getQuery(PlantInBed.class);
 
         query.whereEqualTo(PlantInBed.KEY_GARDEN, garden);
@@ -167,6 +162,35 @@ public class GardenMethodHelper {
             }
         });
 
+    }
+
+    public static List<Plant> queryPlants(){
+        List<Plant> returnPlants = new ArrayList<>();
+        ParseQuery<Plant> query = ParseQuery.getQuery(Plant.class);
+
+        query.addAscendingOrder("createdAt");
+
+        // start an asynchronous call for Plant objects
+        query.findInBackground(new FindCallback<Plant>() {
+            @Override
+            public void done(List<Plant> plants, ParseException e) {
+                // check for errors
+                if (e != null) {
+                    Log.e("Detail Activity", "Issue with getting plants", e);
+                    return;
+                }
+
+                // for debugging purposes let's print every PlantInBed name to LogCat
+                for (Plant plant : plants) {
+                    Log.i("plantinbed Query", "name: " + plant.getName());
+                }
+
+                // save garden's plantsInBed to list and notify adapter of new data
+                returnPlants.addAll(plants);
+
+            }
+        });
+    return returnPlants;
     }
 
 

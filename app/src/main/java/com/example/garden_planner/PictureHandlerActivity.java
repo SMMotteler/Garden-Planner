@@ -1,9 +1,5 @@
 package com.example.garden_planner;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.FileProvider;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -18,8 +14,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
+
 import com.bumptech.glide.Glide;
-import com.example.garden_planner.databinding.ActivityMainBinding;
 import com.example.garden_planner.databinding.ActivityPictureHandlerBinding;
 import com.example.garden_planner.models.BitmapScaler;
 import com.parse.ParseException;
@@ -76,14 +75,14 @@ public class PictureHandlerActivity extends AppCompatActivity {
 
         btTakePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 launchCamera();
             }
         });
 
         btChoosePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 getPictures();
             }
         });
@@ -224,7 +223,7 @@ public class PictureHandlerActivity extends AppCompatActivity {
 
             btUpload.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View view) {
                     ParseUser.getCurrentUser().put("profilePic", new ParseFile(resizedFile));
                     ParseUser.getCurrentUser().saveInBackground(new SaveCallback() {
                         @Override

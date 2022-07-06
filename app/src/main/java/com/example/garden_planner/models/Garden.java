@@ -2,9 +2,9 @@ package com.example.garden_planner.models;
 
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
-import com.parse.ParseGeoPoint;
 
 import java.util.Date;
 import java.util.List;

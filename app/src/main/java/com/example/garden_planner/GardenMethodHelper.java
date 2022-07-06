@@ -22,7 +22,10 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class GardenMethodHelper {
@@ -193,6 +196,15 @@ public class GardenMethodHelper {
     return returnPlants;
     }
 
+    public static LocalDate convertToLocalDateViaInstant(Date dateToConvert) {
+        return dateToConvert.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+    }
+
+    public static Date convertToDate(LocalDate localDateToConvert){
+        return Date.from(localDateToConvert.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    }
 
 }
 

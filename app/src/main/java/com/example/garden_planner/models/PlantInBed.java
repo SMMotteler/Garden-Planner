@@ -1,8 +1,10 @@
 package com.example.garden_planner.models;
 
+import com.example.garden_planner.GardenMethodHelper;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @ParseClassName("PlantInBed")
@@ -20,15 +22,25 @@ public class PlantInBed extends ParseObject {
 
     public Date getPlantDate(){return getDate(KEY_DATE);}
 
-    public void setPlantDate(Date plantDate){put(KEY_DATE, plantDate);}
+    public void setPlantDate(Date plantDate){
+        put(KEY_DATE, plantDate);
+    }
 
     public Date getShouldPlantDate(){return getDate(KEY_SHOULD_PLANT_DATE);}
 
-    public void setShouldPlantDate(Date shouldPlantDate){put(KEY_SHOULD_PLANT_DATE, shouldPlantDate);}
+    public void setShouldPlantDate(Garden garden){
+        LocalDate plantDate = GardenMethodHelper.convertToLocalDateViaInstant(garden.getLastFrostDate());
+        plantDate.plusWeeks(getPlantType().getPlantTime());
+        put(KEY_SHOULD_PLANT_DATE, GardenMethodHelper.convertToDate(plantDate));
+    }
 
     public Date getHarvestDate(){return getDate(KEY_HARVEST_DATE);}
 
-    public void getHarvestDate(Date harvestDate){put(KEY_HARVEST_DATE, harvestDate);}
+    public void getHarvestDate(Date plantDate){
+        LocalDate harvestDate = GardenMethodHelper.convertToLocalDateViaInstant(plantDate);
+        harvestDate.plusWeeks(getPlantType().getHarvestTime());
+        put(KEY_HARVEST_DATE, GardenMethodHelper.convertToDate(harvestDate));
+    }
 
     public Plant getPlantType(){return (Plant)get(KEY_TYPE);}
 

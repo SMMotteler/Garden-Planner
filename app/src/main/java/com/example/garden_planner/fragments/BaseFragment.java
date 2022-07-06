@@ -9,8 +9,6 @@ import android.util.Log;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
-import com.parse.BuildConfig;
-
 import java.io.File;
 
 public class BaseFragment extends Fragment {

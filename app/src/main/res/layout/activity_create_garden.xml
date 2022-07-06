@@ -26,6 +26,22 @@
         android:inputType="textPersonName"
         android:fontFamily="@font/stardew_valley"/>
 
+    <ImageView
+        android:id="@+id/LoadingImageView"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center"
+        android:padding="10dp"
+        app:srcCompat="@drawable/loading_animation" />
+
+    <TextView
+        android:id="@+id/GettingLocationTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Getting location..."
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
     <Button
         android:id="@+id/btFindLocation"
         android:layout_width="match_parent"

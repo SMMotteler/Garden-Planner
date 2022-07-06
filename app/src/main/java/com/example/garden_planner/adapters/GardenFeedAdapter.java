@@ -17,10 +17,8 @@ import com.bumptech.glide.Glide;
 import com.example.garden_planner.GardenMethodHelper;
 import com.example.garden_planner.MainActivity;
 import com.example.garden_planner.databinding.ItemGardenBinding;
-import com.example.garden_planner.databinding.ItemReminderBinding;
 import com.example.garden_planner.models.Garden;
 import com.example.garden_planner.models.PlantInBed;
-import com.example.garden_planner.models.Reminder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,7 +88,7 @@ public class GardenFeedAdapter extends RecyclerView.Adapter<GardenFeedAdapter.Vi
         }
 
         @Override
-        public void onClick(View v) {
+        public void onClick(View view) {
             Log.i("click", "click");
             int position = getAdapterPosition();
             if (position != RecyclerView.NO_POSITION) {
@@ -129,7 +127,6 @@ public class GardenFeedAdapter extends RecyclerView.Adapter<GardenFeedAdapter.Vi
             rvPlants.setLayoutManager(horizontalLayoutManager);
 
             GardenMethodHelper.queryPlantInBed(somePlants, adapter, garden);
-
         }
 
     }

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
@@ -12,21 +11,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.example.garden_planner.databinding.ActivityEditGardenBinding;
 import com.example.garden_planner.databinding.ActivityMainBinding;
 import com.example.garden_planner.fragments.GardenDetailFragment;
-import com.example.garden_planner.fragments.RemindersFragment;
 import com.example.garden_planner.fragments.GardenFeedFragment;
 import com.example.garden_planner.fragments.ProfileFragment;
+import com.example.garden_planner.fragments.RemindersFragment;
 import com.example.garden_planner.models.Garden;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.LogOutCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
-
-import org.json.JSONException;
-
-import java.io.IOException;
 
 
 public class MainActivity extends AppCompatActivity {

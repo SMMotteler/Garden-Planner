@@ -1,16 +1,12 @@
 package com.example.garden_planner;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.AnimationDrawable;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,7 +15,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.garden_planner.databinding.ActivityCreateGardenBinding;
@@ -38,7 +41,6 @@ import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.parse.ParseException;
-import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -58,12 +60,16 @@ public class CreateGardenActivity extends AppCompatActivity {
     private EditText etGardenLocation;
     private Button btFindLocation;
     private Button btCreate;
+    private ImageView loadingImageView;
+    private TextView gettingLocationTextView;
     public static final int  REQUEST_CHECK_SETTING = 1001;
     private double latitude;
     private double longitude;
     public Date frostDate;
     private GeocodingClient geocodingClient;
     private FrostDateClient frostDateClient;
+
+    AnimationDrawable animationDrawable;
 
     LocationRequest locationRequest;
 
@@ -81,6 +87,12 @@ public class CreateGardenActivity extends AppCompatActivity {
         etGardenLocation = binding.etGardenLocation;
         btFindLocation = binding.btFindLocation;
         btCreate = binding.btCreate;
+        gettingLocationTextView = binding.GettingLocationTextView;
+        loadingImageView = binding.LoadingImageView;
+        animationDrawable = (AnimationDrawable)loadingImageView.getDrawable();
+
+        // while not fetching location, set visibility of loadingImageView and gettingLocationTextView to GONE
+        makeLoadingGone();
 
         locationRequest = LocationRequest.create();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
@@ -93,7 +105,7 @@ public class CreateGardenActivity extends AppCompatActivity {
 
         btCreate.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 String gardenName = etGardenName.getText().toString();
                 String gardenLocation = etGardenLocation.getText().toString();
 
@@ -201,7 +213,7 @@ public class CreateGardenActivity extends AppCompatActivity {
 
         btFindLocation.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 findLocation();
             }
         });
@@ -214,6 +226,10 @@ public class CreateGardenActivity extends AppCompatActivity {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
                 if (isGPSEnabled(this)){
+                    loadingImageView.setVisibility(View.VISIBLE);
+                    gettingLocationTextView.setVisibility(View.VISIBLE);
+                    animationDrawable.start();
+                    animationDrawable.setFilterBitmap(false);
 
                     LocationServices.getFusedLocationProviderClient(this).requestLocationUpdates(locationRequest, new LocationCallback() {
                         @Override
@@ -248,6 +264,7 @@ public class CreateGardenActivity extends AppCompatActivity {
                                         Log.e("create garden", response, throwable);
                                     }
                                 });
+                                makeLoadingGone();
                             }
                         }
                     }, Looper.getMainLooper());
@@ -326,8 +343,10 @@ public class CreateGardenActivity extends AppCompatActivity {
     }
 
     // information for this method is from https://github.com/waldoj/frostline
-    public void initializeGardenInformation(double latitude, double longitude, JsonHttpResponseHandler handler) throws JSONException, IOException {
-
+    public void makeLoadingGone(){
+        loadingImageView.setVisibility(View.GONE);
+        gettingLocationTextView.setVisibility(View.GONE);
+        animationDrawable.stop();
     }
 
 }

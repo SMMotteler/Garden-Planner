@@ -21,7 +21,7 @@ public class ParseApplication extends Application {
         ParseObject.registerSubclass(Garden.class);
         ParseObject.registerSubclass(Reminder.class);
         ParseObject.registerSubclass(Plant.class);
-        ParseObject.registerSubclass(User.class);
+        // ParseObject.registerSubclass(User.class);
         ParseObject.registerSubclass(PlantInBed.class);
 
         Parse.initialize(new Parse.Configuration.Builder(this)

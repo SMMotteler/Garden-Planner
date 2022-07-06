@@ -16,12 +16,16 @@ import com.example.garden_planner.databinding.ActivityPlantAdditionBinding;
 import com.example.garden_planner.models.Garden;
 import com.example.garden_planner.models.Plant;
 import com.example.garden_planner.models.PlantInBed;
+import com.example.garden_planner.models.Reminder;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class PlantAdditionActivity extends AppCompatActivity {
@@ -72,18 +76,46 @@ public class PlantAdditionActivity extends AppCompatActivity {
                 plantInBed.setPlantType(plantType);
                 plantInBed.setDisplayName(name);
                 plantInBed.setGarden(garden);
+                plantInBed.setShouldPlantDate(garden.getLastFrostDate());
 
                 plantInBed.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
                         if(e != null){
                             Log.e("yikes", e.getMessage());
-                            Toast.makeText(PlantAdditionActivity.this, "Error in making the plant!!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(PlantAdditionActivity.this, "Error in making the planting reminder!", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }
+                });
+
+                // create a planting reminder for plantInBed
+                Reminder plantReminder = new Reminder();
+                Date startPlantWeek = plantInBed.getShouldPlantDate();
+                Date endPlantWeek = GardenMethodHelper.convertToDate(
+                        GardenMethodHelper.convertToLocalDateViaInstant(
+                                startPlantWeek).plusWeeks(1));
+
+                plantReminder.setReminderStart(startPlantWeek);
+                plantReminder.setReminderEnd(endPlantWeek);
+                plantReminder.setReminderTitle("Plant "+name);
+                plantReminder.setReminderMessage(plantType.getPlantAdvice());
+                plantReminder.setRemindWhat(garden);
+                plantReminder.setRemindWhichPlant(plantInBed);
+                plantReminder.setRemindWho(ParseUser.getCurrentUser());
+
+                plantReminder.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if(e != null){
+                            Log.e("yikes", e.getMessage());
+                            Toast.makeText(PlantAdditionActivity.this, "Error in making the planting reminder!", Toast.LENGTH_SHORT).show();
                             return;
                         }
                         finish();
                     }
                 });
+
             }
         });
     }

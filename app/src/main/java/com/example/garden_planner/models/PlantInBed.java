@@ -28,15 +28,15 @@ public class PlantInBed extends ParseObject {
 
     public Date getShouldPlantDate(){return getDate(KEY_SHOULD_PLANT_DATE);}
 
-    public void setShouldPlantDate(Garden garden){
-        LocalDate plantDate = GardenMethodHelper.convertToLocalDateViaInstant(garden.getLastFrostDate());
+    public void setShouldPlantDate(Date frostDate){
+        LocalDate plantDate = GardenMethodHelper.convertToLocalDateViaInstant(frostDate);
         plantDate.plusWeeks(getPlantType().getPlantTime());
         put(KEY_SHOULD_PLANT_DATE, GardenMethodHelper.convertToDate(plantDate));
     }
 
     public Date getHarvestDate(){return getDate(KEY_HARVEST_DATE);}
 
-    public void getHarvestDate(Date plantDate){
+    public void setHarvestDate(Date plantDate){
         LocalDate harvestDate = GardenMethodHelper.convertToLocalDateViaInstant(plantDate);
         harvestDate.plusWeeks(getPlantType().getHarvestTime());
         put(KEY_HARVEST_DATE, GardenMethodHelper.convertToDate(harvestDate));

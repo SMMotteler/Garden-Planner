@@ -12,7 +12,7 @@
     tools:layout_editor_absoluteY="69dp">
 
     <EditText
-        android:fontFamily="@font/stardew_valley"
+        android:fontFamily="@font/odin"
         android:id="@+id/etEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvMessage" />
 
     <EditText
-        android:fontFamily="@font/stardew_valley"
+        android:fontFamily="@font/odin"
         android:id="@+id/etUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
         app:layout_constraintTop_toBottomOf="@+id/etEmail" />
 
     <Button
-        android:fontFamily="@font/stardew_valley"
+        android:fontFamily="@font/odin"
         android:id="@+id/btCreateAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -63,7 +63,7 @@
         app:layout_constraintTop_toBottomOf="@+id/etConfirmPassword" />
 
     <EditText
-        android:fontFamily="@font/stardew_valley"
+        android:fontFamily="@font/odin"
         android:id="@+id/etPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
         tools:text="Password" />
 
     <EditText
-        android:fontFamily="@font/stardew_valley"
+        android:fontFamily="@font/odin"
         android:id="@+id/etConfirmPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -101,7 +101,7 @@
         tools:text="Password" />
 
     <ImageView
-        android:fontFamily="@font/stardew_valley"
+        android:fontFamily="@font/odin"
         android:id="@+id/ivLogo"
         android:layout_width="211dp"
         android:layout_height="75dp"
@@ -113,7 +113,7 @@
         app:srcCompat="@drawable/main_logo" />
 
     <TextView
-        android:fontFamily="@font/stardew_valley"
+        android:fontFamily="@font/odin"
         android:id="@+id/tvMessage"
         android:layout_width="211dp"
         android:layout_height="wrap_content"

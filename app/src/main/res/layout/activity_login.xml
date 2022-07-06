@@ -8,7 +8,7 @@
     android:background="@drawable/login_register_gradient">
 
     <EditText
-        android:fontFamily="@font/stardew_valley"
+        android:fontFamily="@font/odin"
         android:id="@+id/etUsername"
         android:backgroundTint="@color/white"
         android:textColor="@color/white"
@@ -25,7 +25,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvLogin" />
 
     <EditText
-        android:fontFamily="@font/stardew_valley"
+        android:fontFamily="@font/odin"
         android:id="@+id/etPassword"
         android:backgroundTint="@color/white"
         android:textColor="@color/white"
@@ -42,7 +42,7 @@
         app:layout_constraintTop_toBottomOf="@+id/etUsername" />
 
     <TextView
-        android:fontFamily="@font/stardew_valley"
+        android:fontFamily="@font/odin"
         android:textColor="@color/white"
         android:id="@+id/tvLogin"
         android:layout_width="wrap_content"
@@ -55,7 +55,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:fontFamily="@font/stardew_valley"
+        android:fontFamily="@font/odin"
         android:id="@+id/btLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
         app:layout_constraintTop_toBottomOf="@+id/etPassword" />
 
     <Button
-        android:fontFamily="@font/stardew_valley"
+        android:fontFamily="@font/odin"
         android:id="@+id/btRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

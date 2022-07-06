@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:fontFamily="@font/stardew_valley"
+        android:fontFamily="@font/odin"
         android:id="@+id/btNewGarden"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

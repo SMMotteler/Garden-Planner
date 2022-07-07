@@ -5,8 +5,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -77,6 +79,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
         private TextView tvPlantName;
         private TextView tvReminderTitle;
         private TextView tvReminderText;
+        private Button completeReminderButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -103,7 +106,8 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
             tvPlantName = binding.tvPlantName;
             tvReminderTitle = binding.tvReminderTitle;
             tvReminderText = binding.tvReminderText;
-
+            completeReminderButton = binding.completeReminderButton;
+            
             Log.i(TAG, "binding "+reminder.getReminderTitle());
 
             tvGardenName.setText(reminder.getRemindWhat().getName());
@@ -129,6 +133,12 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
 
             tvReminderText.setText(reminder.getReminderMessage());
 
+            completeReminderButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context, "complete button clicked!", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
 
     }

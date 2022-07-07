@@ -91,7 +91,15 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             tools:text="Water at the root level, not the leaves, to avoid mildew" />
+                        <Button
+                            android:id="@+id/completeReminderButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Complete Reminder" />
                 </LinearLayout>
+
+
 
         </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

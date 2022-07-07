@@ -20,6 +20,7 @@ import com.example.garden_planner.models.Garden;
 import com.example.garden_planner.models.Plant;
 import com.example.garden_planner.models.PlantInBed;
 import com.example.garden_planner.models.Reminder;
+import com.parse.ParseException;
 
 import java.util.List;
 
@@ -135,8 +136,15 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
 
             completeReminderButton.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-                    Toast.makeText(context, "complete button clicked!", Toast.LENGTH_SHORT).show();
+                public void onClick(View view) {
+                    try {
+                        reminder.delete();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    reminders.remove(reminder);
+                    notifyDataSetChanged();
+                    Toast.makeText(context, "reminder completed!", Toast.LENGTH_SHORT).show();
                 }
             });
         }

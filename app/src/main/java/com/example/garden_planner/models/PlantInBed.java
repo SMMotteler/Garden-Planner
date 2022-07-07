@@ -17,10 +17,6 @@ public class PlantInBed extends ParseObject {
     public static final String KEY_SHOULD_HARVEST_DATE = "whenShouldHarvest";
     public static final String KEY_HARVEST_DATE = "whenActuallyHarvested";
 
-    // TODO: implement when Frost Zone API is set up
-    // public Date toPlantByDate;
-    // public Date harvestDate;
-
     public Date getPlantDate(){return getDate(KEY_PLANT_DATE);}
 
     public void setPlantDate(Date plantDate){

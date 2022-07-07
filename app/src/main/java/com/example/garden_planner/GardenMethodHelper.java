@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.garden_planner.adapters.GardenFeedAdapter;
 import com.example.garden_planner.adapters.ReminderAdapter;
+import com.example.garden_planner.fragments.RemindersFragment;
 import com.example.garden_planner.models.FrostDateClient;
 import com.example.garden_planner.models.Garden;
 import com.example.garden_planner.models.Plant;
@@ -27,6 +28,8 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.annotation.Nullable;
 
 public class GardenMethodHelper {
 
@@ -91,7 +94,7 @@ public class GardenMethodHelper {
 
     }
 
-    public static void queryReminders(List<Reminder> userReminders, ReminderAdapter adapter, String key, ParseObject object, Boolean byTime){
+    public static void queryReminders(List<Reminder> userReminders, @Nullable ReminderAdapter adapter, String key, ParseObject object, Boolean byTime){
         ParseQuery<Reminder> query = ParseQuery.getQuery(Reminder.class);
 
         query.whereEqualTo(key, object);
@@ -128,7 +131,9 @@ public class GardenMethodHelper {
                 userReminders.clear();
                 userReminders.addAll(reminders);
 
-                adapter.notifyDataSetChanged();
+                if(adapter != null) {
+                    adapter.notifyDataSetChanged();
+                }
             }
         });
 

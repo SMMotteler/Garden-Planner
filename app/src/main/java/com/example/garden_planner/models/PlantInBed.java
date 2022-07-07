@@ -9,21 +9,22 @@ import java.util.Date;
 
 @ParseClassName("PlantInBed")
 public class PlantInBed extends ParseObject {
-    public static final String KEY_DATE = "whenActuallyPlanted";
+    public static final String KEY_PLANT_DATE = "whenActuallyPlanted";
     public static final String KEY_TYPE = "PlantType";
     public static final String KEY_NAME = "ThisPlantName";
     public static final String KEY_GARDEN= "plantedInGarden";
     public static final String KEY_SHOULD_PLANT_DATE = "whenShouldPlant";
-    public static final String KEY_HARVEST_DATE = "whenHarvest";
+    public static final String KEY_SHOULD_HARVEST_DATE = "whenShouldHarvest";
+    public static final String KEY_HARVEST_DATE = "whenActuallyHarvested";
 
     // TODO: implement when Frost Zone API is set up
     // public Date toPlantByDate;
     // public Date harvestDate;
 
-    public Date getPlantDate(){return getDate(KEY_DATE);}
+    public Date getPlantDate(){return getDate(KEY_PLANT_DATE);}
 
     public void setPlantDate(Date plantDate){
-        put(KEY_DATE, plantDate);
+        put(KEY_PLANT_DATE, plantDate);
     }
 
     public Date getShouldPlantDate(){return getDate(KEY_SHOULD_PLANT_DATE);}
@@ -36,10 +37,14 @@ public class PlantInBed extends ParseObject {
 
     public Date getHarvestDate(){return getDate(KEY_HARVEST_DATE);}
 
-    public void setHarvestDate(Date plantDate){
+    public void setHarvestDate(Date harvestDate){put(KEY_HARVEST_DATE, harvestDate);}
+
+    public Date getShouldHarvestDate(){return getDate(KEY_SHOULD_HARVEST_DATE);}
+
+    public void setShouldHarvestDate(Date plantDate){
         LocalDate harvestDate = GardenMethodHelper.convertToLocalDateViaInstant(plantDate);
         harvestDate.plusWeeks(getPlantType().getHarvestTime());
-        put(KEY_HARVEST_DATE, GardenMethodHelper.convertToDate(harvestDate));
+        put(KEY_SHOULD_HARVEST_DATE, GardenMethodHelper.convertToDate(harvestDate));
     }
 
     public Plant getPlantType(){return (Plant)get(KEY_TYPE);}

@@ -13,7 +13,7 @@
     android:orientation="vertical">
 
         <TextView
-            android:fontFamily="@font/odin"
+
             android:id="@+id/tvGardenName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -43,19 +43,19 @@
         android:id="@+id/btEditGarden"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/odin"
+
         android:text="Edit Garden" />
 
     <TextView
         android:id="@+id/tvGardenLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/odin"
+
         android:textSize="16sp"
         tools:text="location: " />
 
     <TextView
-        android:fontFamily="@font/odin"
+
         android:id="@+id/tvReminderTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

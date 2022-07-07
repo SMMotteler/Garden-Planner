@@ -59,7 +59,7 @@ public class RemindersFragment extends Fragment {
         rbByTime = binding.rbByTime;
 
         userReminders = new ArrayList<>();
-        adapter = new ReminderAdapter(getContext(), userReminders);
+        adapter = new ReminderAdapter(getContext(), userReminders, rvReminders);
         adapter.setHasStableIds(true);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -77,7 +77,7 @@ public class RemindersFragment extends Fragment {
                 // Is the button now checked?
                 boolean checked = rbByTime.isChecked();
                 userReminders = new ArrayList<>();
-                adapter = new ReminderAdapter(getContext(), userReminders);
+                adapter = new ReminderAdapter(getContext(), userReminders, rvReminders);
                 rvReminders.setAdapter(adapter);
                 rvReminders.setLayoutManager(linearLayoutManager);
 

@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.garden_planner.GardenMethodHelper;
 import com.example.garden_planner.MainActivity;
 import com.example.garden_planner.databinding.ItemReminderBinding;
 import com.example.garden_planner.models.Garden;
@@ -29,13 +30,15 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
     public static final String TAG = "ReminderAdapter";
     private Context context;
     private List<Reminder> reminders;
+    private RecyclerView recyclerView;
 
     ItemReminderBinding binding;
 
-    public ReminderAdapter(Context context, List<Reminder> reminders){
+    public ReminderAdapter(Context context, List<Reminder> reminders, RecyclerView recyclerView){
         Log.i(TAG, "making ReminderAdapter");
         this.context = context;
         this.reminders = reminders;
+        this.recyclerView = recyclerView;
     }
 
     @NonNull
@@ -143,7 +146,9 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
                         e.printStackTrace();
                     }
                     reminders.remove(reminder);
-                    notifyDataSetChanged();
+                    ReminderAdapter newAdapter = new ReminderAdapter(context, reminders, recyclerView);
+                    recyclerView.setAdapter(newAdapter);
+                    // notifyDataSetChanged();
                     Toast.makeText(context, "reminder completed!", Toast.LENGTH_SHORT).show();
                 }
             });

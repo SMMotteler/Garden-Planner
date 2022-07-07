@@ -35,13 +35,22 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvPlants"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <Button
+        android:id="@+id/btEditGarden"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/odin"
+        android:text="Edit Garden" />
 
     <TextView
-        android:fontFamily="@font/odin"
         android:id="@+id/tvGardenLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/odin"
         android:textSize="16sp"
         tools:text="location: " />
 
@@ -58,13 +67,6 @@
         android:id="@+id/rvReminders"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-
-    <Button
-        android:fontFamily="@font/odin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btEditGarden"
-        android:text="Edit Garden"/>
 
 
 </LinearLayout>

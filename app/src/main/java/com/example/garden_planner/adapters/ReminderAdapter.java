@@ -16,13 +16,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.garden_planner.GardenMethodHelper;
 import com.example.garden_planner.MainActivity;
+import com.example.garden_planner.PlantAdditionActivity;
 import com.example.garden_planner.databinding.ItemReminderBinding;
 import com.example.garden_planner.models.Garden;
 import com.example.garden_planner.models.Plant;
 import com.example.garden_planner.models.PlantInBed;
 import com.example.garden_planner.models.Reminder;
 import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHolder> {
@@ -140,14 +145,51 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
             completeReminderButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    // create a harvest reminder if the reminder completed is a planting reminder
+                    if(reminder.getReminderType().equals("plant")){
+                        PlantInBed plantInBed = reminder.getRemindWhichPlant();
+                        plantInBed.setPlantDate(new Date());
+                        plantInBed.setShouldHarvestDate(GardenMethodHelper.convertToDate(
+                                GardenMethodHelper.convertToLocalDateViaInstant(
+                                        plantInBed.getPlantDate())
+                                        .plusWeeks(plantInBed.getPlantType().getHarvestTime())));
+
+                        Reminder harvestReminder = new Reminder();
+                        Date startHarvestWeek = plantInBed.getShouldHarvestDate();
+                        Date endHarvestWeek = GardenMethodHelper.convertToDate(
+                                GardenMethodHelper.convertToLocalDateViaInstant(
+                                        startHarvestWeek).plusWeeks(1));
+
+                        harvestReminder.setReminderStart(startHarvestWeek);
+                        harvestReminder.setReminderEnd(endHarvestWeek);
+                        harvestReminder.setReminderTitle("Harvest "+ plantInBed.getDisplayName());
+                        harvestReminder.setReminderMessage(plantInBed.getPlantType().getHarvestAdvice());
+                        harvestReminder.setRemindWhat(plantInBed.getGarden());
+                        harvestReminder.setRemindWhichPlant(plantInBed);
+                        harvestReminder.setRemindWho(ParseUser.getCurrentUser());
+                        harvestReminder.setReminderType("harvest");
+
+                        // reminders.add(harvestReminder);
+
+                        try {
+                            harvestReminder.save();
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    // delete the completed reminder
                     try {
                         reminder.delete();
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
-                    reminders.remove(reminder);
+
+                    // reminders.remove(reminder);
+                    reminders = new ArrayList<>();
                     ReminderAdapter newAdapter = new ReminderAdapter(context, reminders, recyclerView);
                     recyclerView.setAdapter(newAdapter);
+                    GardenMethodHelper.queryReminders(reminders, newAdapter, Reminder.KEY_REMIND_WHO, ParseUser.getCurrentUser(), true);
                     // notifyDataSetChanged();
                     Toast.makeText(context, "reminder completed!", Toast.LENGTH_SHORT).show();
                 }

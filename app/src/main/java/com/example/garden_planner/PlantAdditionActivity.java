@@ -76,7 +76,9 @@ public class PlantAdditionActivity extends AppCompatActivity {
                 plantInBed.setPlantType(plantType);
                 plantInBed.setDisplayName(name);
                 plantInBed.setGarden(garden);
-                plantInBed.setShouldPlantDate(garden.getLastFrostDate());
+                plantInBed.setShouldPlantDate(GardenMethodHelper.convertToDate(
+                        GardenMethodHelper.convertToLocalDateViaInstant(garden.getLastFrostDate())
+                                .plusWeeks(plantType.getPlantTime())));
 
                 plantInBed.saveInBackground(new SaveCallback() {
                     @Override
@@ -103,6 +105,7 @@ public class PlantAdditionActivity extends AppCompatActivity {
                 plantReminder.setRemindWhat(garden);
                 plantReminder.setRemindWhichPlant(plantInBed);
                 plantReminder.setRemindWho(ParseUser.getCurrentUser());
+                plantReminder.setReminderType("plant");
 
                 plantReminder.saveInBackground(new SaveCallback() {
                     @Override

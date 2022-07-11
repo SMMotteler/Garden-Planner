@@ -91,6 +91,12 @@ public class ProfileFragment extends BaseFragment {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Glide.with(getContext()).load(GardenMethodHelper.profilePic(user)).transform(new CircleCrop()).into(ivProfilePic);
+    }
+
     private void goLoginActivity() {
         MainActivity activity = (MainActivity)getContext();
         activity.performLogout();

@@ -51,6 +51,7 @@ public class GardenMethodHelper {
                     return;
                 }
                 goMainActivity(activity);
+                activity.finish();
             }
         });
     }

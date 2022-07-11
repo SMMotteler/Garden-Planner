@@ -52,7 +52,7 @@ public class RemindersFragment extends Fragment {
         rvReminders = binding.rvReminders;
 
         userReminders = new ArrayList<>();
-        adapter = new ReminderAdapter(getContext(), userReminders, rvReminders);
+        adapter = new ReminderAdapter(getContext(), userReminders, rvReminders, Reminder.KEY_REMIND_WHO, ParseUser.getCurrentUser());
         adapter.setHasStableIds(true);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());

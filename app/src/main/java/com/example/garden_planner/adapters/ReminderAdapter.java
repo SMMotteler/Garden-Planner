@@ -23,6 +23,7 @@ import com.example.garden_planner.models.Plant;
 import com.example.garden_planner.models.PlantInBed;
 import com.example.garden_planner.models.Reminder;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -36,14 +37,18 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
     private Context context;
     private List<Reminder> reminders;
     private RecyclerView recyclerView;
+    private ParseObject whatQueryBy;
+    private String key;
 
     ItemReminderBinding binding;
 
-    public ReminderAdapter(Context context, List<Reminder> reminders, RecyclerView recyclerView) {
+    public ReminderAdapter(Context context, List<Reminder> reminders, RecyclerView recyclerView, String key, ParseObject whatQueryBy) {
         Log.i(TAG, "making ReminderAdapter");
         this.context = context;
         this.reminders = reminders;
         this.recyclerView = recyclerView;
+        this.key = key;
+        this.whatQueryBy = whatQueryBy;
     }
 
     @NonNull
@@ -183,9 +188,9 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
 
                     // reminders.remove(reminder);
                     reminders = new ArrayList<>();
-                    ReminderAdapter newAdapter = new ReminderAdapter(context, reminders, recyclerView);
+                    ReminderAdapter newAdapter = new ReminderAdapter(context, reminders, recyclerView, key, whatQueryBy);
                     recyclerView.setAdapter(newAdapter);
-                    GardenMethodHelper.queryReminders(reminders, newAdapter, Reminder.KEY_REMIND_WHO, ParseUser.getCurrentUser());
+                    GardenMethodHelper.queryReminders(reminders, newAdapter, key, whatQueryBy);
                     // notifyDataSetChanged();
                     Toast.makeText(context, "reminder completed!", Toast.LENGTH_SHORT).show();
                 }

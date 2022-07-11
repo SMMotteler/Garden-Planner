@@ -91,7 +91,7 @@ public class GardenDetailFragment extends Fragment {
         rvReminders = binding.rvReminders;
 
         userReminders = new ArrayList<>();
-        reminderAdapter = new ReminderAdapter(getContext(), userReminders, rvReminders);
+        reminderAdapter = new ReminderAdapter(getContext(), userReminders, rvReminders, Reminder.KEY_REMIND_WHAT, garden);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
 

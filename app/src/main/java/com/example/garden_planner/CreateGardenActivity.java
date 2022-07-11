@@ -181,6 +181,10 @@ public class CreateGardenActivity extends AppCompatActivity {
                                                     return;
                                                 }
                                                 finish();
+                                                // TODO: I want to go from creating the garden to a detailview of that garden,
+                                                //  but it's giving me a null pointer exception
+                                                // MainActivity mainActivity = (MainActivity) getParent();
+                                                // mainActivity.goToDetailGardenView(garden);
                                             }
                                         });
                                     } catch (JSONException | java.text.ParseException e) {

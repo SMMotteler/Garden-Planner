@@ -4,32 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/teal_200">
-    <RadioGroup
-        android:id="@+id/rdReminderOrder"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:orientation="horizontal">
-
-        <RadioButton
-
-            android:id="@+id/rbByTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sort By Time"
-            android:paddingRight="40dp"
-            />
-
-        <RadioButton
-
-            android:id="@+id/rbByGarden"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sort by Garden"
-            />
-
-    </RadioGroup>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvReminders"
@@ -39,7 +13,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rdReminderOrder"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

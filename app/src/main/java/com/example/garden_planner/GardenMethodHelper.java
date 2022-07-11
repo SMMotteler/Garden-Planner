@@ -94,16 +94,12 @@ public class GardenMethodHelper {
 
     }
 
-    public static void queryReminders(List<Reminder> userReminders, @Nullable ReminderAdapter adapter, String key, ParseObject object, Boolean byTime){
+    public static void queryReminders(List<Reminder> userReminders, @Nullable ReminderAdapter adapter, String key, ParseObject object){
         ParseQuery<Reminder> query = ParseQuery.getQuery(Reminder.class);
 
         query.whereEqualTo(key, object);
-        if(byTime){
-            query.addAscendingOrder(Reminder.KEY_REMINDER_START);
-        }
-        else{
-            query.addAscendingOrder(Reminder.KEY_REMIND_WHAT);
-        }
+        query.addAscendingOrder(Reminder.KEY_REMINDER_START);
+
         query.include(Reminder.KEY_REMINDER_MESSAGE);
         query.include(Reminder.KEY_REMINDER_TITLE);
         query.include(Reminder.KEY_REMINDER_START);

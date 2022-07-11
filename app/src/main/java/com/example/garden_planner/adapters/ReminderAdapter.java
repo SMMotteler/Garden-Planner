@@ -39,7 +39,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
 
     ItemReminderBinding binding;
 
-    public ReminderAdapter(Context context, List<Reminder> reminders, RecyclerView recyclerView){
+    public ReminderAdapter(Context context, List<Reminder> reminders, RecyclerView recyclerView) {
         Log.i(TAG, "making ReminderAdapter");
         this.context = context;
         this.reminders = reminders;
@@ -51,7 +51,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
     public ReminderAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Log.i(TAG, "onCreateViewHolder ");
 
-        binding = ItemReminderBinding.inflate( LayoutInflater.from(context), parent, false);
+        binding = ItemReminderBinding.inflate(LayoutInflater.from(context), parent, false);
         View view = binding.getRoot();
 
         return new ViewHolder(view);
@@ -61,7 +61,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
     public void onBindViewHolder(@NonNull ReminderAdapter.ViewHolder holder, int position) {
         Log.i(TAG, "onBindViewHolder " + position);
         Reminder reminder = reminders.get(position);
-        Log.i(TAG, "reminder "+reminder.getReminderTitle());
+        Log.i(TAG, "reminder " + reminder.getReminderTitle());
         holder.bind(reminder);
     }
 
@@ -103,12 +103,11 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
                 Garden garden = reminder.getRemindWhat();
                 MainActivity activity = (MainActivity) context;
                 activity.goToDetailGardenView(garden);
-                // TODO: go to the detail view of garden
             }
         }
 
-        public void bind(Reminder reminder){
-            Log.i(TAG, "binding "+reminder.getReminderTitle());
+        public void bind(Reminder reminder) {
+            Log.i(TAG, "binding " + reminder.getReminderTitle());
             tvGardenName = binding.tvGardenName;
             tvToDoDate = binding.tvToDoDate;
             ivPlantPic = binding.ivPlantPic;
@@ -116,21 +115,20 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
             tvReminderTitle = binding.tvReminderTitle;
             tvReminderText = binding.tvReminderText;
             completeReminderButton = binding.completeReminderButton;
-            
-            Log.i(TAG, "binding "+reminder.getReminderTitle());
+
+            Log.i(TAG, "binding " + reminder.getReminderTitle());
 
             tvGardenName.setText(reminder.getRemindWhat().getName());
 
-            if (reminder.getReminderStart().equals(reminder.getReminderEnd())){
+            if (reminder.getReminderStart().equals(reminder.getReminderEnd())) {
                 tvToDoDate.setText(reminder.getReminderStart().toString());
-            }
-            else {
+            } else {
                 tvToDoDate.setText(reminder.getReminderStart().toString() + " to " + reminder.getReminderEnd().toString());
             }
 
-            if(reminder.has(Reminder.KEY_REMIND_WHICH_PLANT)) {
-                if(reminder.getRemindWhichPlant().has(PlantInBed.KEY_TYPE)){
-                    if(reminder.getRemindWhichPlant().getPlantType().has(Plant.KEY_PHOTO)){
+            if (reminder.has(Reminder.KEY_REMIND_WHICH_PLANT)) {
+                if (reminder.getRemindWhichPlant().has(PlantInBed.KEY_TYPE)) {
+                    if (reminder.getRemindWhichPlant().getPlantType().has(Plant.KEY_PHOTO)) {
                         Glide.with(context).load(reminder.getRemindWhichPlant().getPlantType().getPhoto().getUrl()).into(ivPlantPic);
                     }
                 }
@@ -146,12 +144,12 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
                 @Override
                 public void onClick(View view) {
                     // create a harvest reminder if the reminder completed is a planting reminder
-                    if(reminder.getReminderType().equals("plant")){
+                    if (reminder.getReminderType().equals("plant")) {
                         PlantInBed plantInBed = reminder.getRemindWhichPlant();
                         plantInBed.setPlantDate(new Date());
                         plantInBed.setShouldHarvestDate(GardenMethodHelper.convertToDate(
                                 GardenMethodHelper.convertToLocalDateViaInstant(
-                                        plantInBed.getPlantDate())
+                                                plantInBed.getPlantDate())
                                         .plusWeeks(plantInBed.getPlantType().getHarvestTime())));
 
                         Reminder harvestReminder = new Reminder();
@@ -162,7 +160,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
 
                         harvestReminder.setReminderStart(startHarvestWeek);
                         harvestReminder.setReminderEnd(endHarvestWeek);
-                        harvestReminder.setReminderTitle("Harvest "+ plantInBed.getDisplayName());
+                        harvestReminder.setReminderTitle("Harvest " + plantInBed.getDisplayName());
                         harvestReminder.setReminderMessage(plantInBed.getPlantType().getHarvestAdvice());
                         harvestReminder.setRemindWhat(plantInBed.getGarden());
                         harvestReminder.setRemindWhichPlant(plantInBed);
@@ -189,7 +187,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
                     reminders = new ArrayList<>();
                     ReminderAdapter newAdapter = new ReminderAdapter(context, reminders, recyclerView);
                     recyclerView.setAdapter(newAdapter);
-                    GardenMethodHelper.queryReminders(reminders, newAdapter, Reminder.KEY_REMIND_WHO, ParseUser.getCurrentUser(), true);
+                    GardenMethodHelper.queryReminders(reminders, newAdapter, Reminder.KEY_REMIND_WHO, ParseUser.getCurrentUser());
                     // notifyDataSetChanged();
                     Toast.makeText(context, "reminder completed!", Toast.LENGTH_SHORT).show();
                 }
@@ -197,4 +195,4 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
         }
 
     }
-    }
+}

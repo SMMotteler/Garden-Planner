@@ -98,7 +98,7 @@ public class GardenDetailFragment extends Fragment {
         rvReminders.setAdapter(reminderAdapter);
         rvReminders.setLayoutManager(linearLayoutManager);
 
-        GardenMethodHelper.queryReminders(userReminders, reminderAdapter, Reminder.KEY_REMIND_WHAT, garden, true);
+        GardenMethodHelper.queryReminders(userReminders, reminderAdapter, Reminder.KEY_REMIND_WHAT, garden);
 
         btEditGarden.setOnClickListener(new View.OnClickListener() {
             @Override

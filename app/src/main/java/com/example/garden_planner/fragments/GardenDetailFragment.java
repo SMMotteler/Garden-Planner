@@ -110,5 +110,11 @@ public class GardenDetailFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        GardenMethodHelper.queryPlantInBed(somePlants, plantInBedAdapter, garden);
+        GardenMethodHelper.queryReminders(userReminders, reminderAdapter, Reminder.KEY_REMIND_WHAT, garden);
 
+    }
 }

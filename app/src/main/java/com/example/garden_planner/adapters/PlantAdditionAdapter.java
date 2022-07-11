@@ -72,9 +72,10 @@ public class PlantAdditionAdapter extends RecyclerView.Adapter<PlantAdditionAdap
         return plantType;
     }
 
-    public void changeToWhite(@NonNull PlantAdditionAdapter.ViewHolder holder, int index){
-        Plant plant = plants.get(index);
-        holder.resetBackground();
+    public void changeToWhite(@NonNull PlantAdditionAdapter.ViewHolder holder){
+        for (Plant plant : plants){
+            holder.bind(plant);
+        }
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -95,11 +96,7 @@ public class PlantAdditionAdapter extends RecyclerView.Adapter<PlantAdditionAdap
         public void onClick(View view) {
             int position = getAdapterPosition();
             if (position != RecyclerView.NO_POSITION) {
-                //if (plantType != (null)){
-                  //  Log.i("PlantAddition", plantType.getName());
-                    // int oldPosition = plants.indexOf(plantType);
-                    //this.bind(plantType);
-                //}
+                changeToWhite(this);
                 Plant plant = plants.get(position);
                 plantType = plant;
                 // TODO: set the type of the PlantInBed object to be of type plant

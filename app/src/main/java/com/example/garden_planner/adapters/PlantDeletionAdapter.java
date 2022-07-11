@@ -111,13 +111,13 @@ public class PlantDeletionAdapter  extends RecyclerView.Adapter<PlantDeletionAda
                     // TODO: change background of this plant object to red, add it to the removed list
                     // TODO: if clicked again, maybe "unremove" it? (remove from removed list, and change
                     // TODO: the background back)
-                    if (((ColorDrawable)llBackground.getBackground()).getColor() == Color.parseColor("#FF0000")){
+                    if (((ColorDrawable)llBackground.getBackground()).getColor() == Color.RED){
                         plantsToDelete.remove(plant);
-                        llBackground.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                        llBackground.setBackgroundColor(Color.WHITE);
                     }
                     else{
                         plantsToDelete.add(plant);
-                        llBackground.setBackgroundColor(Color.parseColor("#FF0000"));
+                        llBackground.setBackgroundColor(Color.RED);
                     }
                 }
             });

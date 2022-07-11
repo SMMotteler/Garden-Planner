@@ -97,15 +97,10 @@ public class PlantAdditionActivity extends AppCompatActivity {
                 Date endPlantWeek = GardenMethodHelper.convertToDate(
                         GardenMethodHelper.convertToLocalDateViaInstant(
                                 startPlantWeek).plusWeeks(1));
+                String reminderTitle = "Plant "+name;
 
-                plantReminder.setReminderStart(startPlantWeek);
-                plantReminder.setReminderEnd(endPlantWeek);
-                plantReminder.setReminderTitle("Plant "+name);
-                plantReminder.setReminderMessage(plantType.getPlantAdvice());
-                plantReminder.setRemindWhat(garden);
-                plantReminder.setRemindWhichPlant(plantInBed);
-                plantReminder.setRemindWho(ParseUser.getCurrentUser());
-                plantReminder.setReminderType("plant");
+                plantReminder.initializeReminder(startPlantWeek, endPlantWeek, reminderTitle,
+                        plantType.getPlantAdvice(), garden, plantInBed, "plant");
 
                 plantReminder.saveInBackground(new SaveCallback() {
                     @Override

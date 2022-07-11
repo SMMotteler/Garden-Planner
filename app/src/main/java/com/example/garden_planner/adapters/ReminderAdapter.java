@@ -126,6 +126,9 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
                 tvToDoDate.setText(reminder.getReminderStart().toString() + " to " + reminder.getReminderEnd().toString());
             }
 
+            // Note - I know this looks like it should be able to be condensed to one if statement, but
+            // if a reminder doesn't have one of the first two keys, then it will throw an error when it checks
+            // the following key if it was in a single if statement - this setup prevents any crashes
             if (reminder.has(Reminder.KEY_REMIND_WHICH_PLANT)) {
                 if (reminder.getRemindWhichPlant().has(PlantInBed.KEY_TYPE)) {
                     if (reminder.getRemindWhichPlant().getPlantType().has(Plant.KEY_PHOTO)) {
@@ -157,16 +160,11 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
                         Date endHarvestWeek = GardenMethodHelper.convertToDate(
                                 GardenMethodHelper.convertToLocalDateViaInstant(
                                         startHarvestWeek).plusWeeks(1));
+                        String harvestTitle = "Harvest " + plantInBed.getDisplayName();
+                        String harvestMessage =plantInBed.getPlantType().getHarvestAdvice();
 
-                        harvestReminder.setReminderStart(startHarvestWeek);
-                        harvestReminder.setReminderEnd(endHarvestWeek);
-                        harvestReminder.setReminderTitle("Harvest " + plantInBed.getDisplayName());
-                        harvestReminder.setReminderMessage(plantInBed.getPlantType().getHarvestAdvice());
-                        harvestReminder.setRemindWhat(plantInBed.getGarden());
-                        harvestReminder.setRemindWhichPlant(plantInBed);
-                        harvestReminder.setRemindWho(ParseUser.getCurrentUser());
-                        harvestReminder.setReminderType("harvest");
-
+                        harvestReminder.initializeReminder(startHarvestWeek, endHarvestWeek, harvestTitle,
+                                harvestMessage, plantInBed.getGarden(), plantInBed, "harvest");
                         // reminders.add(harvestReminder);
 
                         try {

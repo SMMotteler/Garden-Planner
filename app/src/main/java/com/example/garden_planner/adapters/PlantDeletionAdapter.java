@@ -100,7 +100,7 @@ public class PlantDeletionAdapter  extends RecyclerView.Adapter<PlantDeletionAda
             ivPlantPic = binding.ivPlantPic;
             tvPlantName = binding.tvPlantName;
             btDelete = binding.btDelete;
-
+            llBackground.setBackgroundColor(Color.WHITE);
             tvPlantName.setText(plant.getDisplayName());
 
             Glide.with(context).load(plant.getPlantType().getPhoto().getUrl()).into(ivPlantPic);
@@ -110,14 +110,14 @@ public class PlantDeletionAdapter  extends RecyclerView.Adapter<PlantDeletionAda
                 public void onClick(View view) {
                     // TODO: change background of this plant object to red, add it to the removed list
                     // TODO: if clicked again, maybe "unremove" it? (remove from removed list, and change
-                    // TODO: the background back
-                    if (((ColorDrawable)llBackground.getBackground()).getColor() == Color.parseColor("#00FF00")){
+                    // TODO: the background back)
+                    if (((ColorDrawable)llBackground.getBackground()).getColor() == Color.parseColor("#FF0000")){
                         plantsToDelete.remove(plant);
                         llBackground.setBackgroundColor(Color.parseColor("#FFFFFF"));
                     }
                     else{
                         plantsToDelete.add(plant);
-                        llBackground.setBackgroundColor(Color.parseColor("#00FF00"));
+                        llBackground.setBackgroundColor(Color.parseColor("#FF0000"));
                     }
                 }
             });

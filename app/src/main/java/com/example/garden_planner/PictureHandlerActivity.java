@@ -21,6 +21,7 @@ import androidx.core.content.FileProvider;
 import com.bumptech.glide.Glide;
 import com.example.garden_planner.databinding.ActivityPictureHandlerBinding;
 import com.example.garden_planner.models.BitmapScaler;
+import com.example.garden_planner.models.Garden;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -38,6 +39,7 @@ public class PictureHandlerActivity extends AppCompatActivity {
     private static final int GET_FROM_GALLERY = 3;
     public String photoFileName = "photo.jpg";
     public File photoFile;
+    private Garden garden = null;
     public final static int RESULT_OK = -1;
 
     private ActivityPictureHandlerBinding binding;
@@ -45,6 +47,7 @@ public class PictureHandlerActivity extends AppCompatActivity {
     Button btTakePhoto;
     Button btChoosePhoto;
     ImageView ivPhotoToUpload;
+    ImageView ivGardenPhoto;
     TextView tvYourPhoto;
     Button btUpload;
     TextView tvOr;
@@ -61,16 +64,23 @@ public class PictureHandlerActivity extends AppCompatActivity {
         btTakePhoto = binding.btTakePhoto;
         btChoosePhoto = binding.btChoosePhoto;
         ivPhotoToUpload = binding.ivPhotoToUpload;
+        ivGardenPhoto = binding.ivGardenPhoto;
         tvYourPhoto = binding.tvYourPhoto;
         btUpload = binding.btUpload;
         tvOr = binding.tvOr;
 
-        tvPhotoText.setText("Uploading a photo for your profile picture.");
-
-        // set visibility of submission views (tvYourPhoto, ivPhotoToUpload, and btUpload) to
-        // GONE until a photo is chosen
+        if (getIntent().hasExtra("garden")){
+            garden = getIntent().getParcelableExtra("garden");
+            tvPhotoText.setText("Uploading a photo for "+garden.getName()+".");
+        }
+        else{
+            tvPhotoText.setText("Uploading a photo for your profile picture.");
+        }
+        // set visibility of submission views (tvYourPhoto, ivPhotoToUpload, ivGardenPhoto,
+        // and btUpload) to GONE until a photo is chosen
         tvYourPhoto.setVisibility(View.GONE);
         ivPhotoToUpload.setVisibility(View.GONE);
+        ivGardenPhoto.setVisibility(View.GONE);
         btUpload.setVisibility(View.GONE);
 
         btTakePhoto.setOnClickListener(new View.OnClickListener() {
@@ -159,10 +169,8 @@ public class PictureHandlerActivity extends AppCompatActivity {
                 try {
                     rawTakenImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
                 } catch (FileNotFoundException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 } catch (IOException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
 
@@ -212,30 +220,57 @@ public class PictureHandlerActivity extends AppCompatActivity {
 
             // reveal the submission views
             tvYourPhoto.setVisibility(View.VISIBLE);
-            ivPhotoToUpload.setVisibility(View.VISIBLE);
             btUpload.setVisibility(View.VISIBLE);
 
             // Load the resized image into a preview
             Bitmap takenImage = BitmapFactory.decodeFile(resizedFile.getAbsolutePath());
 
-            Glide.with(this).load(takenImage).circleCrop().into(ivPhotoToUpload);                Log.i(TAG, "bitmap size: "+BitmapFactory.decodeFile(resizedFile.getAbsolutePath()).getByteCount());
+            // depending on which photo is uploaded, we reveal the corresponding image preview
+            // and fill it with the picture
+            if (garden != null) {
+                ivGardenPhoto.setVisibility(View.VISIBLE);
+                Glide.with(this).load(takenImage).into(ivGardenPhoto);
+                Log.i(TAG, "bitmap size: "+BitmapFactory.decodeFile(resizedFile.getAbsolutePath()).getByteCount());
+            }
+            else{
+                ivPhotoToUpload.setVisibility(View.VISIBLE);
+                Glide.with(this).load(takenImage).circleCrop().into(ivPhotoToUpload);
+                Log.i(TAG, "bitmap size: "+BitmapFactory.decodeFile(resizedFile.getAbsolutePath()).getByteCount());
+            }
             Log.i(TAG, "original size: "+rawTakenImage.getByteCount());
 
             btUpload.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ParseUser.getCurrentUser().put("profilePic", new ParseFile(resizedFile));
-                    ParseUser.getCurrentUser().saveInBackground(new SaveCallback() {
-                        @Override
-                        public void done(ParseException e) {
-                            if(e != null){
-                                Log.e("yikes", e.getMessage());
-                                Toast.makeText(PictureHandlerActivity.this, "Error in changing profile pic!", Toast.LENGTH_SHORT).show();
-                                return;
+                    if (garden != null) {
+                        garden.setPhoto(new ParseFile(resizedFile));
+                        garden.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if(e != null){
+                                    Log.e("yikes", e.getMessage());
+                                    Toast.makeText(PictureHandlerActivity.this, "Error in changing profile pic!", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+                                finish();
                             }
-                            finish();
+                        });
                         }
-                    });
+                    else{
+                        ParseUser.getCurrentUser().put("profilePic", new ParseFile(resizedFile));
+                        ParseUser.getCurrentUser().saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if(e != null){
+                                    Log.e("yikes", e.getMessage());
+                                    Toast.makeText(PictureHandlerActivity.this, "Error in changing profile pic!", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+                                finish();
+                            }
+                        });
+                        }
+
                 }
             });
         }

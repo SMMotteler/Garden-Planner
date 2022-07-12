@@ -71,8 +71,7 @@
         android:text="Upload"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivPhotoToUpload"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/ivGardenPhoto" />
 
     <TextView
 
@@ -86,5 +85,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btTakePhoto"
         />
+
+    <ImageView
+        android:id="@+id/ivGardenPhoto"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivPhotoToUpload"
+        tools:srcCompat="@tools:sample/backgrounds/scenic"
+        android:padding="10dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

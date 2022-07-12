@@ -116,7 +116,7 @@ public class GardenFeedAdapter extends RecyclerView.Adapter<GardenFeedAdapter.Vi
             tvGardenLocation.setText("Location: "+garden.getLocation());
 
             if (garden.has("photo")){
-                Glide.with(context).load(garden.getParseFile("photo").getUrl()).into(ivGardenImage);
+                Glide.with(context).load(garden.getPhoto().getUrl()).into(ivGardenImage);
             }
 
             LinearLayoutManager horizontalLayoutManager
@@ -135,8 +135,8 @@ public class GardenFeedAdapter extends RecyclerView.Adapter<GardenFeedAdapter.Vi
                 public void onClick(View v) {
                     MainActivity activity = (MainActivity)context;
                     Intent i = new Intent(context, PictureHandlerActivity.class);
-                    i.putExtra("type", "garden photo");
-
+                    i.putExtra("garden", garden);
+                    activity.startActivity(i);
                 }
             });
         }

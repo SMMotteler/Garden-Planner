@@ -1,6 +1,7 @@
 package com.example.garden_planner.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.garden_planner.GardenMethodHelper;
 import com.example.garden_planner.MainActivity;
+import com.example.garden_planner.PictureHandlerActivity;
 import com.example.garden_planner.databinding.ItemGardenBinding;
 import com.example.garden_planner.models.Garden;
 import com.example.garden_planner.models.PlantInBed;
@@ -127,6 +129,16 @@ public class GardenFeedAdapter extends RecyclerView.Adapter<GardenFeedAdapter.Vi
             rvPlants.setLayoutManager(horizontalLayoutManager);
 
             GardenMethodHelper.queryPlantInBed(somePlants, adapter, garden);
+
+            ivGardenImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    MainActivity activity = (MainActivity)context;
+                    Intent i = new Intent(context, PictureHandlerActivity.class);
+                    i.putExtra("type", "garden photo");
+
+                }
+            });
         }
 
     }

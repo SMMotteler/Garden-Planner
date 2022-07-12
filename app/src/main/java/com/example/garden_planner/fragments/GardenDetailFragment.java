@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.garden_planner.EditGardenActivity;
 import com.example.garden_planner.GardenMethodHelper;
+import com.example.garden_planner.MainActivity;
+import com.example.garden_planner.PictureHandlerActivity;
 import com.example.garden_planner.adapters.PlantInBedAdapter;
 import com.example.garden_planner.adapters.ReminderAdapter;
 import com.example.garden_planner.databinding.FragmentGardenDetailBinding;
@@ -72,7 +74,7 @@ public class GardenDetailFragment extends Fragment {
         }
 
         if (garden.has("photo")){
-            Glide.with(getContext()).load(garden.getParseFile("photo").getUrl()).into(ivGardenImage);
+            Glide.with(getContext()).load(garden.getPhoto().getUrl()).into(ivGardenImage);
         }
 
         LinearLayoutManager horizontalLayoutManager
@@ -108,6 +110,16 @@ public class GardenDetailFragment extends Fragment {
                 getContext().startActivity(i);
             }
         });
+        ivGardenImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity activity = (MainActivity)getContext();
+                Intent i = new Intent(getContext(), PictureHandlerActivity.class);
+                i.putExtra("garden", garden);
+                activity.startActivity(i);
+            }
+        });
+
     }
 
     @Override
@@ -115,6 +127,7 @@ public class GardenDetailFragment extends Fragment {
         super.onResume();
         GardenMethodHelper.queryPlantInBed(somePlants, plantInBedAdapter, garden);
         GardenMethodHelper.queryReminders(userReminders, reminderAdapter, Reminder.KEY_REMIND_WHAT, garden);
+        Glide.with(getContext()).load(garden.getPhoto().getUrl()).into(ivGardenImage);
 
     }
 }

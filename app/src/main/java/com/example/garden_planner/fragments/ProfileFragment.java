@@ -77,7 +77,7 @@ public class ProfileFragment extends BaseFragment {
                             MainActivity activity = (MainActivity)getContext();
                             Intent i = new Intent(getContext(), PictureHandlerActivity.class);
                             activity.startActivity(i);
-                            Glide.with(getContext()).load(GardenMethodHelper.profilePic(user)).transform(new CircleCrop()).into(ivProfilePic);
+                            // Glide.with(getContext()).load(GardenMethodHelper.profilePic(user)).transform(new CircleCrop()).into(ivProfilePic);
 
                         }
                     });

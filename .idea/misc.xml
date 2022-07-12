@@ -7,6 +7,7 @@
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1105" />
         <entry key="app/src/main/res/drawable/loading_animation.xml" value="0.235" />
         <entry key="app/src/main/res/drawable/login_register_gradient.xml" value="0.207" />
+        <entry key="app/src/main/res/drawable/new_gradient.xml" value="0.1" />
         <entry key="app/src/main/res/font/odin.xml" value="0.2713541666666667" />
         <entry key="app/src/main/res/font/stardew_font.xml" value="0.18802083333333333" />
         <entry key="app/src/main/res/layout/activity_create_garden.xml" value="0.29034779866536453" />
@@ -15,6 +16,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_picture_handler.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_plant_addition.xml" value="0.14427083333333332" />
+        <entry key="app/src/main/res/layout/activity_plant_addition_old.xml" value="0.1943359375" />
         <entry key="app/src/main/res/layout/activity_plant_deletion.xml" value="0.16893115942028986" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.16979166666666667" />
         <entry key="app/src/main/res/layout/fragmenet_profile.xml" value="0.1" />
@@ -26,6 +28,7 @@
         <entry key="app/src/main/res/layout/item_garden.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_plant.xml" value="0.16893115942028986" />
         <entry key="app/src/main/res/layout/item_plant_in_bed.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/item_plant_old.xml" value="0.1" />
         <entry key="app/src/main/res/layout/item_reminder.xml" value="0.25" />
         <entry key="app/src/main/res/menu/menu_bottom_navigation.xml" value="0.15729166666666666" />
         <entry key="app/src/main/res/xml/fileprovider.xml" value="0.1" />

@@ -4,43 +4,86 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:id="@+id/llBackground">
 
-    <ImageView
-        android:id="@+id/ivPlantPic"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        tools:srcCompat="@drawable/default_pic" />
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="horizontal">
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        <ImageView
+            android:id="@+id/ivPlantPic"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            tools:srcCompat="@drawable/default_pic"
+            android:layout_marginRight="10dp"/>
 
-        <TextView
-            android:id="@+id/tvPlantName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            tools:text="plantName" />
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tvStartAs"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="start as seeds" />
+            <TextView
+                android:id="@+id/tvPlantName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                tools:text="plantName" />
 
-        <TextView
-            android:id="@+id/tvWhenPlant"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="plant in 1 week" />
+            <TextView
+                android:id="@+id/tvStartAs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="start as seeds" />
 
-        <TextView
-            android:id="@+id/tvWhenHarvest"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="harvest in 3 days" />
+            <TextView
+                android:id="@+id/tvWhenPlant"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="plant in 1 week" />
+
+            <TextView
+                android:id="@+id/tvWhenHarvest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="harvest in 3 days" />
+        </LinearLayout>
     </LinearLayout>
+
+    <net.cachapa.expandablelayout.ExpandableLayout android:id="@+id/expandable_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:el_duration="1000"
+        app:el_expanded="true"
+        app:el_parallax="0.5"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+        <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <EditText
+            android:id="@+id/etPlantName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="What is the name of the plant?"
+            android:inputType="textPersonName"
+            app:layout_constraintBottom_toTopOf="@+id/btCreatePlant"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/btCreatePlant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create Plant"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </net.cachapa.expandablelayout.ExpandableLayout>
 </LinearLayout>

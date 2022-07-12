@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.garden_planner.adapters.PlantAdditionAdapter;
 import com.example.garden_planner.databinding.ActivityPlantAdditionBinding;
+import com.example.garden_planner.databinding.ActivityPlantAdditionOldBinding;
 import com.example.garden_planner.models.Garden;
 import com.example.garden_planner.models.Plant;
 import com.example.garden_planner.models.PlantInBed;
@@ -30,7 +31,8 @@ import java.util.List;
 
 public class PlantAdditionActivity extends AppCompatActivity {
 
-    private ActivityPlantAdditionBinding binding;
+    private ActivityPlantAdditionOldBinding binding;
+    // private ActivityPlantAdditionBinding binding;
 
     private Garden garden;
     private Button btCreatePlant;
@@ -42,7 +44,8 @@ public class PlantAdditionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityPlantAdditionBinding.inflate(getLayoutInflater());
+        // binding = ActivityPlantAdditionBinding.inflate(getLayoutInflater());
+        binding = ActivityPlantAdditionOldBinding.inflate(getLayoutInflater());
 
         View view = binding.getRoot();
         setContentView(view);

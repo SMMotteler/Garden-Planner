@@ -1,6 +1,7 @@
 package com.example.garden_planner.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,6 +72,11 @@ public class PlantAdditionAdapter extends RecyclerView.Adapter<PlantAdditionAdap
         return plantType;
     }
 
+    public void changeToWhite(@NonNull PlantAdditionAdapter.ViewHolder holder, int index){
+        Plant plant = plants.get(index);
+        holder.resetBackground();
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private ImageView ivPlantPic;
@@ -89,11 +95,17 @@ public class PlantAdditionAdapter extends RecyclerView.Adapter<PlantAdditionAdap
         public void onClick(View view) {
             int position = getAdapterPosition();
             if (position != RecyclerView.NO_POSITION) {
+                //if (plantType != (null)){
+                  //  Log.i("PlantAddition", plantType.getName());
+                    // int oldPosition = plants.indexOf(plantType);
+                    //this.bind(plantType);
+                //}
                 Plant plant = plants.get(position);
                 plantType = plant;
                 // TODO: set the type of the PlantInBed object to be of type plant
                 // TODO: if there is another plant that has already been clicked,
                 // TODO: change its background back to white
+
                 llBackground.setBackgroundResource(R.drawable.login_register_gradient);
             }
 
@@ -125,7 +137,12 @@ public class PlantAdditionAdapter extends RecyclerView.Adapter<PlantAdditionAdap
             else{
                 tvWhenPlant.setText("Plant "+plant.getPlantTime()+" weeks after the last frost.");
             }
+            llBackground.setBackgroundColor(Color.WHITE);
+        }
 
+        public void resetBackground(){
+            llBackground = binding.llBackground;
+            llBackground.setBackgroundColor(Color.WHITE);
         }
     }
 }

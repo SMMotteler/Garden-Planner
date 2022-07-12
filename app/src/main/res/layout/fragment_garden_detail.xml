@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/canvas">
 <ScrollView
     android:layout_width="fill_parent"
     android:layout_height="wrap_content">
@@ -13,7 +14,7 @@
     android:orientation="vertical">
 
         <TextView
-            android:fontFamily="@font/odin"
+
             android:id="@+id/tvGardenName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,18 +36,27 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvPlants"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <Button
+        android:id="@+id/btEditGarden"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="Edit Garden" />
 
     <TextView
-        android:fontFamily="@font/odin"
         android:id="@+id/tvGardenLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:textSize="16sp"
         tools:text="location: " />
 
     <TextView
-        android:fontFamily="@font/odin"
+
         android:id="@+id/tvReminderTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -58,13 +68,6 @@
         android:id="@+id/rvReminders"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-
-    <Button
-        android:fontFamily="@font/odin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btEditGarden"
-        android:text="Edit Garden"/>
 
 
 </LinearLayout>

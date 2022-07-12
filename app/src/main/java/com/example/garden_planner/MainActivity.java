@@ -19,6 +19,7 @@ import com.example.garden_planner.fragments.RemindersFragment;
 import com.example.garden_planner.models.Garden;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.LogOutCallback;
+import com.parse.ParseACL;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
@@ -37,6 +38,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
+
+        ParseACL defaultACL = new ParseACL();
+        defaultACL.setPublicReadAccess(true);
+        defaultACL.setPublicWriteAccess(true); //objects created are writable
+        ParseACL.setDefaultACL(defaultACL, true);
 
         View view = binding.getRoot();
         setContentView(view);

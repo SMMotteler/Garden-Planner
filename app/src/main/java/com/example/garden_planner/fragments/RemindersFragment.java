@@ -23,14 +23,10 @@ import java.util.List;
 
 public class RemindersFragment extends Fragment {
 
-    // TODO: figure out the issue with repeating posts in binding - the items don't change appearance
-
     FragmentRemindersBinding binding;
 
     RecyclerView rvReminders;
-    RadioGroup rdReminderOrder;
-    RadioButton rbByTime;
-    RadioButton rbByGarden;
+
     ReminderAdapter adapter;
     List<Reminder> userReminders;
 
@@ -54,12 +50,9 @@ public class RemindersFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         rvReminders = binding.rvReminders;
-        rdReminderOrder = binding.rdReminderOrder;
-        rbByGarden = binding.rbByGarden;
-        rbByTime = binding.rbByTime;
 
         userReminders = new ArrayList<>();
-        adapter = new ReminderAdapter(getContext(), userReminders);
+        adapter = new ReminderAdapter(getContext(), userReminders, rvReminders, Reminder.KEY_REMIND_WHO, ParseUser.getCurrentUser());
         adapter.setHasStableIds(true);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -67,34 +60,8 @@ public class RemindersFragment extends Fragment {
         rvReminders.setAdapter(adapter);
         rvReminders.setLayoutManager(linearLayoutManager);
 
-        GardenMethodHelper.queryReminders(userReminders, adapter, Reminder.KEY_REMIND_WHO, ParseUser.getCurrentUser(), false);
+        GardenMethodHelper.queryReminders(userReminders, adapter, Reminder.KEY_REMIND_WHO, ParseUser.getCurrentUser());
 
-        rbByGarden.setChecked(true);
-
-        rdReminderOrder.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                // Is the button now checked?
-                boolean checked = rbByTime.isChecked();
-                userReminders = new ArrayList<>();
-                adapter = new ReminderAdapter(getContext(), userReminders);
-                rvReminders.setAdapter(adapter);
-                rvReminders.setLayoutManager(linearLayoutManager);
-
-
-                // Check which radio button was clicked
-                        if (checked) {
-                            GardenMethodHelper.queryReminders(userReminders, adapter, Reminder.KEY_REMIND_WHO, ParseUser.getCurrentUser(), true);
-                        }
-                        else {
-                            GardenMethodHelper.queryReminders(userReminders, adapter, Reminder.KEY_REMIND_WHO, ParseUser.getCurrentUser(), false);
-                        }
-                for (Reminder reminder : userReminders){
-                    Log.i("reminderFragment", "reminder: "+reminder.getReminderTitle());
-                }
-
-                }
-        });
 
     }
 }

@@ -91,14 +91,14 @@ public class GardenDetailFragment extends Fragment {
         rvReminders = binding.rvReminders;
 
         userReminders = new ArrayList<>();
-        reminderAdapter = new ReminderAdapter(getContext(), userReminders);
+        reminderAdapter = new ReminderAdapter(getContext(), userReminders, rvReminders, Reminder.KEY_REMIND_WHAT, garden);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
 
         rvReminders.setAdapter(reminderAdapter);
         rvReminders.setLayoutManager(linearLayoutManager);
 
-        GardenMethodHelper.queryReminders(userReminders, reminderAdapter, Reminder.KEY_REMIND_WHAT, garden, true);
+        GardenMethodHelper.queryReminders(userReminders, reminderAdapter, Reminder.KEY_REMIND_WHAT, garden);
 
         btEditGarden.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,5 +110,11 @@ public class GardenDetailFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        GardenMethodHelper.queryPlantInBed(somePlants, plantInBedAdapter, garden);
+        GardenMethodHelper.queryReminders(userReminders, reminderAdapter, Reminder.KEY_REMIND_WHAT, garden);
 
+    }
 }

@@ -12,14 +12,14 @@
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/teal_200"
+            android:background="@color/light_green"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:fontFamily="@font/odin"
+
                     android:id="@+id/tvToDoDate"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
                     tools:text="June 20th" />
 
                 <TextView
-                    android:fontFamily="@font/odin"
+
                     android:id="@+id/tvGardenName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-            android:background="@color/white">
+            android:background="@color/canvas">
 
                 <LinearLayout
                     android:layout_width="100dp"
@@ -61,7 +61,7 @@
                             tools:srcCompat="@tools:sample/avatars" />
 
                         <TextView
-                            android:fontFamily="@font/odin"
+
                             android:id="@+id/tvPlantName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -76,7 +76,7 @@
                     android:paddingRight="0dp">
 
                         <TextView
-                            android:fontFamily="@font/odin"
+
                             android:id="@+id/tvReminderTitle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -85,13 +85,21 @@
                             tools:text="Water your plants" />
 
                         <TextView
-                            android:fontFamily="@font/odin"
+
                             android:id="@+id/tvReminderText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             tools:text="Water at the root level, not the leaves, to avoid mildew" />
+                        <Button
+                            android:id="@+id/completeReminderButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Complete Reminder" />
                 </LinearLayout>
+
+
 
         </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

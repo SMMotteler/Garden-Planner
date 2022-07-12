@@ -15,6 +15,7 @@ public class Reminder extends ParseObject {
     public static final String KEY_REMIND_WHO = "RemindWho";
     public static final String KEY_REMIND_WHICH_PLANT = "RemindWhichPlant";
     public static final String KEY_REMINDER_TITLE = "ReminderTitle";
+    public static final String KEY_TYPE = "reminderType";
 
     public Date getReminderStart(){return getDate(KEY_REMINDER_START);}
 
@@ -44,4 +45,20 @@ public class Reminder extends ParseObject {
 
     public void setReminderTitle(String reminderTitle){put(KEY_REMINDER_TITLE, reminderTitle);}
 
+    public String getReminderType(){return getString(KEY_TYPE);}
+
+    public void setReminderType(String reminderType){put(KEY_TYPE, reminderType);}
+
+    public void initializeReminder(Date reminderStart, Date reminderEnd, String reminderTitle,
+                                   String reminderMessage, Garden reminderGarden, PlantInBed reminderWhichPlant,
+                                   String reminderType){
+        this.setReminderStart(reminderStart);
+        this.setReminderEnd(reminderEnd);
+        this.setReminderTitle(reminderTitle);
+        this.setReminderMessage(reminderMessage);
+        this.setRemindWhat(reminderGarden);
+        this.setRemindWhichPlant(reminderWhichPlant);
+        this.setRemindWho(ParseUser.getCurrentUser());
+        this.setReminderType(reminderType);
+    }
 }

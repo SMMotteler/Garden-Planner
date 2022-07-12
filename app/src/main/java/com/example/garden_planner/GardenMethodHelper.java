@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.garden_planner.adapters.GardenFeedAdapter;
 import com.example.garden_planner.adapters.ReminderAdapter;
+import com.example.garden_planner.fragments.RemindersFragment;
 import com.example.garden_planner.models.FrostDateClient;
 import com.example.garden_planner.models.Garden;
 import com.example.garden_planner.models.Plant;
@@ -22,8 +23,13 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import javax.annotation.Nullable;
 
 public class GardenMethodHelper {
 
@@ -45,6 +51,7 @@ public class GardenMethodHelper {
                     return;
                 }
                 goMainActivity(activity);
+                activity.finish();
             }
         });
     }
@@ -88,16 +95,12 @@ public class GardenMethodHelper {
 
     }
 
-    public static void queryReminders(List<Reminder> userReminders, ReminderAdapter adapter, String key, ParseObject object, Boolean byTime){
+    public static void queryReminders(List<Reminder> userReminders, @Nullable ReminderAdapter adapter, String key, ParseObject object){
         ParseQuery<Reminder> query = ParseQuery.getQuery(Reminder.class);
 
         query.whereEqualTo(key, object);
-        if(byTime){
-            query.addAscendingOrder(Reminder.KEY_REMINDER_START);
-        }
-        else{
-            query.addAscendingOrder(Reminder.KEY_REMIND_WHAT);
-        }
+        query.addAscendingOrder(Reminder.KEY_REMINDER_START);
+
         query.include(Reminder.KEY_REMINDER_MESSAGE);
         query.include(Reminder.KEY_REMINDER_TITLE);
         query.include(Reminder.KEY_REMINDER_START);
@@ -125,7 +128,9 @@ public class GardenMethodHelper {
                 userReminders.clear();
                 userReminders.addAll(reminders);
 
-                adapter.notifyDataSetChanged();
+                if(adapter != null) {
+                    adapter.notifyDataSetChanged();
+                }
             }
         });
 
@@ -193,6 +198,15 @@ public class GardenMethodHelper {
     return returnPlants;
     }
 
+    public static LocalDate convertToLocalDateViaInstant(Date dateToConvert) {
+        return dateToConvert.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+    }
+
+    public static Date convertToDate(LocalDate localDateToConvert){
+        return Date.from(localDateToConvert.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    }
 
 }
 

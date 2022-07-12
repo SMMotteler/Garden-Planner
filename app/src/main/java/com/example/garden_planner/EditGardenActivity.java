@@ -55,5 +55,6 @@ public class EditGardenActivity extends AppCompatActivity {
 
         super.onActivityResult(requestCode, resultCode, data);
         finish();
+        // TODO: figure out what to do with the save button/edit activity
     }
 }

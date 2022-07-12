@@ -77,10 +77,6 @@ public class Plant  extends ParseObject {
         return getBoolean(KEY_SEED_REC);
     }
 
-    public void setSeedRec(Boolean seedRec) {
-        put(KEY_SEED_REC, seedRec);
-
-
-    }
+    public void setSeedRec(Boolean seedRec) { put(KEY_SEED_REC, seedRec); }
 
 }

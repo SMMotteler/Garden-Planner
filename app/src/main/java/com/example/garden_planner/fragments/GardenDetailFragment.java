@@ -2,6 +2,7 @@ package com.example.garden_planner.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.garden_planner.EditGardenActivity;
 import com.example.garden_planner.GardenMethodHelper;
+import com.example.garden_planner.ImageActivity;
 import com.example.garden_planner.MainActivity;
 import com.example.garden_planner.PictureHandlerActivity;
 import com.example.garden_planner.adapters.PlantInBedAdapter;
@@ -25,11 +28,14 @@ import com.example.garden_planner.models.Garden;
 import com.example.garden_planner.models.PlantInBed;
 import com.example.garden_planner.models.Reminder;
 
+import org.parceler.Parcels;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class GardenDetailFragment extends Fragment {
     private FragmentGardenDetailBinding binding;
+    public static final int MODAL_DISAPPEAR = 5;
 
     public Garden garden;
     private PlantInBedAdapter plantInBedAdapter;
@@ -44,6 +50,8 @@ public class GardenDetailFragment extends Fragment {
     private TextView tvReminderTitle;
     private RecyclerView rvReminders;
     private Button btEditGarden;
+    private Button changeGardenPhotoButton;
+    private View modalGreyLayer;
 
     public GardenDetailFragment(){
 
@@ -66,14 +74,17 @@ public class GardenDetailFragment extends Fragment {
         rvPlants = binding.rvPlants;
         tvGardenLocation = binding.tvGardenLocation;
         btEditGarden = binding.btEditGarden;
+        changeGardenPhotoButton = binding.changeGardenPhotoButton;
+        modalGreyLayer = binding.modalGreyLayer;
 
+        modalGreyLayer.setVisibility(View.GONE);
         tvGardenName.setText(garden.getName());
-        tvGardenLocation.setText("Location: "+garden.getLocation());
-        if(garden.has("lastFrostDate")){
-            tvGardenLocation.setText("Location: "+garden.getLocation()+"\nFrost date: "+garden.getLastFrostDate());
+        tvGardenLocation.setText("Location: " + garden.getLocation());
+        if (garden.has("lastFrostDate")) {
+            tvGardenLocation.setText("Location: " + garden.getLocation() + "\nFrost date: " + garden.getLastFrostDate());
         }
 
-        if (garden.has("photo")){
+        if (garden.has("photo")) {
             Glide.with(getContext()).load(garden.getPhoto().getUrl()).into(ivGardenImage);
         }
 
@@ -110,24 +121,39 @@ public class GardenDetailFragment extends Fragment {
                 getContext().startActivity(i);
             }
         });
-        ivGardenImage.setOnClickListener(new View.OnClickListener() {
+
+        changeGardenPhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity activity = (MainActivity)getContext();
+                MainActivity activity = (MainActivity) getContext();
                 Intent i = new Intent(getContext(), PictureHandlerActivity.class);
                 i.putExtra("garden", garden);
                 activity.startActivity(i);
             }
         });
 
-    }
+        // got this code from https://stackoverflow.com/questions/7693633/android-image-dialog-popup
+        ivGardenImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                modalGreyLayer.setVisibility(View.VISIBLE);
+                MainActivity activity = (MainActivity) getContext();
+                Intent i = new Intent(getContext(), ImageActivity.class);
+                i.putExtra("photo", garden.getPhoto().getUrl());
+                activity.startActivityForResult(i, MODAL_DISAPPEAR);
 
+
+            }
+        });
+    }
     @Override
     public void onResume() {
         super.onResume();
         GardenMethodHelper.queryPlantInBed(somePlants, plantInBedAdapter, garden);
         GardenMethodHelper.queryReminders(userReminders, reminderAdapter, Reminder.KEY_REMIND_WHAT, garden);
         Glide.with(getContext()).load(garden.getPhoto().getUrl()).into(ivGardenImage);
-
+        modalGreyLayer.setVisibility(View.GONE);
     }
+
+
 }

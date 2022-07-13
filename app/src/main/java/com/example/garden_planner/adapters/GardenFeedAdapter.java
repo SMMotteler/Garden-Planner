@@ -130,15 +130,6 @@ public class GardenFeedAdapter extends RecyclerView.Adapter<GardenFeedAdapter.Vi
 
             GardenMethodHelper.queryPlantInBed(somePlants, adapter, garden);
 
-            ivGardenImage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    MainActivity activity = (MainActivity)context;
-                    Intent i = new Intent(context, PictureHandlerActivity.class);
-                    i.putExtra("garden", garden);
-                    activity.startActivity(i);
-                }
-            });
         }
 
     }

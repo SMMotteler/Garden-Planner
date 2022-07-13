@@ -169,6 +169,7 @@ public class CreateGardenActivity extends AppCompatActivity {
                                         String lastFrostDateDay = lastFrostDateInfo.getString("prob_50")+today.getYear();
                                         // Log.i("FROST DATE", "this is the frost date "+frostDate.toString());
                                         // return the last frost date
+                                        // TODO: figure out how frost date API does dates
                                         SimpleDateFormat formatter = new SimpleDateFormat("ddMMyy");
                                         frostDate = formatter.parse(lastFrostDateDay);
                                         garden.setLastFrostDate(frostDate);

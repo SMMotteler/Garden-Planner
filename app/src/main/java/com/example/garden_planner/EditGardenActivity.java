@@ -4,51 +4,51 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.garden_planner.adapters.PlantAdditionAdapter;
+import com.example.garden_planner.adapters.PlantDeletionAdapter;
 import com.example.garden_planner.databinding.ActivityEditGardenBinding;
+import com.example.garden_planner.databinding.ActivityEditGardenNewBinding;
 import com.example.garden_planner.models.Garden;
+import com.example.garden_planner.models.Plant;
+import com.example.garden_planner.models.PlantInBed;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EditGardenActivity extends AppCompatActivity {
-    private ActivityEditGardenBinding binding;
-    private Button btAddPlant;
-    private Button btDeletePlant;
+    private ActivityEditGardenNewBinding binding;
+    private Button btSaveGarden;
+    private RecyclerView rvAddPlants;
+    private RecyclerView rvCurrentPlants;
     private Garden garden;
+    private TextView tvGardenName;
+    private PlantAdditionAdapter additionAdapter;
+    private List<Plant> plantTypes;
+    private ArrayList<PlantInBed> plants;
+    private PlantDeletionAdapter deletionAdapter;
+
     public static final int ACTIVITY_RESULT = 1001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityEditGardenBinding.inflate(getLayoutInflater());
+        binding = ActivityEditGardenNewBinding.inflate(getLayoutInflater());
 
         garden = getIntent().getParcelableExtra("garden");
 
         View view = binding.getRoot();
         setContentView(view);
 
-        btAddPlant = binding.btAddPlant;
-        btDeletePlant = binding.btDeletePlant;
-
-        btAddPlant.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(EditGardenActivity.this, PlantAdditionActivity.class);
-                i.putExtra("garden", garden);
-                startActivityForResult(i, ACTIVITY_RESULT);
-            }
-        });
-
-        btDeletePlant.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(EditGardenActivity.this, PlantDeletionActivity.class);
-                i.putExtra("garden", garden);
-                startActivityForResult(i, ACTIVITY_RESULT);
-
-            }
-        });
+        btSaveGarden = binding.btSaveGarden;
+        rvAddPlants = binding.rvAddPlants;
+        tvGardenName = binding.tvGardenName;
+        rvCurrentPlants = binding.rvCurrentPlants;
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

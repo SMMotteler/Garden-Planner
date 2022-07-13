@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.garden_planner.R;
 import com.example.garden_planner.databinding.ItemPlantBinding;
+import com.example.garden_planner.databinding.ItemPlantOldBinding;
 import com.example.garden_planner.models.Plant;
 
 import java.util.List;
@@ -26,7 +27,8 @@ public class PlantAdditionAdapter extends RecyclerView.Adapter<PlantAdditionAdap
     private List<Plant> plants;
     private Plant plantType = null;
 
-    ItemPlantBinding binding;
+    ItemPlantOldBinding binding;
+    // ItemPlantBinding binding;
 
     public PlantAdditionAdapter(Context context, List<Plant> plants){
         Log.i(TAG, "making PlantInBedAdapter");
@@ -39,7 +41,8 @@ public class PlantAdditionAdapter extends RecyclerView.Adapter<PlantAdditionAdap
     public PlantAdditionAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Log.i(TAG, "onCreateViewHolder ");
 
-        binding = ItemPlantBinding.inflate( LayoutInflater.from(context), parent, false);
+        binding = ItemPlantOldBinding.inflate( LayoutInflater.from(context), parent, false);
+        // binding = ItemPlantBinding.inflate( LayoutInflater.from(context), parent, false);
         View view = binding.getRoot();
 
         return new PlantAdditionAdapter.ViewHolder(view);
@@ -72,9 +75,10 @@ public class PlantAdditionAdapter extends RecyclerView.Adapter<PlantAdditionAdap
         return plantType;
     }
 
-    public void changeToWhite(@NonNull PlantAdditionAdapter.ViewHolder holder, int index){
-        Plant plant = plants.get(index);
-        holder.resetBackground();
+    public void changeToWhite(@NonNull PlantAdditionAdapter.ViewHolder holder){
+        for (Plant plant : plants){
+            holder.bind(plant);
+        }
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -95,11 +99,7 @@ public class PlantAdditionAdapter extends RecyclerView.Adapter<PlantAdditionAdap
         public void onClick(View view) {
             int position = getAdapterPosition();
             if (position != RecyclerView.NO_POSITION) {
-                //if (plantType != (null)){
-                  //  Log.i("PlantAddition", plantType.getName());
-                    // int oldPosition = plants.indexOf(plantType);
-                    //this.bind(plantType);
-                //}
+                changeToWhite(this);
                 Plant plant = plants.get(position);
                 plantType = plant;
                 // TODO: set the type of the PlantInBed object to be of type plant

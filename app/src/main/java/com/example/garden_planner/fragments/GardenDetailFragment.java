@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -142,7 +143,7 @@ public class GardenDetailFragment extends Fragment {
                 MainActivity activity = (MainActivity) getContext();
                 Intent i = new Intent(getContext(), ImageActivity.class);
                 i.putExtra("photo", garden.getPhoto().getUrl());
-                activity.startActivityForResult(i, MODAL_DISAPPEAR);
+                activity.startActivity(i);
 
 
             }
@@ -152,7 +153,11 @@ public class GardenDetailFragment extends Fragment {
 
             @Override
             public boolean onLongClick(View v) {
-                Toast.makeText(getContext(), "Long click detected!", Toast.LENGTH_SHORT).show();
+                FragmentManager fm = getParentFragmentManager();
+                PhotoBottomDialogFragment photoBottomDialogFragment = PhotoBottomDialogFragment.newInstance(garden);
+                photoBottomDialogFragment.show(fm, "fragment_photo_bottom_dialog");
+                modalGreyLayer.setVisibility(View.VISIBLE);
+                // Toast.makeText(getContext(), "Long click detected!", Toast.LENGTH_SHORT).show();
                 return true;
             }
 

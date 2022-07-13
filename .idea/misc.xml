@@ -5,6 +5,7 @@
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.12080335731414868" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1105" />
+        <entry key="app/src/main/res/drawable/back.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/loading_animation.xml" value="0.235" />
         <entry key="app/src/main/res/drawable/login_register_gradient.xml" value="0.207" />
         <entry key="app/src/main/res/drawable/new_gradient.xml" value="0.1" />
@@ -24,6 +25,7 @@
         <entry key="app/src/main/res/layout/fragmenet_profile.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_garden_detail.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_garden_feed.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_photo_dialog.xml" value="0.10790273556231003" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_reminders.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_choose_reminder_order.xml" value="0.335" />

@@ -162,14 +162,38 @@ public class CreateGardenActivity extends AppCompatActivity {
                                     Log.i("FROST DATE", "in onsuccess 2");
 
                                     try {
-                                        Log.i("FROST DATE", "in try 2");
 
                                         Date today = new Date();
                                         JSONObject lastFrostDateInfo = json.jsonArray.getJSONObject(1);
-                                        String lastFrostDateDay = lastFrostDateInfo.getString("prob_50")+today.getYear();
+                                        String frostDateDayMonth = lastFrostDateInfo.getString("prob_50");
+
+                                        // today.getMonth() has January = 0, so we need to add 1 to month to make it match to frostDateDayMonth
+                                        String todayMonth;
+                                        if (today.getMonth() < 9) {
+                                            todayMonth = "0"+(today.getMonth() + 1);
+                                        }
+                                        else{
+                                            todayMonth = ""+(today.getMonth()+1);
+                                        }
+                                        String todayDate;
+                                        if (today.getDate() < 9) {
+                                            todayDate = "0"+(today.getDate());
+                                        }
+                                        else{
+                                            todayDate = ""+(today.getDate());
+                                        }
+                                        String todayDayMonth = todayMonth+todayDate;
+                                        String year;
+                                        if (Integer.valueOf(todayDayMonth) > Integer.valueOf(frostDateDayMonth)){
+                                            year = String.valueOf(today.getYear()+1901);
+                                        }
+                                        else{
+                                            year = String.valueOf(today.getYear()+1900);
+                                        }
+                                        String lastFrostDateDay = lastFrostDateInfo.getString("prob_50")+year;
                                         // Log.i("FROST DATE", "this is the frost date "+frostDate.toString());
                                         // return the last frost date
-                                        SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyy");
+                                        SimpleDateFormat formatter = new SimpleDateFormat("MMddyyyy");
                                         frostDate = formatter.parse(lastFrostDateDay);
                                         garden.setLastFrostDate(frostDate);
                                         garden.saveInBackground(new SaveCallback() {

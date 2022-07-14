@@ -49,6 +49,7 @@ public class EditGardenActivity extends AppCompatActivity {
         tvGardenName = binding.tvGardenName;
         rvCurrentPlants = binding.rvCurrentPlants;
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 

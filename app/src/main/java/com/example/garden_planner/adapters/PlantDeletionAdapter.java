@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -23,6 +24,8 @@ import com.example.garden_planner.R;
 import com.example.garden_planner.databinding.ItemPlantInBedBinding;
 import com.example.garden_planner.databinding.ItemPlantInBedExpandableBinding;
 import com.example.garden_planner.models.PlantInBed;
+import com.parse.ParseException;
+import com.parse.SaveCallback;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
 
@@ -131,6 +134,9 @@ public class PlantDeletionAdapter  extends RecyclerView.Adapter<PlantDeletionAda
 
             llBackground.setBackgroundColor(R.color.canvas);
             tvDisplayName.setText(plant.getDisplayName());
+            String plantType = plant.getPlantType().getName().substring(0,1).toUpperCase()
+                    + plant.getPlantType().getName().substring(1) +" Plant";
+            tvPlantType.setText(plantType);
 
 
             Glide.with(context).load(plant.getPlantType().getPhoto().getUrl()).into(ivPlantPic);
@@ -161,11 +167,47 @@ public class PlantDeletionAdapter  extends RecyclerView.Adapter<PlantDeletionAda
                     // TODO: the background back)
                     if (((ColorDrawable)llBackground.getBackground()).getColor() == Color.RED){
                         plantsToDelete.remove(plant);
-                        llBackground.setBackgroundColor(Color.WHITE);
+                        llBackground.setBackgroundColor(R.color.canvas);
+                        expandableLayoutOptions.collapse();
                     }
                     else{
                         plantsToDelete.add(plant);
                         llBackground.setBackgroundColor(Color.RED);
+                        expandableLayoutOptions.collapse();
+                    }
+                }
+            });
+
+            btRename.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (expandableLayoutRename.isExpanded()){
+                        expandableLayoutRename.collapse();
+                    }
+                    else{
+                        expandableLayoutRename.expand();
+                    }
+                }
+            });
+
+            btSetNewName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String newName = etPlantName.getText().toString();
+                    if (newName.length() < 1){
+                        Toast.makeText(context, "Enter a new name!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    else{
+                        plant.setDisplayName(newName);
+                        plant.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                tvDisplayName.setText(newName);
+                                expandableLayoutRename.collapse();
+                                expandableLayoutOptions.collapse();
+                            }
+                        });
                     }
                 }
             });

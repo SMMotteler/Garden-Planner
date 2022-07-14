@@ -54,7 +54,7 @@ public class GardenDetailFragment extends Fragment {
     private RecyclerView rvReminders;
     private Button btEditGarden;
     private Button changeGardenPhotoButton;
-    private View modalGreyLayer;
+    public static View modalGreyLayer;
 
     public GardenDetailFragment(){
 
@@ -80,7 +80,7 @@ public class GardenDetailFragment extends Fragment {
         changeGardenPhotoButton = binding.changeGardenPhotoButton;
         modalGreyLayer = binding.modalGreyLayer;
 
-        modalGreyLayer.setVisibility(View.GONE);
+        hideGrey();
         tvGardenName.setText(garden.getName());
         tvGardenLocation.setText("Location: " + garden.getLocation());
         if (garden.has("lastFrostDate")) {
@@ -139,7 +139,7 @@ public class GardenDetailFragment extends Fragment {
         ivGardenImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                modalGreyLayer.setVisibility(View.VISIBLE);
+                showGrey();
                 MainActivity activity = (MainActivity) getContext();
                 Intent i = new Intent(getContext(), ImageActivity.class);
                 i.putExtra("photo", garden.getPhoto().getUrl());
@@ -156,8 +156,6 @@ public class GardenDetailFragment extends Fragment {
                 FragmentManager fm = getParentFragmentManager();
                 PhotoBottomDialogFragment photoBottomDialogFragment = PhotoBottomDialogFragment.newInstance(garden);
                 photoBottomDialogFragment.show(fm, "fragment_photo_bottom_dialog");
-                modalGreyLayer.setVisibility(View.VISIBLE);
-                // Toast.makeText(getContext(), "Long click detected!", Toast.LENGTH_SHORT).show();
                 return true;
             }
 
@@ -169,8 +167,15 @@ public class GardenDetailFragment extends Fragment {
         GardenMethodHelper.queryPlantInBed(somePlants, plantInBedAdapter, garden);
         GardenMethodHelper.queryReminders(userReminders, reminderAdapter, Reminder.KEY_REMIND_WHAT, garden);
         Glide.with(getContext()).load(garden.getPhoto().getUrl()).into(ivGardenImage);
-        modalGreyLayer.setVisibility(View.GONE);
+        hideGrey();
     }
 
+    public static void showGrey(){
+        modalGreyLayer.setVisibility(View.VISIBLE);
+    }
+
+    public static void hideGrey() {
+        modalGreyLayer.setVisibility(View.GONE);
+    }
 
 }

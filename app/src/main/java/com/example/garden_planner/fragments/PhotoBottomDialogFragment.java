@@ -22,6 +22,7 @@ public class PhotoBottomDialogFragment extends BottomSheetDialogFragment {
     private TextView viewModalText;
     private TextView editImageText;
     private FragmentPhotoDialogBinding binding;
+    private GardenDetailFragment gardenDetailFragment;
 
     public PhotoBottomDialogFragment(){
 
@@ -47,12 +48,16 @@ public class PhotoBottomDialogFragment extends BottomSheetDialogFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        GardenDetailFragment fragment = (GardenDetailFragment) this.getParentFragment();
+
         viewModalText = binding.viewModalText;
         editImageText = binding.editImageText;
+
 
         viewModalText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                fragment.showGrey();
                 Garden garden = getArguments().getParcelable("garden");
                 MainActivity activity = (MainActivity) getContext();
                 Intent i = new Intent(getContext(), ImageActivity.class);

@@ -1,5 +1,6 @@
 package com.example.garden_planner.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -8,16 +9,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.garden_planner.R;
 import com.example.garden_planner.databinding.ItemPlantInBedBinding;
+import com.example.garden_planner.databinding.ItemPlantInBedExpandableBinding;
 import com.example.garden_planner.models.PlantInBed;
+
+import net.cachapa.expandablelayout.ExpandableLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +35,7 @@ public class PlantDeletionAdapter  extends RecyclerView.Adapter<PlantDeletionAda
     private List<PlantInBed> plants;
     private List<PlantInBed> plantsToDelete;
 
-    ItemPlantInBedBinding binding;
+    ItemPlantInBedExpandableBinding binding;
 
     public PlantDeletionAdapter(Context context, List<PlantInBed> plants){
         Log.i(TAG, "making PlantInBedAdapter");
@@ -42,7 +49,7 @@ public class PlantDeletionAdapter  extends RecyclerView.Adapter<PlantDeletionAda
     public PlantDeletionAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Log.i(TAG, "onCreateViewHolder ");
 
-        binding = ItemPlantInBedBinding.inflate( LayoutInflater.from(context), parent, false);
+        binding = ItemPlantInBedExpandableBinding.inflate( LayoutInflater.from(context), parent, false);
         View view = binding.getRoot();
 
         return new PlantDeletionAdapter.ViewHolder(view);
@@ -77,9 +84,19 @@ public class PlantDeletionAdapter  extends RecyclerView.Adapter<PlantDeletionAda
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private ImageView ivPlantPic;
-        private TextView tvPlantName;
-        private Button btDelete;
+        private ImageView ivArrow;
+        private TextView tvDisplayName;
+        private TextView tvPlantType;
+        private ExpandableLayout expandableLayoutOptions;
+        private ExpandableLayout expandableLayoutRename;
+        private ConstraintLayout selectionLayout;
+        private ConstraintLayout renameLayout;
+        private Button btRename;
+        private Button btDeletePlant;
+        private Button btSetNewName;
+        private EditText etPlantName;
         private LinearLayout llBackground;
+        private LinearLayout llPlantInBedInfo;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -95,17 +112,48 @@ public class PlantDeletionAdapter  extends RecyclerView.Adapter<PlantDeletionAda
 
         }
 
+        @SuppressLint("ResourceAsColor")
         public void bind(PlantInBed plant){
             llBackground = binding.llBackground;
             ivPlantPic = binding.ivPlantPic;
-            tvPlantName = binding.tvPlantName;
-            btDelete = binding.btDelete;
-            llBackground.setBackgroundColor(Color.WHITE);
-            tvPlantName.setText(plant.getDisplayName());
+            ivArrow = binding.ivArrow;
+            tvDisplayName = binding.tvDisplayName;
+            tvPlantType = binding.tvPlantType;
+            expandableLayoutOptions = binding.expandableLayoutOptions;
+            expandableLayoutRename = binding.expandableLayoutRename;;
+            selectionLayout = binding.selectionLayout;
+            renameLayout = binding.renameLayout;
+            btRename = binding.btRename;
+            btDeletePlant = binding.btDeletePlant;
+            btSetNewName = binding.btSetNewName;
+            etPlantName = binding.etPlantName;
+            llPlantInBedInfo = binding.llPlantInBedInfo;
+
+            llBackground.setBackgroundColor(R.color.canvas);
+            tvDisplayName.setText(plant.getDisplayName());
+
 
             Glide.with(context).load(plant.getPlantType().getPhoto().getUrl()).into(ivPlantPic);
 
-            btDelete.setOnClickListener(new View.OnClickListener() {
+            llPlantInBedInfo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (expandableLayoutOptions.isExpanded()) {
+                        expandableLayoutOptions.collapse();
+                        if (expandableLayoutRename.isExpanded()){
+                            expandableLayoutRename.collapse();
+                        }
+                        Glide.with(context).load(R.drawable.rightarrow).into(ivArrow);
+                    }
+                    else{
+                        Glide.with(context).load(R.drawable.downarrow).into(ivArrow);
+                        expandableLayoutOptions.expand();
+                    }
+                }
+            });
+
+
+            btDeletePlant.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     // TODO: change background of this plant object to red, add it to the removed list

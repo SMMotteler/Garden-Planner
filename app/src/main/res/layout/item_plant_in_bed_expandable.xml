@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:id="@+id/llBackground">
+
+    <LinearLayout
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/llPlantInBedInfo">
+
+        <ImageView
+            android:id="@+id/ivPlantPic"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            tools:srcCompat="@drawable/default_pic"
+            android:layout_marginRight="10dp"/>
+
+        <LinearLayout
+            android:layout_width="242dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvDisplayName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                tools:text="specificName" />
+
+            <TextView
+                android:id="@+id/tvPlantType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Tomato Plant" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/ivArrow"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/rightarrow" />
+
+    </LinearLayout>
+
+    <net.cachapa.expandablelayout.ExpandableLayout android:id="@+id/expandableLayoutOptions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:el_duration="1000"
+        app:el_expanded="false"
+        app:el_parallax="0.5">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/selectionLayout">
+                <Button
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/btRename"
+                    android:text="Rename Plant"/>
+                <Button
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:id="@+id/btDeletePlant"
+                    android:text="Delete Plant"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <net.cachapa.expandablelayout.ExpandableLayout android:id="@+id/expandableLayoutRename"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:el_duration="1000"
+                app:el_expanded="false"
+                app:el_parallax="0.5">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/renameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <EditText
+                    android:id="@+id/etPlantName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:hint="What is the name of the plant?"
+                    android:inputType="textPersonName"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <Button
+                    android:id="@+id/btSetNewName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Set Name"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/etPlantName" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            </net.cachapa.expandablelayout.ExpandableLayout>
+        </LinearLayout>
+
+    </net.cachapa.expandablelayout.ExpandableLayout>
+</LinearLayout>

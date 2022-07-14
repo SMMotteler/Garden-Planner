@@ -46,7 +46,6 @@ public class EditGardenActivity extends AppCompatActivity {
         setContentView(view);
 
         btSaveGarden = binding.btSaveGarden;
-        rvAddPlants = binding.rvAddPlants;
         tvGardenName = binding.tvGardenName;
         rvCurrentPlants = binding.rvCurrentPlants;
     }

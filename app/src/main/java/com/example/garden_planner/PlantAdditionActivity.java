@@ -52,7 +52,7 @@ public class PlantAdditionActivity extends AppCompatActivity {
 
         garden = getIntent().getParcelableExtra("garden");
 
-        btCreatePlant = binding.btCreatePlant;
+        btCreatePlant = binding.btSetNewName;
         etPlantName = binding.etPlantName;
         rvPlants = binding.rvPlants;
 

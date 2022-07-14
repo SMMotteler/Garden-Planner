@@ -30,6 +30,10 @@
         android:theme="@style/Theme.GardenPlanner"
         tools:targetApi="31">
         <activity
+            android:name=".ImageActivity"
+            android:theme="@style/myDialogTheme"
+            android:exported="false" />
+        <activity
             android:name=".PlantDeletionActivity"
             android:exported="false" />
         <activity

@@ -94,7 +94,7 @@ public class EditGardenActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String plantName = etPlantType.getText().toString();
 
-                if (plantName.length() < 1){
+                if (plantName.isEmpty()){
                     Toast.makeText(EditGardenActivity.this, "Please enter something into the text box!", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -129,7 +129,7 @@ public class EditGardenActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             String newPlantName = etNewPlantName.getText().toString();
-                            if (newPlantName.length() < 1) {
+                            if (newPlantName.isEmpty()) {
                                 Toast.makeText(EditGardenActivity.this, "Enter a name for your new plant!", Toast.LENGTH_SHORT).show();
                                 return;
                             }

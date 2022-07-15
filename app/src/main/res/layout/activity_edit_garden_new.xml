@@ -49,11 +49,11 @@
                 android:id="@+id/etPlantType"
                 android:layout_width="339dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginLeft="10dp"
+                android:layout_marginTop="8dp"
                 android:ems="10"
+                android:hint="Search Plant Here"
                 android:inputType="textPersonName"
-                android:text="Name"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvAddAPlant" />
 
@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:text="Save"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/clPlantInfo" />
+                app:layout_constraintTop_toBottomOf="@+id/elPlantInfo" />
 
             <Button
                 android:id="@+id/btSearch"
@@ -75,13 +75,16 @@
                 app:layout_constraintStart_toEndOf="@+id/etPlantType"
                 app:layout_constraintTop_toBottomOf="@+id/tvAddAPlant" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/clPlantInfo"
+            <net.cachapa.expandablelayout.ExpandableLayout
+                android:id="@+id/elPlantInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etPlantType">
+                app:layout_constraintTop_toBottomOf="@+id/etPlantType"
+                app:el_duration="1000"
+                app:el_expanded="false"
+                app:el_parallax="0.5">
 
                 <LinearLayout
                     android:id="@+id/llPlantInBedInfo"
@@ -130,7 +133,7 @@
                         android:background="@drawable/check" />
 
                 </LinearLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </net.cachapa.expandablelayout.ExpandableLayout>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

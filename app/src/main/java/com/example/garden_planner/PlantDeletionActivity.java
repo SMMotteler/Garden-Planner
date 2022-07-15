@@ -73,7 +73,6 @@ public class PlantDeletionActivity extends AppCompatActivity {
             }
         });
     }
-
     public void deleteReminders(PlantInBed plant){
         ParseQuery<Reminder> query = ParseQuery.getQuery(Reminder.class);
         query.whereEqualTo(Reminder.KEY_REMIND_WHICH_PLANT, plant);
@@ -104,4 +103,5 @@ public class PlantDeletionActivity extends AppCompatActivity {
         });
 
     }
+
 }

@@ -8,6 +8,7 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.garden_planner.adapters.GardenFeedAdapter;
+import com.example.garden_planner.adapters.PlantAdditionAdapter;
 import com.example.garden_planner.adapters.ReminderAdapter;
 import com.example.garden_planner.fragments.RemindersFragment;
 import com.example.garden_planner.models.FrostDateClient;
@@ -169,7 +170,7 @@ public class GardenMethodHelper {
 
     }
 
-    public static List<Plant> queryPlants(){
+    public static void queryPlants(String plantName, PlantAdditionAdapter adapter, List<Plant> plants){
         List<Plant> returnPlants = new ArrayList<>();
         ParseQuery<Plant> query = ParseQuery.getQuery(Plant.class);
 
@@ -187,15 +188,22 @@ public class GardenMethodHelper {
 
                 // for debugging purposes let's print every PlantInBed name to LogCat
                 for (Plant plant : plants) {
-                    Log.i("plantinbed Query", "name: " + plant.getName());
+                    Log.i("plantinbed Query", "name: " + plant.getName()+", looking for: "+plantName);
+                    Log.i("plantinbed Query", (plant.getName()).equals(plantName)+"");
+                    if ((plant.getName()).equals(plantName)){
+                        returnPlants.add(plant);
+                    }
+
+                    Log.i("return plant", returnPlants.size()+" middle");
                 }
 
-                // save garden's plantsInBed to list and notify adapter of new data
-                returnPlants.addAll(plants);
+                plants.clear();
+                plants.addAll(returnPlants);
+
+                adapter.notifyDataSetChanged();
 
             }
         });
-    return returnPlants;
     }
 
     public static LocalDate convertToLocalDateViaInstant(Date dateToConvert) {

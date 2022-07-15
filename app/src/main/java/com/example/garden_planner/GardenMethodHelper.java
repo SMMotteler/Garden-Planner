@@ -170,42 +170,6 @@ public class GardenMethodHelper {
 
     }
 
-    public static void queryPlants(String plantName, PlantAdditionAdapter adapter, List<Plant> plants){
-        List<Plant> returnPlants = new ArrayList<>();
-        ParseQuery<Plant> query = ParseQuery.getQuery(Plant.class);
-
-        query.addAscendingOrder("createdAt");
-
-        // start an asynchronous call for Plant objects
-        query.findInBackground(new FindCallback<Plant>() {
-            @Override
-            public void done(List<Plant> plants, ParseException e) {
-                // check for errors
-                if (e != null) {
-                    Log.e("Detail Activity", "Issue with getting plants", e);
-                    return;
-                }
-
-                // for debugging purposes let's print every PlantInBed name to LogCat
-                for (Plant plant : plants) {
-                    Log.i("plantinbed Query", "name: " + plant.getName()+", looking for: "+plantName);
-                    Log.i("plantinbed Query", (plant.getName()).equals(plantName)+"");
-                    if ((plant.getName()).equals(plantName)){
-                        returnPlants.add(plant);
-                    }
-
-                    Log.i("return plant", returnPlants.size()+" middle");
-                }
-
-                plants.clear();
-                plants.addAll(returnPlants);
-
-                adapter.notifyDataSetChanged();
-
-            }
-        });
-    }
-
     public static LocalDate convertToLocalDateViaInstant(Date dateToConvert) {
         return dateToConvert.toInstant()
                 .atZone(ZoneId.systemDefault())
@@ -217,4 +181,5 @@ public class GardenMethodHelper {
     }
 
 }
+
 

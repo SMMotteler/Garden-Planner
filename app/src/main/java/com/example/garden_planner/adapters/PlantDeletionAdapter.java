@@ -24,7 +24,10 @@ import com.example.garden_planner.R;
 import com.example.garden_planner.databinding.ItemPlantInBedBinding;
 import com.example.garden_planner.databinding.ItemPlantInBedExpandableBinding;
 import com.example.garden_planner.models.PlantInBed;
+import com.example.garden_planner.models.Reminder;
+import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
@@ -162,9 +165,6 @@ public class PlantDeletionAdapter  extends RecyclerView.Adapter<PlantDeletionAda
             btDeletePlant.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // TODO: change background of this plant object to red, add it to the removed list
-                    // TODO: if clicked again, maybe "unremove" it? (remove from removed list, and change
-                    // TODO: the background back)
                     if (((ColorDrawable)llBackground.getBackground()).getColor() == Color.RED){
                         plantsToDelete.remove(plant);
                         llBackground.setBackgroundColor(R.color.canvas);
@@ -199,6 +199,7 @@ public class PlantDeletionAdapter  extends RecyclerView.Adapter<PlantDeletionAda
                         return;
                     }
                     else{
+                        String oldName = plant.getDisplayName();
                         plant.setDisplayName(newName);
                         plant.saveInBackground(new SaveCallback() {
                             @Override
@@ -206,9 +207,40 @@ public class PlantDeletionAdapter  extends RecyclerView.Adapter<PlantDeletionAda
                                 tvDisplayName.setText(newName);
                                 expandableLayoutRename.collapse();
                                 expandableLayoutOptions.collapse();
+                                renameReminders(plant, oldName);
                             }
                         });
                     }
+                }
+            });
+        }
+
+        private void renameReminders(PlantInBed plant, String oldName) {
+
+            ParseQuery<Reminder> query = ParseQuery.getQuery(Reminder.class);
+            query.whereEqualTo(Reminder.KEY_REMIND_WHICH_PLANT, plant);
+            query.addAscendingOrder(Reminder.KEY_REMINDER_START);
+            query.include(Reminder.KEY_REMINDER_TITLE);
+
+            // start an asynchronous call for reminders
+            query.findInBackground(new FindCallback<Reminder>() {
+                @Override
+                public void done(List<Reminder> reminders, ParseException e) {
+                    // check for errors
+                    if (e != null) {
+                        Log.e("Detail Activity", "Issue with getting gardens", e);
+                        return;
+                    }
+
+                    // for debugging purposes let's print every reminder title to LogCat, then delete the reminder
+                    for (Reminder reminder : reminders) {
+                        Log.i("Reminder Query", "Reminder: " + reminder.getReminderTitle());
+                        String oldTitle = reminder.getReminderTitle();
+                        String newTitle = oldTitle.replace(oldName, plant.getDisplayName());
+                        reminder.setReminderTitle(newTitle);
+                        reminder.saveInBackground();
+                    }
+
                 }
             });
         }

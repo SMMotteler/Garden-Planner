@@ -253,34 +253,4 @@ public class EditGardenActivity extends AppCompatActivity {
 
     }
 
-    public void queryPlant(String plantName, List<Plant> plantsNow){
-        ParseQuery<Plant> query = ParseQuery.getQuery(Plant.class);
-
-        query.addAscendingOrder("createdAt");
-
-        // start an asynchronous call for PlantInBed objects
-        query.findInBackground(new FindCallback<Plant>() {
-            @Override
-            public void done(List<Plant> plants, ParseException e) {
-                plantsNow.clear();
-                // check for errors
-                if (e != null) {
-                    Log.e("Detail Activity", "Issue with getting plants", e);
-                    return;
-                }
-
-                // for debugging purposes let's print every PlantInBed name to LogCat
-                for (Plant plant : plants) {
-                    Log.i("plantinbed Query", "name: " + plant.getName());
-                    if ((plant.getName()).equals(plantName)){
-                        plantsNow.add(plant);
-                    }
-                }
-
-
-                adapter.notifyDataSetChanged();
-            }
-        });
-
-    }
 }

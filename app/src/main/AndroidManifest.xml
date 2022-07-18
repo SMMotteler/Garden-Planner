@@ -78,7 +78,7 @@
             android:name=".MainActivity"
             android:exported="false" />
         <meta-data android:name="com.parse.push.gcm_sender_id"
-            android:value="INSERT_YOUR_SENDER_ID" />
+            android:value="827635173745" />
         <service android:name="com.parse.fcm.ParseFirebaseMessagingService" android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>

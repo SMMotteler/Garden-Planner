@@ -10,6 +10,7 @@ import com.example.garden_planner.models.User;
 import com.parse.Parse;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;
+import com.parse.ParsePush;
 
 import java.util.ArrayList;
 
@@ -41,5 +42,7 @@ public class ParseApplication extends Application {
         installation.put("GCMSenderId", BuildConfig.GCM_SENDER_ID);
         installation.put("channels", channels);
         installation.saveInBackground();
+
+        ParsePush.subscribeInBackground("News");
     }
 }

@@ -26,7 +26,7 @@
         <entry key="app/src/main/res/layout/fragment_garden_detail.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_garden_feed.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_photo_dialog.xml" value="0.10790273556231003" />
-        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_reminders.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_choose_reminder_order.xml" value="0.335" />
         <entry key="app/src/main/res/layout/item_garden.xml" value="0.25" />

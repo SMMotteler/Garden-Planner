@@ -17,7 +17,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "API_ACCESS_KEY", apikeyProperties['API_ACCESS_KEY'])
-
+        buildConfigField("String", "GCM_SENDER_ID", apikeyProperties['GCM_SENDER_ID'])
     }
 
     buildTypes {
@@ -58,6 +58,7 @@ dependencies {
     implementation 'com.github.cachapa:ExpandableLayout:2.9.2'
     implementation 'org.parceler:parceler-api:1.1.12'
     annotationProcessor 'org.parceler:parceler:1.1.12'
-
+    implementation "com.github.parse-community.Parse-SDK-Android:fcm:4.0.0"
+    implementation 'com.parse.bolts:bolts-android:1.4.0'
 
 }

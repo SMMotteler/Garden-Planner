@@ -5,6 +5,7 @@ import android.app.Application;
 import com.example.garden_planner.models.Garden;
 import com.example.garden_planner.models.Plant;
 import com.example.garden_planner.models.PlantInBed;
+import com.example.garden_planner.models.PushNotification;
 import com.example.garden_planner.models.Reminder;
 import com.example.garden_planner.models.User;
 import com.parse.Parse;
@@ -25,7 +26,7 @@ public class ParseApplication extends Application {
         ParseObject.registerSubclass(Garden.class);
         ParseObject.registerSubclass(Reminder.class);
         ParseObject.registerSubclass(Plant.class);
-        // ParseObject.registerSubclass(User.class);
+        ParseObject.registerSubclass(PushNotification.class);
         ParseObject.registerSubclass(PlantInBed.class);
 
         Parse.initialize(new Parse.Configuration.Builder(this)

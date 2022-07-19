@@ -8,6 +8,7 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.garden_planner.adapters.GardenFeedAdapter;
+import com.example.garden_planner.adapters.PlantAdditionAdapter;
 import com.example.garden_planner.adapters.ReminderAdapter;
 import com.example.garden_planner.fragments.RemindersFragment;
 import com.example.garden_planner.models.FrostDateClient;
@@ -169,35 +170,6 @@ public class GardenMethodHelper {
 
     }
 
-    public static List<Plant> queryPlants(){
-        List<Plant> returnPlants = new ArrayList<>();
-        ParseQuery<Plant> query = ParseQuery.getQuery(Plant.class);
-
-        query.addAscendingOrder("createdAt");
-
-        // start an asynchronous call for Plant objects
-        query.findInBackground(new FindCallback<Plant>() {
-            @Override
-            public void done(List<Plant> plants, ParseException e) {
-                // check for errors
-                if (e != null) {
-                    Log.e("Detail Activity", "Issue with getting plants", e);
-                    return;
-                }
-
-                // for debugging purposes let's print every PlantInBed name to LogCat
-                for (Plant plant : plants) {
-                    Log.i("plantinbed Query", "name: " + plant.getName());
-                }
-
-                // save garden's plantsInBed to list and notify adapter of new data
-                returnPlants.addAll(plants);
-
-            }
-        });
-    return returnPlants;
-    }
-
     public static LocalDate convertToLocalDateViaInstant(Date dateToConvert) {
         return dateToConvert.toInstant()
                 .atZone(ZoneId.systemDefault())
@@ -209,4 +181,5 @@ public class GardenMethodHelper {
     }
 
 }
+
 

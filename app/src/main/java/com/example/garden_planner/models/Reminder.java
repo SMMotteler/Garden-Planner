@@ -76,6 +76,10 @@ public class Reminder extends ParseObject {
 
             pushNotification.setReminder(this);
 
+            pushNotification.setPushTitle(this);
+
+            pushNotification.setPushToUser(this);
+
             pushNotification.saveInBackground();
         }
 

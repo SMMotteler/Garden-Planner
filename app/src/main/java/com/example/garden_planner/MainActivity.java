@@ -21,6 +21,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.LogOutCallback;
 import com.parse.ParseACL;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParseUser;
 
 
@@ -37,6 +38,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+
+        installation.put("user", ParseUser.getCurrentUser());
+        installation.put("deviceID", installation.getDeviceToken());
+        ParseUser.getCurrentUser().put("installationID", installation.getInstallationId());
+
+        ParseUser.getCurrentUser().saveInBackground();
+        installation.saveInBackground();
+
         binding = ActivityMainBinding.inflate(getLayoutInflater());
 
         ParseACL defaultACL = new ParseACL();

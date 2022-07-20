@@ -5,10 +5,15 @@ import android.app.Application;
 import com.example.garden_planner.models.Garden;
 import com.example.garden_planner.models.Plant;
 import com.example.garden_planner.models.PlantInBed;
+import com.example.garden_planner.models.PushNotification;
 import com.example.garden_planner.models.Reminder;
 import com.example.garden_planner.models.User;
 import com.parse.Parse;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
+import com.parse.ParsePush;
+
+import java.util.ArrayList;
 
 public class ParseApplication extends Application {
 
@@ -21,7 +26,7 @@ public class ParseApplication extends Application {
         ParseObject.registerSubclass(Garden.class);
         ParseObject.registerSubclass(Reminder.class);
         ParseObject.registerSubclass(Plant.class);
-        // ParseObject.registerSubclass(User.class);
+        ParseObject.registerSubclass(PushNotification.class);
         ParseObject.registerSubclass(PlantInBed.class);
 
         Parse.initialize(new Parse.Configuration.Builder(this)
@@ -30,5 +35,15 @@ public class ParseApplication extends Application {
                 .server("https://parseapi.back4app.com")
                 .build()
         );
+
+        ArrayList<String> channels = new ArrayList<>();
+        channels.add("News");
+        ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+
+        installation.put("GCMSenderId", BuildConfig.GCM_SENDER_ID);
+        installation.put("channels", channels);
+        installation.saveInBackground();
+
+        ParsePush.subscribeInBackground("News");
     }
 }

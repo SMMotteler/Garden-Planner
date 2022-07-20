@@ -53,4 +53,16 @@
         app:layout_constraintTop_toBottomOf="@id/tvUserSince"
         />
 
+    <Button
+
+        android:id="@+id/btTestPushNotifications"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Test Push Notificatoin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btLogout"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

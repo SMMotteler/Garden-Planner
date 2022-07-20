@@ -164,8 +164,27 @@ public class GardenDetailFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        LinearLayoutManager horizontalLayoutManager
+                = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+
+        somePlants = new ArrayList<>();
+        plantInBedAdapter = new PlantInBedAdapter(getContext(), somePlants);
+
+        rvPlants.setAdapter(plantInBedAdapter);
+        rvPlants.setLayoutManager(horizontalLayoutManager);
+
         GardenMethodHelper.queryPlantInBed(somePlants, plantInBedAdapter, garden);
+
+        userReminders = new ArrayList<>();
+        reminderAdapter = new ReminderAdapter(getContext(), userReminders, rvReminders, Reminder.KEY_REMIND_WHAT, garden);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+
+        rvReminders.setAdapter(reminderAdapter);
+        rvReminders.setLayoutManager(linearLayoutManager);
+
         GardenMethodHelper.queryReminders(userReminders, reminderAdapter, Reminder.KEY_REMIND_WHAT, garden);
+
         Glide.with(getContext()).load(garden.getPhoto().getUrl()).into(ivGardenImage);
         hideGrey();
     }

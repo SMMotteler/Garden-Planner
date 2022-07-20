@@ -1,10 +1,12 @@
 package com.example.garden_planner.models;
 
+import com.example.garden_planner.GardenMethodHelper;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 @ParseClassName("Reminder")
 public class Reminder extends ParseObject {
@@ -60,5 +62,27 @@ public class Reminder extends ParseObject {
         this.setRemindWhichPlant(reminderWhichPlant);
         this.setRemindWho(ParseUser.getCurrentUser());
         this.setReminderType(reminderType);
+
+        long millisecondsBetween = reminderEnd.getTime() - reminderStart.getTime();
+
+        // this should always be equal to 7, but it's better to calculate to make sure
+        long dates = TimeUnit.DAYS.convert(millisecondsBetween, TimeUnit.MILLISECONDS);
+
+        for(long day =0; day<=dates; day++){
+            PushNotification pushNotification = new PushNotification();
+            Date pushDate = GardenMethodHelper.convertToDate(
+                    GardenMethodHelper.convertToLocalDateViaInstant(reminderStart).plusDays(day));
+            pushNotification.setPushDate(pushDate);
+
+            pushNotification.setReminder(this);
+
+            pushNotification.setPushTitle(this);
+
+            pushNotification.setPushToUser(this);
+
+            pushNotification.saveInBackground();
+        }
+
+
     }
 }

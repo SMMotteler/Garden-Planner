@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.garden_planner.GardenMethodHelper;
 import com.example.garden_planner.MainActivity;
-import com.example.garden_planner.PlantAdditionActivity;
 import com.example.garden_planner.databinding.ItemReminderBinding;
 import com.example.garden_planner.models.Garden;
 import com.example.garden_planner.models.Plant;
@@ -24,8 +23,6 @@ import com.example.garden_planner.models.PlantInBed;
 import com.example.garden_planner.models.Reminder;
 import com.parse.ParseException;
 import com.parse.ParseObject;
-import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.Date;

@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.garden_planner.R;
-import com.example.garden_planner.databinding.ItemPlantBinding;
 import com.example.garden_planner.databinding.ItemPlantOldBinding;
 import com.example.garden_planner.models.Plant;
 
@@ -80,7 +79,9 @@ public class PlantAdditionAdapter extends RecyclerView.Adapter<PlantAdditionAdap
             holder.bind(plant);
         }
     }
-
+    public List<Plant> getPlants(){
+        return plants;
+    }
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private ImageView ivPlantPic;
@@ -144,5 +145,7 @@ public class PlantAdditionAdapter extends RecyclerView.Adapter<PlantAdditionAdap
             llBackground = binding.llBackground;
             llBackground.setBackgroundColor(Color.WHITE);
         }
+
+
     }
 }

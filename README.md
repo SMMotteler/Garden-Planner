@@ -144,20 +144,27 @@ TODO: add BedSpot, Plant, and Reminder models
 * Register Screen
   * (Create/POST) Create a new user object
 * Current Garden Bed Screen
-  * (Read/GET) List out the current user's garden beds
+  * (Read/GET) List out the current user's gardens
 * Reminders Screen
   * (Read/GET) List out the current user's reminders
-* Detailed View of Garden Bed Screen
-  * (Read/GET) Display the current bed's bed spots
-* Edit Mode of Garden Bed Screen
-  * (Read/GET) Display the state of the current bed's bed spots
-  * (Edit/POST) Change the properties of the current bed's bed spots
-* Creation of Garden Bed Screen
-  * (Create/POST)
-* Plant Addition Screen
-* Plant Detail Screen
+  * (Delete/POST) Complete a reminder and delete it
+  * (Create/POST) Generate a 'harvest' reminder when a 'plant' reminder is completed
 * Profile Screen
+  * (Read/GET) Display information about the current user
+* Detailed View of Garden Screen
+  * (Read/GET) Display the details of the current garden
+  * (Read/GET) Display the reminders pertaining to the current garden
+  * (Delete/POST) Complete a reminder and delete it
+  * (Create/POST) Generate a 'harvest' reminder when a 'plant' reminder is completed
+* Edit Mode of Garden Bed Screen
+  * (Read/GET) Display the garden's current PlantInBed object
+  * (Edit/POST) Change the name of a current PlantInBed object
+  * (Create/POST) Add a new PlantInBed object to the garden
+  * (Delete/POST) Delete a current PlantInBed object
+* Creation of Garden Bed Screen
+  * (Create/POST) Create a new Garden object
+* Change Photo Screen
+  * (Edit/POST) Replace the current profile picture/garden photo
 
-- [Add list of network requests by screen ]
 - [Create basic snippets for each Parse network request]
 - [OPTIONAL: List endpoints if using existing API such as Yelp]

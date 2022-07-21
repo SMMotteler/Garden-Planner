@@ -122,22 +122,20 @@ Detailed Wireframes
 | email | String | the email associated with the user |
 | username | String | the username associated with the user |
 | password | String | the password associated with the user |
-| profilePic | file | the photo associated with the user's profile |
+| profilePic | File | the photo associated with the user's profile |
 | installationID | String | the installationId of the Installation associated with the user |
 
-**Bed**
+**Garden**
 | Property | Type | Description |
 | --- | --- | --- |
-| objectID | String | the ID internally associated with the bed |
-| createdAt | Date | the time that the User created the bed |
+| objectID | String | the ID internally associated with the garden |
+| createdAt | Date | the time that the User created the garden |
+| location | String | the address where the garden is located |
+| photo | File | the photo associated with the Garden |
+| whoseGarden | pointer to User object | the User who created the garden |
 | name | String | the name associated with the bed |
-| length | Number | how long the bed is (in feet) |
-| width | Number | how wide the bed is (in feet) |
-| latitude | Number | the latitude of the bed's location |
-| longitude | Number | the longitude of the bed's location | 
-| hardinessZone | String | the hardiness zone where the bed is located |
-| bedSpots | Array of Array (2-D Array) of Pointers to BedSpot objects | the bed spots of the bed |
-| reminders | ArrayList of Pointers to Reminder objects | the reminders pertaining to the beds that the user created |
+| latLong | GeoPoint | the latitude/longitude coordinates where the garden is located |
+| lastFrostDate | Date | the date of the last frost date of the location where the garden is located |
 
 TODO: add BedSpot, Plant, and Reminder models
 ### Networking

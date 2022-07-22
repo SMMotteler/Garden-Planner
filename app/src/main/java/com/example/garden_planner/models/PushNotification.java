@@ -23,7 +23,7 @@ public class PushNotification extends ParseObject {
 
     public String getPushTitle(){return getString(KEY_TITLE);}
 
-    public void setPushTitle(Reminder reminder){put(KEY_TITLE, reminder.getReminderTitle());}
+    public void setPushTitle(String pushTitle){put(KEY_TITLE, pushTitle);}
 
     public ParseUser getPushToUser(){return getParseUser(KEY_USER);}
 

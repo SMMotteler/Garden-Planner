@@ -1,7 +1,6 @@
 package com.example.garden_planner;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -93,8 +92,6 @@ public class EditGardenActivity extends AppCompatActivity {
                     return;
                 }
 
-                Log.i("Edit Garden", plantName);
-
                 ParseQuery<Plant> query = ParseQuery.getQuery(Plant.class);
                 query.whereEqualTo(Plant.KEY_NAME, plantName);
                 query.addAscendingOrder("createdAt");
@@ -132,8 +129,7 @@ public class EditGardenActivity extends AppCompatActivity {
                                 @Override
                                 public void done(ParseException e) {
                                     if(e != null){
-                                        Log.e("yikes", e.getMessage());
-                                        Toast.makeText(EditGardenActivity.this, "Error in making the planting reminder!", Toast.LENGTH_SHORT).show();
+                                        e.printStackTrace();
                                         return;
                                     }
 
@@ -164,8 +160,7 @@ public class EditGardenActivity extends AppCompatActivity {
                                 @Override
                                 public void done(ParseException e) {
                                     if(e != null){
-                                        Log.e("yikes", e.getMessage());
-                                        Toast.makeText(EditGardenActivity.this, "Error in making the planting reminder!", Toast.LENGTH_SHORT).show();
+                                        e.printStackTrace();
                                         return;
                                     }
 
@@ -177,12 +172,10 @@ public class EditGardenActivity extends AppCompatActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                // add search code
             }
         });
 
         btSaveGarden.setOnClickListener(new View.OnClickListener() {
-            // display loading gifs as tasks finish
             @Override
             public void onClick(View v) {
                 List<PlantInBed> plantsToDelete = deletionAdapter.getPlantsToDelete();
@@ -196,8 +189,6 @@ public class EditGardenActivity extends AppCompatActivity {
                 }
 
                 garden.saveInBackground(new SaveCallback() {
-                    // while loading, display the loading gif
-
                     @Override
                     public void done(ParseException e) {
                         finish();
@@ -220,14 +211,12 @@ public class EditGardenActivity extends AppCompatActivity {
             public void done(List<Reminder> reminders, ParseException e) {
                 // check for errors
                 if (e != null) {
-                    Log.e("Edit Garden", "Issue with getting reminders", e);
+                    e.printStackTrace();
                     return;
                 }
 
-                // for debugging purposes let's print every reminder title to LogCat, then delete the reminder
                 for (Reminder reminder : reminders) {
                     reminder.deletePushes();
-                    Log.i("Reminder Query", "Reminder: " + reminder.getReminderTitle());
                     try {
                         reminder.delete();
                     } catch (ParseException ex) {

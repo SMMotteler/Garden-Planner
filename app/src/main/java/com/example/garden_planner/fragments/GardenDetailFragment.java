@@ -60,7 +60,6 @@ public class GardenDetailFragment extends Fragment {
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        // Defines the xml file for the fragment
         binding = FragmentGardenDetailBinding.inflate(getLayoutInflater(), parent, false);
 
         View view = binding.getRoot();

@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -20,7 +19,6 @@ import androidx.core.content.FileProvider;
 
 import com.bumptech.glide.Glide;
 import com.example.garden_planner.databinding.ActivityPictureHandlerBinding;
-import com.example.garden_planner.models.BitmapScaler;
 import com.example.garden_planner.models.Garden;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -116,7 +114,6 @@ public class PictureHandlerActivity extends AppCompatActivity {
         if (intent.resolveActivity(getPackageManager()) != null) {
             // Start the image capture intent to take photo
             startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
-            Log.i(TAG, " pics :(");
         }
 
     }
@@ -126,11 +123,6 @@ public class PictureHandlerActivity extends AppCompatActivity {
         // Use `getExternalFilesDir` on Context to access package-specific directories.
         // This way, we don't need to request external read/write runtime permissions.
         File mediaStorageDir = new File(this.getExternalFilesDir(Environment.DIRECTORY_PICTURES), TAG);
-
-        // Create the storage directory if it does not exist
-        if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()){
-            Log.d(TAG, "failed to create directory");
-        }
 
         // Return the file target for the photo based on filename
         File file = new File(mediaStorageDir.getPath() + File.separator + fileName);
@@ -145,19 +137,20 @@ public class PictureHandlerActivity extends AppCompatActivity {
 
     }
 
+    public Bitmap scaleToFitWidth(Bitmap b, int width)
+    {
+        float factor = width / (float) b.getWidth();
+        return Bitmap.createScaledBitmap(b, width, (int) (b.getHeight() * factor), true);
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Bitmap rawTakenImage = null;
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                // by this point we have the camera photo on disk
-                // Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
-                // resize the photo
                 Uri takenPhotoUri = Uri.fromFile(getPhotoFileUri(photoFileName));
-// by this point we have the camera photo on disk
                 rawTakenImage = BitmapFactory.decodeFile(takenPhotoUri.getPath());
-// See BitmapScaler.java: https://gist.github.com/nesquena/3885707fd3773c09f1bb
 
             } else { // Result was a failure
                 Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
@@ -187,13 +180,10 @@ public class PictureHandlerActivity extends AppCompatActivity {
             // while the size of the bitmap is larger than 10 MB, shrink it to 1/4 of its current size
             // - once it is smaller than 10 MB, it is acceptable to be saved to the imageview
             while (resizedBitmap.getByteCount() >= 1000000 * 10) {
-                resizedBitmap = BitmapScaler.scaleToFitWidth(rawTakenImage, resizedBitmap.getWidth()/2);
+                resizedBitmap = scaleToFitWidth(rawTakenImage, resizedBitmap.getWidth()/2);
             }
-// Configure byte output stream
             ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-// Compress the image further
             resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 40, bytes);
-// Create a new file for the resized bitmap (`getPhotoFileUri` defined above)
             File resizedFile = getPhotoFileUri(photoFileName + "_resized");
             try {
                 resizedFile.createNewFile();
@@ -206,7 +196,6 @@ public class PictureHandlerActivity extends AppCompatActivity {
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-// Write the bytes of the bitmap to file
             try {
                 fos.write(bytes.toByteArray());
             } catch (IOException e) {
@@ -218,11 +207,9 @@ public class PictureHandlerActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            // reveal the submission views
             tvYourPhoto.setVisibility(View.VISIBLE);
             btUpload.setVisibility(View.VISIBLE);
 
-            // Load the resized image into a preview
             Bitmap takenImage = BitmapFactory.decodeFile(resizedFile.getAbsolutePath());
 
             // depending on which photo is uploaded, we reveal the corresponding image preview
@@ -230,14 +217,11 @@ public class PictureHandlerActivity extends AppCompatActivity {
             if (garden != null) {
                 ivGardenPhoto.setVisibility(View.VISIBLE);
                 Glide.with(this).load(takenImage).into(ivGardenPhoto);
-                Log.i(TAG, "bitmap size: "+BitmapFactory.decodeFile(resizedFile.getAbsolutePath()).getByteCount());
             }
             else{
                 ivPhotoToUpload.setVisibility(View.VISIBLE);
                 Glide.with(this).load(takenImage).circleCrop().into(ivPhotoToUpload);
-                Log.i(TAG, "bitmap size: "+BitmapFactory.decodeFile(resizedFile.getAbsolutePath()).getByteCount());
             }
-            Log.i(TAG, "original size: "+rawTakenImage.getByteCount());
 
             btUpload.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -248,8 +232,8 @@ public class PictureHandlerActivity extends AppCompatActivity {
                             @Override
                             public void done(ParseException e) {
                                 if(e != null){
-                                    Log.e("yikes", e.getMessage());
-                                    Toast.makeText(PictureHandlerActivity.this, "Error in changing profile pic!", Toast.LENGTH_SHORT).show();
+                                    e.printStackTrace();
+                                    Toast.makeText(PictureHandlerActivity.this, "Error in changing garden photo!", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
                                 finish();
@@ -262,7 +246,7 @@ public class PictureHandlerActivity extends AppCompatActivity {
                             @Override
                             public void done(ParseException e) {
                                 if(e != null){
-                                    Log.e("yikes", e.getMessage());
+                                    e.printStackTrace();
                                     Toast.makeText(PictureHandlerActivity.this, "Error in changing profile pic!", Toast.LENGTH_SHORT).show();
                                     return;
                                 }

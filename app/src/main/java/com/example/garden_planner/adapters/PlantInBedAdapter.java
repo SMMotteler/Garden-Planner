@@ -1,11 +1,9 @@
 package com.example.garden_planner.adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,7 +24,6 @@ public class PlantInBedAdapter extends RecyclerView.Adapter<PlantInBedAdapter.Vi
     ItemPlantInBedBinding binding;
 
     public PlantInBedAdapter(Context context, List<PlantInBed> plants){
-        Log.i(TAG, "making PlantInBedAdapter");
         this.context = context;
         this.plants = plants;
     }
@@ -34,8 +31,6 @@ public class PlantInBedAdapter extends RecyclerView.Adapter<PlantInBedAdapter.Vi
     @NonNull
     @Override
     public PlantInBedAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Log.i(TAG, "onCreateViewHolder ");
-
         binding = ItemPlantInBedBinding.inflate( LayoutInflater.from(context), parent, false);
         View view = binding.getRoot();
 
@@ -44,7 +39,7 @@ public class PlantInBedAdapter extends RecyclerView.Adapter<PlantInBedAdapter.Vi
 
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {        Log.i(TAG, "onBindViewHolder " + position);
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         PlantInBed plant = plants.get(position);
         holder.bind(plant);
     }
@@ -80,10 +75,13 @@ public class PlantInBedAdapter extends RecyclerView.Adapter<PlantInBedAdapter.Vi
 
             tvPlantName.setText(plant.getDisplayName());
 
+            // Note - I know this looks like it should be able to be condensed to one if statement, but
+            // if a reminder doesn't have one of the first two keys, then it will throw an error when it checks
+            // the following key if it was in a single if statement - this setup prevents any crashes
             if (plant.has(PlantInBed.KEY_TYPE)){
-            if (plant.getPlantType().has("photo")){
-                Glide.with(context).load(plant.getPlantType().getPhoto().getUrl()).into(ivPlantPic);
-            }
+                if (plant.getPlantType().has("photo")){
+                    Glide.with(context).load(plant.getPlantType().getPhoto().getUrl()).into(ivPlantPic);
+                }
             }
 
         }

@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
@@ -29,7 +30,7 @@ import com.parse.FunctionCallback;
 import com.parse.ParseCloud;
 import java.util.HashMap;
 
-public class ProfileFragment extends BaseFragment {
+public class ProfileFragment extends Fragment {
 
     private FragmentProfileBinding binding;
     private Button btLogout;
@@ -44,7 +45,6 @@ public class ProfileFragment extends BaseFragment {
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        // Defines the xml file for the fragment
         binding = FragmentProfileBinding.inflate(getLayoutInflater(), parent, false);
 
         View view = binding.getRoot();
@@ -76,7 +76,7 @@ public class ProfileFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 final HashMap<String, String> params = new HashMap<>();
-// Calling the cloud code function
+                // Calling the cloud code function
                 ParseCloud.callFunctionInBackground("pushsample", params, new FunctionCallback<Object>() {
                     @Override
                     public void done(Object response, ParseException exc) {

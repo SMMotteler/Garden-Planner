@@ -2,7 +2,6 @@ package com.example.garden_planner;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,7 +29,6 @@ import javax.annotation.Nullable;
 public class GardenMethodHelper {
 
     public static void goMainActivity(Activity activity) {
-        // Toast.makeText(activity.getApplicationContext(), "Logged in!", Toast.LENGTH_SHORT).show();
         Intent i = new Intent(activity.getApplicationContext(), MainActivity.class);
         activity.startActivity(i);
         activity.finish();
@@ -41,7 +39,7 @@ public class GardenMethodHelper {
             @Override
             public void done(ParseUser user, ParseException e) {
                 if (e != null){
-                    Toast.makeText(activity, "Issue with login :(", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, "Issue with login!", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 goMainActivity(activity);
@@ -70,15 +68,11 @@ public class GardenMethodHelper {
             public void done(List<Garden> gardens, ParseException e) {
                 // check for errors
                 if (e != null) {
-                    Log.e("Detail Activity", "Issue with getting gardens", e);
+                    e.printStackTrace();
                     return;
                 }
 
                 // for debugging purposes let's print every garden name to LogCat
-                for (Garden garden : gardens) {
-                    Log.i("Garden Query", "Garden: " + garden.getName());
-                }
-
                 // save user garden to list and notify adapter of new data
                 userGardens.clear();
                 userGardens.addAll(gardens);
@@ -109,13 +103,8 @@ public class GardenMethodHelper {
             public void done(List<Reminder> reminders, ParseException e) {
                 // check for errors
                 if (e != null) {
-                    Log.e("Detail Activity", "Issue with getting gardens", e);
+                    e.printStackTrace();
                     return;
-                }
-
-                // for debugging purposes let's print every reminder title to LogCat
-                for (Reminder reminder : reminders) {
-                    Log.i("Reminder Query", "Reminder: " + reminder.getReminderTitle());
                 }
 
                 // save user's reminders to list and notify adapter of new data
@@ -144,13 +133,8 @@ public class GardenMethodHelper {
             public void done(List<PlantInBed> plantsInBed, ParseException e) {
                 // check for errors
                 if (e != null) {
-                    Log.e("Detail Activity", "Issue with getting plants", e);
+                    e.printStackTrace();
                     return;
-                }
-
-                // for debugging purposes let's print every PlantInBed name to LogCat
-                for (PlantInBed plantInBed : plantsInBed) {
-                    Log.i("plantinbed Query", "name: " + plantInBed.getDisplayName());
                 }
 
                 // save garden's plantsInBed to list and notify adapter of new data

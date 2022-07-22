@@ -2,7 +2,6 @@ package com.example.garden_planner;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,7 +15,6 @@ import com.parse.ParseUser;
 public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding binding;
 
-    private static final String TAG = "LoginActivity";
     EditText etUsername;
     EditText etPassword;
     Button btLogin;
@@ -35,7 +33,6 @@ public class LoginActivity extends AppCompatActivity {
             GardenMethodHelper.goMainActivity(LoginActivity.this);
         }
 
-        // find the views and reference them here
         etUsername = binding.etUsername;
         etPassword = binding.etPassword;
         btLogin = binding.btLogin;
@@ -46,7 +43,6 @@ public class LoginActivity extends AppCompatActivity {
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i(TAG, "onClick login button");
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
                 GardenMethodHelper.loginUser(username, password, LoginActivity.this);
@@ -56,7 +52,6 @@ public class LoginActivity extends AppCompatActivity {
         btRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i(TAG, "onClick register button");
                 goRegister();
             }
         });

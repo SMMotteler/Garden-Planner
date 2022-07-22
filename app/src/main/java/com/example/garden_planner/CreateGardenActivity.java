@@ -1,9 +1,7 @@
 package com.example.garden_planner;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.AnimationDrawable;
@@ -11,7 +9,6 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,7 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -77,7 +73,6 @@ public class CreateGardenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityCreateGardenBinding.inflate(getLayoutInflater());
         frostDateClient = new FrostDateClient();
-        // final Date frostDate;
 
         View view = binding.getRoot();
         setContentView(view);
@@ -127,12 +122,9 @@ public class CreateGardenActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                        Log.e("create garden", response, throwable);
-                        // Toast.makeText(CreateGardenActivity.this, "Error with finding location! Please try again", Toast.LENGTH_SHORT).show();
+                        throwable.printStackTrace();
                     }
                 });
-
-                Log.i("CreateGardenActivity", "lat/long: "+latitude+" "+longitude);
 
                 Garden garden = new Garden();
                 garden.setLocation(gardenLocation);
@@ -185,7 +177,7 @@ public class CreateGardenActivity extends AppCompatActivity {
                                             year = String.valueOf(today.getYear()+1900);
                                         }
                                         String lastFrostDateDay = lastFrostDateInfo.getString("prob_50")+year;
-                                        // Log.i("FROST DATE", "this is the frost date "+frostDate.toString());
+
                                         // return the last frost date
                                         SimpleDateFormat formatter = new SimpleDateFormat("MMddyyyy");
                                         frostDate = formatter.parse(lastFrostDateDay);
@@ -194,7 +186,6 @@ public class CreateGardenActivity extends AppCompatActivity {
                                             @Override
                                             public void done(ParseException e) {
                                                 if(e != null){
-                                                    Log.e("yikes", e.getMessage());
                                                     Toast.makeText(CreateGardenActivity.this, "Error in making a garden!!", Toast.LENGTH_SHORT).show();
                                                     return;
                                                 }
@@ -202,26 +193,24 @@ public class CreateGardenActivity extends AppCompatActivity {
                                             }
                                         });
                                     } catch (JSONException | java.text.ParseException e) {
-                                        Log.e("FROST DATE", e.getMessage());
                                         e.printStackTrace();
                                     }
                                 }
 
                                 @Override
                                 public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                                    Log.e("initializeGardenInformation", "error with getting frost dates", throwable);
+                                    throwable.printStackTrace();
                                 }
                             });
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Log.e("FROST DATE", e.getMessage());
 
                         }
                     }
 
                     @Override
                     public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                        Log.e("initializeGardenInformation", "error with getting stations", throwable);
+                        throwable.printStackTrace();
                     }
                 });
 
@@ -262,7 +251,6 @@ public class CreateGardenActivity extends AppCompatActivity {
                                 latitude = locationResult.getLocations().get(index).getLatitude();
                                 longitude = locationResult.getLocations().get(index).getLongitude();
 
-                                Log.i("create garden", "latitude "+latitude+" longitude "+longitude);
 
                                 geocodingClient.reverseGeocoding(latitude, longitude, new JsonHttpResponseHandler() {
                                     @Override
@@ -278,7 +266,7 @@ public class CreateGardenActivity extends AppCompatActivity {
 
                                     @Override
                                     public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                                        Log.e("create garden", response, throwable);
+                                        throwable.printStackTrace();
                                     }
                                 });
                                 makeLoadingGone();
@@ -325,7 +313,6 @@ public class CreateGardenActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<LocationSettingsResponse> task) {
                 try {
                     LocationSettingsResponse response = task.getResult(ApiException.class);
-                    Log.i("gps", "gps is on");
                 } catch (ApiException e) {
                     switch (e.getStatusCode()){
                         case LocationSettingsStatusCodes
@@ -346,21 +333,6 @@ public class CreateGardenActivity extends AppCompatActivity {
 
             }
         });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(requestCode == REQUEST_CHECK_SETTING){
-            switch (resultCode){
-                case Activity.RESULT_OK:
-                    Toast.makeText(this, "gps is turned on", Toast.LENGTH_SHORT).show();
-                    break;
-                case Activity.RESULT_CANCELED:
-                    Toast.makeText(this, "GPS needs to be turned on", Toast.LENGTH_SHORT).show();
-            }
-        }
     }
 
     public void makeLoadingGone(){

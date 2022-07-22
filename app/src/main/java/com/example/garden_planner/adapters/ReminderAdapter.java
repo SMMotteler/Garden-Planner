@@ -1,7 +1,6 @@
 package com.example.garden_planner.adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +39,6 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
     ItemReminderBinding binding;
 
     public ReminderAdapter(Context context, List<Reminder> reminders, RecyclerView recyclerView, String key, ParseObject whatQueryBy) {
-        Log.i(TAG, "making ReminderAdapter");
         this.context = context;
         this.reminders = reminders;
         this.recyclerView = recyclerView;
@@ -51,8 +49,6 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
     @NonNull
     @Override
     public ReminderAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Log.i(TAG, "onCreateViewHolder ");
-
         binding = ItemReminderBinding.inflate(LayoutInflater.from(context), parent, false);
         View view = binding.getRoot();
 
@@ -61,9 +57,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ReminderAdapter.ViewHolder holder, int position) {
-        Log.i(TAG, "onBindViewHolder " + position);
         Reminder reminder = reminders.get(position);
-        Log.i(TAG, "reminder " + reminder.getReminderTitle());
         holder.bind(reminder);
     }
 
@@ -109,7 +103,6 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
         }
 
         public void bind(Reminder reminder) {
-            Log.i(TAG, "binding " + reminder.getReminderTitle());
             tvGardenName = binding.tvGardenName;
             tvToDoDate = binding.tvToDoDate;
             ivPlantPic = binding.ivPlantPic;
@@ -118,7 +111,6 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
             tvReminderText = binding.tvReminderText;
             completeReminderButton = binding.completeReminderButton;
 
-            Log.i(TAG, "binding " + reminder.getReminderTitle());
 
             tvGardenName.setText(reminder.getRemindWhat().getName());
 

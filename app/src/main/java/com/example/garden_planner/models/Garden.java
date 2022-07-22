@@ -34,12 +34,6 @@ public class Garden extends ParseObject {
 
     public void setPlants(List<PlantInBed> plants){ put(KEY_PLANTS, plants);}
 
-    public void addPlant(PlantInBed plant){
-        List<PlantInBed> currentPlants = getPlants();
-        currentPlants.add(plant);
-        setPlants(currentPlants);
-    }
-
     public String getLocation(){return getString(KEY_LOCATION);}
 
     public void setLocation(String location){put(KEY_LOCATION, location);}

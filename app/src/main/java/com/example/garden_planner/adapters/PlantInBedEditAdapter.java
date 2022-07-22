@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +43,6 @@ public class PlantInBedEditAdapter extends RecyclerView.Adapter<PlantInBedEditAd
     ItemPlantInBedExpandableBinding binding;
 
     public PlantInBedEditAdapter(Context context, List<PlantInBed> plants){
-        Log.i(TAG, "making PlantInBedAdapter");
         this.context = context;
         this.plants = plants;
         plantsToDelete = new ArrayList<>();
@@ -53,8 +51,6 @@ public class PlantInBedEditAdapter extends RecyclerView.Adapter<PlantInBedEditAd
     @NonNull
     @Override
     public PlantInBedEditAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Log.i(TAG, "onCreateViewHolder ");
-
         binding = ItemPlantInBedExpandableBinding.inflate( LayoutInflater.from(context), parent, false);
         View view = binding.getRoot();
 
@@ -214,13 +210,12 @@ public class PlantInBedEditAdapter extends RecyclerView.Adapter<PlantInBedEditAd
                 public void done(List<Reminder> reminders, ParseException e) {
                     // check for errors
                     if (e != null) {
-                        Log.e("renaming", "Issue with getting reminders", e);
+                        e.printStackTrace();
                         return;
                     }
 
                     // for debugging purposes let's print every reminder title to LogCat, then delete the reminder
                     for (Reminder reminder : reminders) {
-                        Log.i("Reminder Query", "Reminder: " + reminder.getReminderTitle());
                         String oldTitle = reminder.getReminderTitle();
                         String newTitle = oldTitle.replace(oldName, plant.getDisplayName());
                         reminder.setReminderTitle(newTitle);

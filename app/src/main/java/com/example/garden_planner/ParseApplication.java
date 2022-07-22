@@ -20,7 +20,6 @@ public class ParseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
         // Register your parse models
         ParseObject.registerSubclass(Garden.class);
         ParseObject.registerSubclass(Reminder.class);

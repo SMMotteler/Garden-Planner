@@ -1,12 +1,9 @@
 package com.example.garden_planner.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -31,12 +28,10 @@ public class RemindersFragment extends Fragment {
     List<Reminder> userReminders;
 
     public RemindersFragment() {
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        // Defines the xml file for the fragment
         binding = FragmentRemindersBinding.inflate(getLayoutInflater(), parent, false);
 
         View view = binding.getRoot();

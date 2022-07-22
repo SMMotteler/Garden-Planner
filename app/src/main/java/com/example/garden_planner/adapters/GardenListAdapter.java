@@ -1,7 +1,6 @@
 package com.example.garden_planner.adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +31,6 @@ public class GardenListAdapter extends RecyclerView.Adapter<GardenListAdapter.Vi
     ItemGardenBinding binding;
 
     public GardenListAdapter(Context context, List<Garden> gardens){
-        Log.i(TAG, "making GardenFeedAdapter");
         this.context = context;
         this.gardens = gardens;
 
@@ -41,8 +39,6 @@ public class GardenListAdapter extends RecyclerView.Adapter<GardenListAdapter.Vi
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Log.i(TAG, "onCreateViewHolder ");
-
         binding = ItemGardenBinding.inflate( LayoutInflater.from(context), parent, false);
         View view = binding.getRoot();
 
@@ -51,9 +47,7 @@ public class GardenListAdapter extends RecyclerView.Adapter<GardenListAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull GardenListAdapter.ViewHolder holder, int position) {
-        Log.i(TAG, "onBindViewHolder " + position);
         Garden garden = gardens.get(position);
-        Log.i(TAG, "garden " + garden.getName());
         holder.bind(garden);
     }
 
@@ -74,7 +68,6 @@ public class GardenListAdapter extends RecyclerView.Adapter<GardenListAdapter.Vi
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private ImageView ivGardenIcon;
         private TextView tvGardenName;
         private ImageView ivGardenImage;
         private RecyclerView rvPlants;
@@ -88,11 +81,9 @@ public class GardenListAdapter extends RecyclerView.Adapter<GardenListAdapter.Vi
 
         @Override
         public void onClick(View view) {
-            Log.i("click", "click");
             int position = getAdapterPosition();
             if (position != RecyclerView.NO_POSITION) {
                 Garden garden = gardens.get(position);
-                Log.i("clicked", "clicked "+garden.getName());
                 MainActivity activity = (MainActivity) context;
                 activity.goToDetailGardenView(garden);
             }
@@ -101,9 +92,6 @@ public class GardenListAdapter extends RecyclerView.Adapter<GardenListAdapter.Vi
 
         public void bind(Garden garden){
 
-            Log.i(TAG, "binding "+garden.getName());
-
-            ivGardenIcon = binding.ivGardenIcon;
             tvGardenName = binding.tvGardenName;
             ivGardenImage = binding.ivGardenImage;
             rvPlants = binding.rvPlants;

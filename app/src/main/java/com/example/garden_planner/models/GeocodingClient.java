@@ -1,7 +1,5 @@
 package com.example.garden_planner.models;
 
-import android.util.Log;
-
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.garden_planner.BuildConfig;
@@ -35,8 +33,7 @@ public class GeocodingClient {
     public void reverseGeocoding(double latitude, double longitude, JsonHttpResponseHandler handler){
 
             String url = getApiUrl("reverse?access_key="+ACCESS_KEY+"&query=");
-            Log.i("Geocoding client", url + latitude+","+longitude+"&limit=1");
-            client.get(url + latitude+","+longitude, handler);
+            client.get(url + latitude+","+longitude+"&limit=1", handler);
 
     }
 }

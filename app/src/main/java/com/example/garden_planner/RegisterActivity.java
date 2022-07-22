@@ -1,7 +1,6 @@
 package com.example.garden_planner;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,7 +47,6 @@ public class RegisterActivity extends AppCompatActivity {
         btCreateAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i(TAG, "onClick create button");
                 String email = etEmail.getText().toString();
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
@@ -62,8 +60,6 @@ public class RegisterActivity extends AppCompatActivity {
     private void makeAccount(String email, String username, String password, String checkPassword) {
         if (!checkPassword.equals(password)) {
             Toast.makeText(RegisterActivity.this, "The passwords aren't equal to each other! Retype your password.", Toast.LENGTH_SHORT).show();
-            Log.i(TAG, checkPassword);
-            Log.i(TAG, password);
             return;
         }
         registerAccount(email, username, password);
@@ -79,7 +75,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void done(ParseException e) {
                 if (e != null){
                     Toast.makeText(RegisterActivity.this, "Issue with registering :(", Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "Issue with register", e);
+                    e.printStackTrace();
                     return;
                 }
                 try {
@@ -87,7 +83,6 @@ public class RegisterActivity extends AppCompatActivity {
                     GardenMethodHelper.loginUser(username, password, RegisterActivity.this);
                 } catch (ParseException i) {
                     e.printStackTrace();
-                    Log.e(TAG, "couldn't make account", i);
                     Toast.makeText(RegisterActivity.this, "Issue with creating account :(", Toast.LENGTH_SHORT).show();
                     return;
                 }

@@ -35,7 +35,6 @@ public class GardenFeedFragment extends Fragment {
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        // Defines the xml file for the fragment
         binding = FragmentGardenFeedBinding.inflate(getLayoutInflater(), parent, false);
 
         View view = binding.getRoot();

@@ -1,7 +1,5 @@
 package com.example.garden_planner.models;
 
-import android.util.Log;
-
 import com.example.garden_planner.GardenMethodHelper;
 import com.parse.FindCallback;
 import com.parse.ParseClassName;
@@ -99,7 +97,7 @@ public class Reminder extends ParseObject {
             @Override
             public void done(List<PushNotification> pushNotifications, ParseException e) {
                 if (e != null) {
-                    Log.e("Detail Activity", "Issue with getting pushes", e);
+                    e.printStackTrace();
                     return;
                 }
                 for (PushNotification notification : pushNotifications){

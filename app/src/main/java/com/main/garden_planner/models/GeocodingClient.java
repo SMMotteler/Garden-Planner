@@ -24,7 +24,7 @@ public class GeocodingClient {
     public void forwardGeocoding(String address, JsonHttpResponseHandler handler) {
         try {
             String url = getApiUrl("forward?access_key="+ACCESS_KEY+"&query=");
-            client.get(url + URLEncoder.encode(address, "utf-8")+"&limit=1", handler);
+            client.get(url + URLEncoder.encode(address, "utf-8"), handler);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

@@ -19,7 +19,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     private ActivityRegisterBinding binding;
 
-    public static final String TAG = "RegisterActivity";
     EditText etEmail;
     EditText etUsername;
     EditText etPassword;

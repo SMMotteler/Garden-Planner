@@ -52,7 +52,7 @@ public class GardenMethodHelper {
     public static String profilePic(ParseUser user){
         ParseFile image = (ParseFile)user.get("profilePic");
         if (image == null){
-            return "android.resource://com.example.parsetagram/"+ R.drawable.default_pic;
+            return "android.resource://com.main.Garden-Planner/"+ R.drawable.default_pic;
         }
         return image.getUrl();
     }

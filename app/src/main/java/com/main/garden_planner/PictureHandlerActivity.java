@@ -20,7 +20,6 @@ import androidx.core.content.FileProvider;
 
 import com.bumptech.glide.Glide;
 import com.example.garden_planner.databinding.ActivityPictureHandlerBinding;
-import com.main.garden_planner.models.BitmapScaler;
 import com.main.garden_planner.models.Garden;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -97,24 +96,32 @@ public class PictureHandlerActivity extends AppCompatActivity {
             }
         });
     }
-
+    public Bitmap scaleToFitWidth(Bitmap b, int width)
+    {
+        float factor = width / (float) b.getWidth();
+        return Bitmap.createScaledBitmap(b, width, (int) (b.getHeight() * factor), true);
+    }
     public void launchCamera() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         photoFile = getPhotoFileUri(photoFileName);
 
-        Uri fileProvider = FileProvider.getUriForFile(this, "com.codepath.fileprovider.GardenPlanner", photoFile);
+        Uri fileProvider = FileProvider.getUriForFile(this, "com.codepath.fileprovider.main.GardenPlanner", photoFile);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
 
         if (intent.resolveActivity(getPackageManager()) != null) {
             // Start the image capture intent to take photo
             startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
-            Log.i(TAG, " pics :(");
         }
 
     }
 
     public File getPhotoFileUri(String fileName) {
         File mediaStorageDir = new File(this.getExternalFilesDir(Environment.DIRECTORY_PICTURES), TAG);
+
+        if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()){
+            Log.d(TAG, "failed to create directory");
+        }
+
 
         File file = new File(mediaStorageDir.getPath() + File.separator + fileName);
 
@@ -163,7 +170,7 @@ public class PictureHandlerActivity extends AppCompatActivity {
         if (rawTakenImage != null){
             Bitmap resizedBitmap = rawTakenImage;
             while (resizedBitmap.getByteCount() >= 1000000 * 10) {
-                resizedBitmap = BitmapScaler.scaleToFitWidth(rawTakenImage, resizedBitmap.getWidth()/2);
+                resizedBitmap = scaleToFitWidth(rawTakenImage, resizedBitmap.getWidth()/2);
             }
             ByteArrayOutputStream bytes = new ByteArrayOutputStream();
             resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 40, bytes);

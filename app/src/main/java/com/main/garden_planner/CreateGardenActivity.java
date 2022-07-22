@@ -126,6 +126,7 @@ public class CreateGardenActivity extends AppCompatActivity {
                     }
                 });
 
+                btCreate.setClickable(false);
                 Garden garden = new Garden();
                 garden.setLocation(gardenLocation);
                 garden.setName(gardenName);
@@ -257,7 +258,7 @@ public class CreateGardenActivity extends AppCompatActivity {
                                     public void onSuccess(int statusCode, Headers headers, JSON json) {
                                         try {
                                             String address = json.jsonObject.getJSONArray("data")
-                                                    .getJSONObject(1).getString("label");
+                                                    .getJSONObject(0).getString("label");
                                             etGardenLocation.setText(address);
                                         } catch (JSONException e) {
                                             e.printStackTrace();
@@ -280,10 +281,7 @@ public class CreateGardenActivity extends AppCompatActivity {
 
             }else{
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-                // so the user doesn't have to click the button again if they want to allow the app to access their location
-                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-                    findLocation();
-                }
+
             }
         }
     }

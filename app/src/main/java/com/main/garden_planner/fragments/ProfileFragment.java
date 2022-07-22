@@ -115,17 +115,4 @@ public class ProfileFragment extends Fragment {
 
     }
 
-    private void alertDisplayer(String title,String message){
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
-                .setTitle(title)
-                .setMessage(message)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-        AlertDialog ok = builder.create();
-        ok.show();
-    }
 }

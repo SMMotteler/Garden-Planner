@@ -39,9 +39,7 @@
             android:name=".ImageActivity"
             android:theme="@style/myDialogTheme"
             android:exported="false" />
-        <activity
-            android:name=".PlantDeletionActivity"
-            android:exported="false" />
+
         <activity
             android:name=".PictureHandlerActivity"
             android:exported="false" />

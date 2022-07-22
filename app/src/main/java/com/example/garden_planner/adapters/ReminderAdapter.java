@@ -178,6 +178,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
 
                     // delete the completed reminder
                     try {
+                        reminder.deletePushes();
                         reminder.delete();
                     } catch (ParseException e) {
                         e.printStackTrace();

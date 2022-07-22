@@ -10,6 +10,7 @@
         <entry key="app/src/main/res/drawable/loading_animation.xml" value="0.235" />
         <entry key="app/src/main/res/drawable/login_register_gradient.xml" value="0.207" />
         <entry key="app/src/main/res/drawable/new_gradient.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/old_gradient.xml" value="0.1" />
         <entry key="app/src/main/res/font/odin.xml" value="0.2713541666666667" />
         <entry key="app/src/main/res/font/stardew_font.xml" value="0.18802083333333333" />
         <entry key="app/src/main/res/layout/activity_create_garden.xml" value="0.29034779866536453" />

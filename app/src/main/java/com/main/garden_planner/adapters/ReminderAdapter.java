@@ -1,4 +1,4 @@
-package com.example.garden_planner.adapters;
+package com.main.garden_planner.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,13 +13,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.garden_planner.GardenMethodHelper;
-import com.example.garden_planner.MainActivity;
 import com.example.garden_planner.databinding.ItemReminderBinding;
-import com.example.garden_planner.models.Garden;
-import com.example.garden_planner.models.Plant;
-import com.example.garden_planner.models.PlantInBed;
-import com.example.garden_planner.models.Reminder;
+import com.main.garden_planner.GardenMethodHelper;
+import com.main.garden_planner.MainActivity;
+import com.main.garden_planner.models.Garden;
+import com.main.garden_planner.models.Plant;
+import com.main.garden_planner.models.PlantInBed;
+import com.main.garden_planner.models.Reminder;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 

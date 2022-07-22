@@ -1,4 +1,4 @@
-package com.example.garden_planner.fragments;
+package com.main.garden_planner.fragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -18,9 +18,9 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
-import com.example.garden_planner.GardenMethodHelper;
-import com.example.garden_planner.MainActivity;
-import com.example.garden_planner.PictureHandlerActivity;
+import com.main.garden_planner.GardenMethodHelper;
+import com.main.garden_planner.MainActivity;
+import com.main.garden_planner.PictureHandlerActivity;
 import com.example.garden_planner.databinding.FragmentProfileBinding;
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -34,7 +34,6 @@ public class ProfileFragment extends Fragment {
 
     private FragmentProfileBinding binding;
     private Button btLogout;
-    private Button btTestPushNotifications;
     private TextView tvUsername;
     private TextView tvUserSince;
     private ImageView ivProfilePic;
@@ -59,37 +58,14 @@ public class ProfileFragment extends Fragment {
         tvUsername = binding.tvUsername;
         tvUserSince = binding.tvUserSince;
         ivProfilePic = binding.ivProfilePic;
-        btTestPushNotifications = binding.btTestPushNotifications;
 
         // prevents buttons from appearing before anything else
         btLogout.setVisibility(View.GONE);
-        btTestPushNotifications.setVisibility(View.GONE);
 
         btLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 goLoginActivity();
-            }
-        });
-
-        btTestPushNotifications.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final HashMap<String, String> params = new HashMap<>();
-                // Calling the cloud code function
-                ParseCloud.callFunctionInBackground("pushsample", params, new FunctionCallback<Object>() {
-                    @Override
-                    public void done(Object response, ParseException exc) {
-                        if(exc == null) {
-                            // The function was executed, but it's interesting to check its response
-                            alertDisplayer("Successful Push","Check on your phone the notifications to confirm!");
-                        }
-                        else {
-                            // Something went wrong
-                            Toast.makeText(getContext(), exc.getMessage(), Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
             }
         });
 
@@ -100,7 +76,6 @@ public class ProfileFragment extends Fragment {
                 displayUserInfo();
                 if(user.hasSameId(ParseUser.getCurrentUser())){
                     btLogout.setVisibility(View.VISIBLE);
-                    btTestPushNotifications.setVisibility(View.VISIBLE);
                     ivProfilePic.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {

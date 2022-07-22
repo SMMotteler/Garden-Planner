@@ -1,4 +1,4 @@
-package com.example.garden_planner.adapters;
+package com.main.garden_planner.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -15,15 +15,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.garden_planner.R;
 import com.example.garden_planner.databinding.ItemPlantInBedExpandableBinding;
-import com.example.garden_planner.models.PlantInBed;
-import com.example.garden_planner.models.PushNotification;
-import com.example.garden_planner.models.Reminder;
+import com.main.garden_planner.models.PlantInBed;
+import com.main.garden_planner.models.PushNotification;
+import com.main.garden_planner.models.Reminder;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;

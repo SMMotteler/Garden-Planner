@@ -1,4 +1,4 @@
-package com.example.garden_planner;
+package com.main.garden_planner;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,12 +11,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.garden_planner.R;
 import com.example.garden_planner.databinding.ActivityMainBinding;
-import com.example.garden_planner.fragments.GardenDetailFragment;
-import com.example.garden_planner.fragments.GardenFeedFragment;
-import com.example.garden_planner.fragments.ProfileFragment;
-import com.example.garden_planner.fragments.RemindersFragment;
-import com.example.garden_planner.models.Garden;
+import com.main.garden_planner.fragments.GardenDetailFragment;
+import com.main.garden_planner.fragments.GardenFeedFragment;
+import com.main.garden_planner.fragments.ProfileFragment;
+import com.main.garden_planner.fragments.RemindersFragment;
+import com.main.garden_planner.models.Garden;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.LogOutCallback;
 import com.parse.ParseACL;

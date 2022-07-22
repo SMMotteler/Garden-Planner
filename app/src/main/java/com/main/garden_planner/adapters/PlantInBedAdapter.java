@@ -1,4 +1,4 @@
-package com.example.garden_planner.adapters;
+package com.main.garden_planner.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.garden_planner.databinding.ItemPlantInBedBinding;
-import com.example.garden_planner.models.PlantInBed;
+import com.main.garden_planner.models.PlantInBed;
 
 import java.util.List;
 

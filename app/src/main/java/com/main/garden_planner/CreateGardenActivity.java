@@ -1,4 +1,4 @@
-package com.example.garden_planner;
+package com.main.garden_planner;
 
 import android.Manifest;
 import android.content.Context;
@@ -22,9 +22,9 @@ import androidx.core.app.ActivityCompat;
 
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.garden_planner.databinding.ActivityCreateGardenBinding;
-import com.example.garden_planner.models.FrostDateClient;
-import com.example.garden_planner.models.Garden;
-import com.example.garden_planner.models.GeocodingClient;
+import com.main.garden_planner.models.FrostDateClient;
+import com.main.garden_planner.models.Garden;
+import com.main.garden_planner.models.GeocodingClient;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.LocationCallback;

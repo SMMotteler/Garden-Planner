@@ -1,37 +1,31 @@
-package com.example.garden_planner.fragments;
+package com.main.garden_planner.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.garden_planner.EditGardenActivity;
-import com.example.garden_planner.GardenMethodHelper;
-import com.example.garden_planner.ImageActivity;
-import com.example.garden_planner.MainActivity;
-import com.example.garden_planner.PictureHandlerActivity;
-import com.example.garden_planner.adapters.PlantInBedAdapter;
-import com.example.garden_planner.adapters.ReminderAdapter;
+import com.main.garden_planner.EditGardenActivity;
+import com.main.garden_planner.GardenMethodHelper;
+import com.main.garden_planner.ImageActivity;
+import com.main.garden_planner.MainActivity;
+import com.main.garden_planner.PictureHandlerActivity;
+import com.main.garden_planner.adapters.PlantInBedAdapter;
+import com.main.garden_planner.adapters.ReminderAdapter;
 import com.example.garden_planner.databinding.FragmentGardenDetailBinding;
-import com.example.garden_planner.models.Garden;
-import com.example.garden_planner.models.PlantInBed;
-import com.example.garden_planner.models.Reminder;
-
-import org.parceler.Parcels;
+import com.main.garden_planner.models.Garden;
+import com.main.garden_planner.models.PlantInBed;
+import com.main.garden_planner.models.Reminder;
 
 import java.util.ArrayList;
 import java.util.List;

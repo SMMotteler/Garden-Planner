@@ -1,4 +1,4 @@
-package com.example.garden_planner.fragments;
+package com.main.garden_planner.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,11 +11,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.garden_planner.CreateGardenActivity;
-import com.example.garden_planner.GardenMethodHelper;
-import com.example.garden_planner.adapters.GardenListAdapter;
+import com.main.garden_planner.CreateGardenActivity;
+import com.main.garden_planner.GardenMethodHelper;
+import com.main.garden_planner.adapters.GardenListAdapter;
 import com.example.garden_planner.databinding.FragmentGardenFeedBinding;
-import com.example.garden_planner.models.Garden;
+import com.main.garden_planner.models.Garden;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;

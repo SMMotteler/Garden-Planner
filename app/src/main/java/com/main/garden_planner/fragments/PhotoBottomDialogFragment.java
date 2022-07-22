@@ -1,20 +1,19 @@
-package com.example.garden_planner.fragments;
+package com.main.garden_planner.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-import com.example.garden_planner.ImageActivity;
-import com.example.garden_planner.MainActivity;
-import com.example.garden_planner.PictureHandlerActivity;
+import com.main.garden_planner.ImageActivity;
+import com.main.garden_planner.MainActivity;
+import com.main.garden_planner.PictureHandlerActivity;
 import com.example.garden_planner.databinding.FragmentPhotoDialogBinding;
-import com.example.garden_planner.models.Garden;
+import com.main.garden_planner.models.Garden;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public class PhotoBottomDialogFragment extends BottomSheetDialogFragment {

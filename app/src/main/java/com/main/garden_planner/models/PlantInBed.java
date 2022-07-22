@@ -1,6 +1,6 @@
-package com.example.garden_planner.models;
+package com.main.garden_planner.models;
 
-import com.example.garden_planner.GardenMethodHelper;
+import com.main.garden_planner.GardenMethodHelper;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 

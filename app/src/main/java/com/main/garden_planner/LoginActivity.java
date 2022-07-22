@@ -1,4 +1,4 @@
-package com.example.garden_planner;
+package com.main.garden_planner;
 
 import android.content.Intent;
 import android.os.Bundle;

@@ -1,4 +1,4 @@
-package com.example.garden_planner;
+package com.main.garden_planner;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -7,9 +7,6 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.example.garden_planner.databinding.ActivityImageBinding;
-import com.example.garden_planner.models.Garden;
-
-import org.parceler.Parcels;
 
 public class ImageActivity extends Activity {
 

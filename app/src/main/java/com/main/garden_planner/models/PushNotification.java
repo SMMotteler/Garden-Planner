@@ -1,4 +1,4 @@
-package com.example.garden_planner.models;
+package com.main.garden_planner.models;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;

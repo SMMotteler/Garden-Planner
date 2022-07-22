@@ -1,12 +1,12 @@
-package com.example.garden_planner;
+package com.main.garden_planner;
 
 import android.app.Application;
 
-import com.example.garden_planner.models.Garden;
-import com.example.garden_planner.models.Plant;
-import com.example.garden_planner.models.PlantInBed;
-import com.example.garden_planner.models.PushNotification;
-import com.example.garden_planner.models.Reminder;
+import com.main.garden_planner.models.Garden;
+import com.main.garden_planner.models.Plant;
+import com.main.garden_planner.models.PlantInBed;
+import com.main.garden_planner.models.PushNotification;
+import com.main.garden_planner.models.Reminder;
 import com.parse.Parse;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;
@@ -38,7 +38,7 @@ public class ParseApplication extends Application {
         channels.add("News");
         ParseInstallation installation = ParseInstallation.getCurrentInstallation();
 
-        installation.put("GCMSenderId", BuildConfig.GCM_SENDER_ID);
+        installation.put("GCMSenderId", com.example.garden_planner.BuildConfig.GCM_SENDER_ID);
         installation.put("channels", channels);
         installation.saveInBackground();
 

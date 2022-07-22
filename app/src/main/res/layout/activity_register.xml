@@ -7,7 +7,7 @@
     android:background="@color/light_green"
 
     android:fitsSystemWindows="true"
-    tools:context=".LoginActivity"
+    tools:context="com.main.garden_planner.LoginActivity"
     tools:layout_editor_absoluteX="2dp"
     tools:layout_editor_absoluteY="69dp">
 

@@ -1,4 +1,4 @@
-package com.example.garden_planner;
+package com.main.garden_planner;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,11 +6,12 @@ import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.garden_planner.adapters.GardenListAdapter;
-import com.example.garden_planner.adapters.ReminderAdapter;
-import com.example.garden_planner.models.Garden;
-import com.example.garden_planner.models.PlantInBed;
-import com.example.garden_planner.models.Reminder;
+import com.example.garden_planner.R;
+import com.main.garden_planner.adapters.GardenListAdapter;
+import com.main.garden_planner.adapters.ReminderAdapter;
+import com.main.garden_planner.models.Garden;
+import com.main.garden_planner.models.PlantInBed;
+import com.main.garden_planner.models.Reminder;
 import com.parse.FindCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
@@ -51,7 +52,7 @@ public class GardenMethodHelper {
     public static String profilePic(ParseUser user){
         ParseFile image = (ParseFile)user.get("profilePic");
         if (image == null){
-            return "android.resource://com.example.parsetagram/"+R.drawable.default_pic;
+            return "android.resource://com.example.parsetagram/"+ R.drawable.default_pic;
         }
         return image.getUrl();
     }

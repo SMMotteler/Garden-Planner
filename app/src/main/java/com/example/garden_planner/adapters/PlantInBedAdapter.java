@@ -64,31 +64,19 @@ public class PlantInBedAdapter extends RecyclerView.Adapter<PlantInBedAdapter.Vi
         return position;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView ivPlantPic;
         private TextView tvPlantName;
-        private Button btDelete;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            itemView.setOnClickListener(this);
         }
 
-        @Override
-        public void onClick(View view) {
-            int position = getAdapterPosition();
-            if (position != RecyclerView.NO_POSITION) {
-                PlantInBed plant = plants.get(position);
-                // TODO: maybe set up a detail view for a plant in a bed?
-            }
-
-        }
 
         public void bind(PlantInBed plant){
             ivPlantPic = binding.ivPlantPic;
             tvPlantName = binding.tvPlantName;
-            btDelete = binding.btDelete;
 
             tvPlantName.setText(plant.getDisplayName());
 
@@ -98,7 +86,6 @@ public class PlantInBedAdapter extends RecyclerView.Adapter<PlantInBedAdapter.Vi
             }
             }
 
-            btDelete.setVisibility(View.GONE);
         }
     }
 }

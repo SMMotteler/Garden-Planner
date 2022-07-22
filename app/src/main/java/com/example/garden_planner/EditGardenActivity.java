@@ -1,6 +1,5 @@
 package com.example.garden_planner;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,23 +9,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
-import com.example.garden_planner.adapters.PlantAdditionAdapter;
-import com.example.garden_planner.adapters.PlantDeletionAdapter;
+import com.example.garden_planner.adapters.PlantInBedEditAdapter;
 import com.example.garden_planner.databinding.ActivityEditGardenNewBinding;
 import com.example.garden_planner.models.Garden;
 import com.example.garden_planner.models.Plant;
 import com.example.garden_planner.models.PlantInBed;
-import com.example.garden_planner.models.PushNotification;
 import com.example.garden_planner.models.Reminder;
-import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -42,8 +36,7 @@ public class EditGardenActivity extends AppCompatActivity {
     private ActivityEditGardenNewBinding binding;
     private Garden garden;
     private ArrayList<PlantInBed> plants;
-    private PlantDeletionAdapter deletionAdapter;
-    private PlantAdditionAdapter adapter;
+    private PlantInBedEditAdapter deletionAdapter;
 
     private Button btSaveGarden;
     private RecyclerView rvCurrentPlants;
@@ -83,7 +76,7 @@ public class EditGardenActivity extends AppCompatActivity {
 
 
         plants = new ArrayList<>();
-        deletionAdapter = new PlantDeletionAdapter(this, plants);
+        deletionAdapter = new PlantInBedEditAdapter(this, plants);
         GardenMethodHelper.queryPlantInBed(plants, deletionAdapter, garden);
         rvCurrentPlants.setLayoutManager(new LinearLayoutManager(this));
         rvCurrentPlants.setAdapter(deletionAdapter);
@@ -148,7 +141,7 @@ public class EditGardenActivity extends AppCompatActivity {
                                     etNewPlantName.setText("");
 
                                     plants = new ArrayList<>();
-                                    deletionAdapter = new PlantDeletionAdapter(EditGardenActivity.this, plants);
+                                    deletionAdapter = new PlantInBedEditAdapter(EditGardenActivity.this, plants);
                                     GardenMethodHelper.queryPlantInBed(plants, deletionAdapter, garden);
                                     rvCurrentPlants.setLayoutManager(new LinearLayoutManager(EditGardenActivity.this));
                                     rvCurrentPlants.setAdapter(deletionAdapter);
@@ -214,14 +207,6 @@ public class EditGardenActivity extends AppCompatActivity {
         });
 
     }
-
-    //@Override
-    //public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-
-    //    super.onActivityResult(requestCode, resultCode, data);
-   //     finish();
-        // TODO: figure out what to do with the save button/edit activity
-   // }
 
     public void deleteReminders(PlantInBed plant){
         ParseQuery<Reminder> query = ParseQuery.getQuery(Reminder.class);

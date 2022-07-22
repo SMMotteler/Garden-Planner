@@ -50,7 +50,6 @@ public class GardenDetailFragment extends Fragment {
     private ImageView ivGardenImage;
     private RecyclerView rvPlants;
     private TextView tvGardenLocation;
-    private TextView tvReminderTitle;
     private RecyclerView rvReminders;
     private Button btEditGarden;
     private Button changeGardenPhotoButton;
@@ -101,8 +100,6 @@ public class GardenDetailFragment extends Fragment {
         rvPlants.setLayoutManager(horizontalLayoutManager);
 
         GardenMethodHelper.queryPlantInBed(somePlants, plantInBedAdapter, garden);
-
-        tvReminderTitle = binding.tvReminderTitle;
 
         rvReminders = binding.rvReminders;
 

@@ -8,7 +8,6 @@ import java.util.List;
 
 @ParseClassName("Plant")
 public class Plant  extends ParseObject {
-    public static final String KEY_HARDINESS = "hardinessZones";
     public static final String KEY_NAME = "name";
     public static final String KEY_HARVEST_ADVICE = "harvestAdvice";
     public static final String KEY_PLANT_TIME = "weeksBeforeAfterFrostPlant";
@@ -16,14 +15,6 @@ public class Plant  extends ParseObject {
     public static final String KEY_PLANT_ADVICE = "plantingAdvice";
     public static final String KEY_PHOTO = "photo";
     public static final String KEY_SEED_REC = "recommendStartAsSeed";
-
-    public List getHardiness() {
-        return (List) get(KEY_HARDINESS);
-    }
-
-    public void setHardiness(List hardiness) {
-        put(KEY_HARDINESS, hardiness);
-    }
 
     public String getName() {
         return getString(KEY_NAME);

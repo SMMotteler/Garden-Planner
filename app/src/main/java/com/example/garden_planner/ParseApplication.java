@@ -7,7 +7,6 @@ import com.example.garden_planner.models.Plant;
 import com.example.garden_planner.models.PlantInBed;
 import com.example.garden_planner.models.PushNotification;
 import com.example.garden_planner.models.Reminder;
-import com.example.garden_planner.models.User;
 import com.parse.Parse;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;

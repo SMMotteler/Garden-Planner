@@ -78,7 +78,6 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void done(ParseException e) {
                 if (e != null){
-                    // TODO: better error handling
                     Toast.makeText(RegisterActivity.this, "Issue with registering :(", Toast.LENGTH_SHORT).show();
                     Log.e(TAG, "Issue with register", e);
                     return;

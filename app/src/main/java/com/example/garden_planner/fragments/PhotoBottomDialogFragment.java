@@ -22,7 +22,6 @@ public class PhotoBottomDialogFragment extends BottomSheetDialogFragment {
     private TextView viewModalText;
     private TextView editImageText;
     private FragmentPhotoDialogBinding binding;
-    private GardenDetailFragment gardenDetailFragment;
 
     public PhotoBottomDialogFragment(){
 

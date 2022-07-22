@@ -47,7 +47,6 @@ import com.parse.SaveCallback;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -123,7 +122,6 @@ public class CreateGardenActivity extends AppCompatActivity {
                             longitude = json.jsonObject.getJSONArray("data").getJSONObject(0).getDouble("longitude");
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            return;
                         }
                     }
 
@@ -131,7 +129,6 @@ public class CreateGardenActivity extends AppCompatActivity {
                     public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
                         Log.e("create garden", response, throwable);
                         // Toast.makeText(CreateGardenActivity.this, "Error with finding location! Please try again", Toast.LENGTH_SHORT).show();
-                        return;
                     }
                 });
 
@@ -146,12 +143,10 @@ public class CreateGardenActivity extends AppCompatActivity {
                 frostDateClient.getStations(latitude, longitude, new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Headers headers, JSON json) {
-                        Log.i("FROST DATE", "in onsuccess 1");
                         // the API for the stations list them in order of increasing distance, so we can always
                         // take the first JSONObject
                         try {
                             JSONObject station = json.jsonArray.getJSONObject(0);
-                            Log.i("FROST DATE", "in try 1");
 
                             frostDateClient.getFrostDate(station.getString("id"), 1, new JsonHttpResponseHandler() {
                                 @Override
@@ -159,7 +154,6 @@ public class CreateGardenActivity extends AppCompatActivity {
                                     // the API for the frost dates has the 32 deg. threshold as the second entry in
                                     // the array every time, which we are using as the temperature where no more frost
                                     // will occur
-                                    Log.i("FROST DATE", "in onsuccess 2");
 
                                     try {
 
@@ -205,10 +199,6 @@ public class CreateGardenActivity extends AppCompatActivity {
                                                     return;
                                                 }
                                                 finish();
-                                                // TODO: I want to go from creating the garden to a detailview of that garden,
-                                                //  but it's giving me a null pointer exception
-                                                // MainActivity mainActivity = (MainActivity) getParent();
-                                                // mainActivity.goToDetailGardenView(garden);
                                             }
                                         });
                                     } catch (JSONException | java.text.ParseException e) {
@@ -274,7 +264,6 @@ public class CreateGardenActivity extends AppCompatActivity {
 
                                 Log.i("create garden", "latitude "+latitude+" longitude "+longitude);
 
-                                // TODO: use this latitude and longitude to set the location of the garden
                                 geocodingClient.reverseGeocoding(latitude, longitude, new JsonHttpResponseHandler() {
                                     @Override
                                     public void onSuccess(int statusCode, Headers headers, JSON json) {
@@ -303,13 +292,17 @@ public class CreateGardenActivity extends AppCompatActivity {
 
             }else{
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+                // so the user doesn't have to click the button again if they want to allow the app to access their location
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+                    findLocation();
+                }
             }
         }
     }
 
     public boolean isGPSEnabled(Context context){
         LocationManager locationManager = null;
-        boolean isEnabled = false;
+        boolean isEnabled;
 
         if (locationManager == null) {
             locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
@@ -370,7 +363,6 @@ public class CreateGardenActivity extends AppCompatActivity {
         }
     }
 
-    // information for this method is from https://github.com/waldoj/frostline
     public void makeLoadingGone(){
         loadingImageView.setVisibility(View.GONE);
         gettingLocationTextView.setVisibility(View.GONE);

@@ -21,11 +21,4 @@
         android:gravity="center"
         tools:text="hello! my name is Sarah" />
 
-    <Button
-
-        android:id="@+id/btDelete"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Delete" />
-
 </LinearLayout>

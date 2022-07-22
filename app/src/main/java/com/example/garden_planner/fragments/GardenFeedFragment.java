@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.garden_planner.CreateGardenActivity;
 import com.example.garden_planner.GardenMethodHelper;
-import com.example.garden_planner.adapters.GardenFeedAdapter;
+import com.example.garden_planner.adapters.GardenListAdapter;
 import com.example.garden_planner.databinding.FragmentGardenFeedBinding;
 import com.example.garden_planner.models.Garden;
 import com.parse.ParseUser;
@@ -26,7 +26,7 @@ public class GardenFeedFragment extends Fragment {
 
     RecyclerView rvGardens;
     ArrayList<Garden> userGardens;
-    GardenFeedAdapter adapter;
+    GardenListAdapter adapter;
     Button btNewGarden;
 
     public GardenFeedFragment()
@@ -50,7 +50,7 @@ public class GardenFeedFragment extends Fragment {
         btNewGarden = binding.btNewGarden;
 
         userGardens = new ArrayList<>();
-        adapter = new GardenFeedAdapter(getContext(), userGardens);
+        adapter = new GardenListAdapter(getContext(), userGardens);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
 

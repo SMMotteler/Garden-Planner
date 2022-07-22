@@ -1,12 +1,10 @@
 package com.example.garden_planner.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.garden_planner.GardenMethodHelper;
 import com.example.garden_planner.MainActivity;
-import com.example.garden_planner.PictureHandlerActivity;
 import com.example.garden_planner.databinding.ItemGardenBinding;
 import com.example.garden_planner.models.Garden;
 import com.example.garden_planner.models.PlantInBed;
@@ -25,7 +22,7 @@ import com.example.garden_planner.models.PlantInBed;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GardenFeedAdapter extends RecyclerView.Adapter<GardenFeedAdapter.ViewHolder> {
+public class GardenListAdapter extends RecyclerView.Adapter<GardenListAdapter.ViewHolder> {
     public static final String TAG = "GardenAdapter";
     private Context context;
     private List<Garden> gardens;
@@ -34,7 +31,7 @@ public class GardenFeedAdapter extends RecyclerView.Adapter<GardenFeedAdapter.Vi
 
     ItemGardenBinding binding;
 
-    public GardenFeedAdapter(Context context, List<Garden> gardens){
+    public GardenListAdapter(Context context, List<Garden> gardens){
         Log.i(TAG, "making GardenFeedAdapter");
         this.context = context;
         this.gardens = gardens;
@@ -53,7 +50,7 @@ public class GardenFeedAdapter extends RecyclerView.Adapter<GardenFeedAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull GardenFeedAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull GardenListAdapter.ViewHolder holder, int position) {
         Log.i(TAG, "onBindViewHolder " + position);
         Garden garden = gardens.get(position);
         Log.i(TAG, "garden " + garden.getName());

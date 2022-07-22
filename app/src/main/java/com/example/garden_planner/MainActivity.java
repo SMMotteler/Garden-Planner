@@ -111,7 +111,6 @@ public class MainActivity extends AppCompatActivity {
 
         fragmentManager.beginTransaction().replace(R.id.flContainer, detailFragment).commit();
 
-        // TODO: I want the selected item to be the garden icon, but I want the fragment to be the detail garden view
     }
 
 

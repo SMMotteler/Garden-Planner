@@ -21,7 +21,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.garden_planner.R;
-import com.example.garden_planner.databinding.ItemPlantInBedBinding;
 import com.example.garden_planner.databinding.ItemPlantInBedExpandableBinding;
 import com.example.garden_planner.models.PlantInBed;
 import com.example.garden_planner.models.PushNotification;
@@ -36,7 +35,7 @@ import net.cachapa.expandablelayout.ExpandableLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlantDeletionAdapter  extends RecyclerView.Adapter<PlantDeletionAdapter.ViewHolder> {
+public class PlantInBedEditAdapter extends RecyclerView.Adapter<PlantInBedEditAdapter.ViewHolder> {
     public static final String TAG = "PlantDeletionAdapter";
     private Context context;
     private List<PlantInBed> plants;
@@ -44,7 +43,7 @@ public class PlantDeletionAdapter  extends RecyclerView.Adapter<PlantDeletionAda
 
     ItemPlantInBedExpandableBinding binding;
 
-    public PlantDeletionAdapter(Context context, List<PlantInBed> plants){
+    public PlantInBedEditAdapter(Context context, List<PlantInBed> plants){
         Log.i(TAG, "making PlantInBedAdapter");
         this.context = context;
         this.plants = plants;
@@ -53,13 +52,13 @@ public class PlantDeletionAdapter  extends RecyclerView.Adapter<PlantDeletionAda
 
     @NonNull
     @Override
-    public PlantDeletionAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public PlantInBedEditAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Log.i(TAG, "onCreateViewHolder ");
 
         binding = ItemPlantInBedExpandableBinding.inflate( LayoutInflater.from(context), parent, false);
         View view = binding.getRoot();
 
-        return new PlantDeletionAdapter.ViewHolder(view);
+        return new PlantInBedEditAdapter.ViewHolder(view);
     }
 
     @Override
@@ -88,7 +87,7 @@ public class PlantDeletionAdapter  extends RecyclerView.Adapter<PlantDeletionAda
         return plantsToDelete;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView ivPlantPic;
         private ImageView ivArrow;
@@ -96,8 +95,6 @@ public class PlantDeletionAdapter  extends RecyclerView.Adapter<PlantDeletionAda
         private TextView tvPlantType;
         private ExpandableLayout expandableLayoutOptions;
         private ExpandableLayout expandableLayoutRename;
-        private ConstraintLayout selectionLayout;
-        private ConstraintLayout renameLayout;
         private Button btRename;
         private Button btDeletePlant;
         private Button btSetNewName;
@@ -109,16 +106,6 @@ public class PlantDeletionAdapter  extends RecyclerView.Adapter<PlantDeletionAda
             super(itemView);
         }
 
-        @Override
-        public void onClick(View view) {
-            int position = getAdapterPosition();
-            if (position != RecyclerView.NO_POSITION) {
-                PlantInBed plant = plants.get(position);
-                // TODO: view the details of that plant
-            }
-
-        }
-
         @SuppressLint("ResourceAsColor")
         public void bind(PlantInBed plant){
             llBackground = binding.llBackground;
@@ -128,8 +115,6 @@ public class PlantDeletionAdapter  extends RecyclerView.Adapter<PlantDeletionAda
             tvPlantType = binding.tvPlantType;
             expandableLayoutOptions = binding.expandableLayoutOptions;
             expandableLayoutRename = binding.expandableLayoutRename;;
-            selectionLayout = binding.selectionLayout;
-            renameLayout = binding.renameLayout;
             btRename = binding.btRename;
             btDeletePlant = binding.btDeletePlant;
             btSetNewName = binding.btSetNewName;

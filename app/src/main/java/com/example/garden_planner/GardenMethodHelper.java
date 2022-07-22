@@ -7,13 +7,9 @@ import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.garden_planner.adapters.GardenFeedAdapter;
-import com.example.garden_planner.adapters.PlantAdditionAdapter;
+import com.example.garden_planner.adapters.GardenListAdapter;
 import com.example.garden_planner.adapters.ReminderAdapter;
-import com.example.garden_planner.fragments.RemindersFragment;
-import com.example.garden_planner.models.FrostDateClient;
 import com.example.garden_planner.models.Garden;
-import com.example.garden_planner.models.Plant;
 import com.example.garden_planner.models.PlantInBed;
 import com.example.garden_planner.models.Reminder;
 import com.parse.FindCallback;
@@ -26,15 +22,12 @@ import com.parse.ParseUser;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Nullable;
 
 public class GardenMethodHelper {
-
-    static FrostDateClient client = new FrostDateClient();
 
     public static void goMainActivity(Activity activity) {
         // Toast.makeText(activity.getApplicationContext(), "Logged in!", Toast.LENGTH_SHORT).show();
@@ -65,7 +58,7 @@ public class GardenMethodHelper {
         return image.getUrl();
     }
 
-    public static void queryGarden(List<Garden> userGardens, GardenFeedAdapter adapter, ParseUser user){
+    public static void queryGarden(List<Garden> userGardens, GardenListAdapter adapter, ParseUser user){
         ParseQuery<Garden> query = ParseQuery.getQuery(Garden.class);
 
         query.whereEqualTo(Garden.KEY_USER, user);

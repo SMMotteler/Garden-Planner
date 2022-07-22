@@ -175,6 +175,9 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
                             e.printStackTrace();
                         }
                     }
+                    else if (reminder.getReminderType().equals("harvest")){
+                        reminder.getRemindWhichPlant().setHarvestDate(new Date());
+                    }
 
                     // delete the completed reminder
                     try {

@@ -19,6 +19,7 @@ import androidx.core.content.FileProvider;
 
 import com.bumptech.glide.Glide;
 import com.example.garden_planner.databinding.ActivityPictureHandlerBinding;
+import com.example.garden_planner.models.BitmapScaler;
 import com.example.garden_planner.models.Garden;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -180,7 +181,7 @@ public class PictureHandlerActivity extends AppCompatActivity {
             // while the size of the bitmap is larger than 10 MB, shrink it to 1/4 of its current size
             // - once it is smaller than 10 MB, it is acceptable to be saved to the imageview
             while (resizedBitmap.getByteCount() >= 1000000 * 10) {
-                resizedBitmap = scaleToFitWidth(rawTakenImage, resizedBitmap.getWidth()/2);
+                resizedBitmap = BitmapScaler.scaleToFitWidth(rawTakenImage, resizedBitmap.getWidth()/2);
             }
             ByteArrayOutputStream bytes = new ByteArrayOutputStream();
             resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 40, bytes);

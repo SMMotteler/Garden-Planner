@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -119,7 +118,7 @@ public class PictureHandlerActivity extends AppCompatActivity {
         File mediaStorageDir = new File(this.getExternalFilesDir(Environment.DIRECTORY_PICTURES), TAG);
 
         if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()){
-            Log.d(TAG, "failed to create directory");
+            return null;
         }
 
 
@@ -209,14 +208,11 @@ public class PictureHandlerActivity extends AppCompatActivity {
             if (garden != null) {
                 ivGardenPhoto.setVisibility(View.VISIBLE);
                 Glide.with(this).load(takenImage).into(ivGardenPhoto);
-                Log.i(TAG, "bitmap size: "+BitmapFactory.decodeFile(resizedFile.getAbsolutePath()).getByteCount());
             }
             else{
                 ivPhotoToUpload.setVisibility(View.VISIBLE);
                 Glide.with(this).load(takenImage).circleCrop().into(ivPhotoToUpload);
-                Log.i(TAG, "bitmap size: "+BitmapFactory.decodeFile(resizedFile.getAbsolutePath()).getByteCount());
             }
-            Log.i(TAG, "original size: "+rawTakenImage.getByteCount());
 
             btUpload.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -227,7 +223,7 @@ public class PictureHandlerActivity extends AppCompatActivity {
                             @Override
                             public void done(ParseException e) {
                                 if(e != null){
-                                    Log.e("yikes", e.getMessage());
+                                    e.printStackTrace();
                                     Toast.makeText(PictureHandlerActivity.this, "Error in changing profile pic!", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
@@ -241,7 +237,7 @@ public class PictureHandlerActivity extends AppCompatActivity {
                             @Override
                             public void done(ParseException e) {
                                 if(e != null){
-                                    Log.e("yikes", e.getMessage());
+                                    e.printStackTrace();
                                     Toast.makeText(PictureHandlerActivity.this, "Error in changing profile pic!", Toast.LENGTH_SHORT).show();
                                     return;
                                 }

@@ -137,7 +137,31 @@ Detailed Wireframes
 | latLong | GeoPoint | the latitude/longitude coordinates where the garden is located |
 | lastFrostDate | Date | the date of the last frost date of the location where the garden is located |
 
-TODO: add BedSpot, Plant, and Reminder models
+
+**Plant**
+| Property | Type | Description |
+| --- | --- | --- |
+| objectID | String | the ID internally associated with the plant|
+| name | String | the name associated with the plant |
+| photo | File | the photo associated with the plant |
+| recommendStartAsSeed | boolean | the app's recommendation on whether the plant should be planted as seeds or as a seedling - True for planted as seeds, False for planted as a seedling |
+| weeksBeforeAfterFrostPlant | Number | the number of weeks after (before if the number is negative) the last frost date that the plant should be planted outside |
+| plantingAdvice | String | advice on planting the specific kind of plant |
+| weeksUntilHarvest | Number | the number of weeks after planting that it will take for the plant to be ready to harvest |
+| harvestAdvice | String | advice on harvesting the specific kind of plant |
+
+**PlantInBed**
+| Property | Type | Description |
+| --- | --- | --- |
+| objectID | String | the ID internally associated with the plant |
+| PlantType | Pointer to Plant object | the type of Plant that the PlantInBed object is |
+| ThisPlantName | String | the display name associated with the PlantInBed |
+| plantedInBed | Pointer to Garden object | the Garden object that the PlantInBed object is "planted" in and contained by |
+| whenShouldPlant | Date | the date that the PlantInBed object should be planted, based off of the lastFrostDate Garden parameter and the weeksBeforeAfterFrostPlant Plant parameter |
+| whenActuallyPlanted | Date | the date that the PlantInBed object is actually planted, represented by when the reminder that is associated with the planting of the PlantInBed object is completed |
+| whenShouldHarvest | Date | the date that the PlantInBed object should be harvested, based off of the whenActuallyPlanted parameter and the weeksUntilHarvest Plant parameter |
+| whenActuallyHarvested | Date | the date that the PlantInBed object is actually harvested, represented by when the reminder that is associated with the harvesting of the PlantInBed object is completed |
+
 ### Networking
 * Login Screen
   * (Read/GET) Get user information based on login information

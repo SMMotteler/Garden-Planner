@@ -138,6 +138,29 @@ Detailed Wireframes
 | lastFrostDate | Date | the date of the last frost date of the location where the garden is located |
 
 
+**Reminder**
+| Property | Type | Description |
+| --- | --- | --- |
+| objectID | String | the ID internally associated with the reminder |
+| ReminderMessage | String | the display name associated with the PlantInBed |
+| ReminderStart | Date | the date that the reminder starts |
+| ReminderEnd | Date | the date that the reminder ends |
+| ReminderTitle | String | the title of this reminder |
+| ReminderMessage | String | the text of the reminder |
+| remindWhichPlant | Pointer to PlantInBed object | the PlantInBed object that the reminder is associated with |
+| remindWhat | Pointer to Garden object | the Garden object that the PlantInBed object pointed to by remindWhichPlant is associated with |
+| remindWho | Pointer to User object | the User object that the Garden object pointed to by remindWhat is associated with |
+| reminderType | String | the type of reminder (either "harvest" or "plant")|
+
+**PushNotification**
+| Property | Type | Description |
+| --- | --- | --- |
+| objectID | String | the ID internally associated with the reminder |
+| reminder | Pointer to Reminder Object | the Reminder object that the PushNotification is associated with |
+| pushDate | Date | the date that the pushNotification should be sent on |
+| pushTitle | String | the title of this push notification |
+| pushTo | Pointer to User object | the User that this reminder should be pushed to |
+
 **Plant**
 | Property | Type | Description |
 | --- | --- | --- |
@@ -153,7 +176,7 @@ Detailed Wireframes
 **PlantInBed**
 | Property | Type | Description |
 | --- | --- | --- |
-| objectID | String | the ID internally associated with the plant |
+| objectID | String | the ID internally associated with the PlantInBed |
 | PlantType | Pointer to Plant object | the type of Plant that the PlantInBed object is |
 | ThisPlantName | String | the display name associated with the PlantInBed |
 | plantedInBed | Pointer to Garden object | the Garden object that the PlantInBed object is "planted" in and contained by |

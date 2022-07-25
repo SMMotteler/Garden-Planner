@@ -128,19 +128,13 @@ public class PlantInBedEditAdapter extends RecyclerView.Adapter<PlantInBedEditAd
             llPlantInBedInfo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (expandableLayoutOptions.isExpanded()) {
-                        expandableLayoutOptions.collapse();
+                    openCloseOptions();
                         if (expandableLayoutRename.isExpanded()){
                             expandableLayoutRename.collapse();
-                        }
-                        Glide.with(context).load(R.drawable.rightarrow).into(ivArrow);
-                    }
-                    else{
-                        Glide.with(context).load(R.drawable.downarrow).into(ivArrow);
-                        expandableLayoutOptions.expand();
-                    }
                 }
-            });
+            }
+            }
+            );
 
 
             btDeletePlant.setOnClickListener(new View.OnClickListener() {
@@ -149,12 +143,14 @@ public class PlantInBedEditAdapter extends RecyclerView.Adapter<PlantInBedEditAd
                     if (((ColorDrawable)llBackground.getBackground()).getColor() == Color.RED){
                         plantsToDelete.remove(plant);
                         llBackground.setBackgroundColor(R.color.canvas);
-                        expandableLayoutOptions.collapse();
+                        btDeletePlant.setText("DELETE");
+                        openCloseOptions();
                     }
                     else{
                         plantsToDelete.add(plant);
                         llBackground.setBackgroundColor(Color.RED);
-                        expandableLayoutOptions.collapse();
+                        openCloseOptions();
+                        btDeletePlant.setText("UNDO DELETION");
                     }
                 }
             });
@@ -187,8 +183,9 @@ public class PlantInBedEditAdapter extends RecyclerView.Adapter<PlantInBedEditAd
                             public void done(ParseException e) {
                                 tvDisplayName.setText(newName);
                                 expandableLayoutRename.collapse();
-                                expandableLayoutOptions.collapse();
+                                openCloseOptions();
                                 renameReminders(plant, oldName);
+                                etPlantName.setText("");
                             }
                         });
                     }
@@ -213,7 +210,6 @@ public class PlantInBedEditAdapter extends RecyclerView.Adapter<PlantInBedEditAd
                         return;
                     }
 
-                    // for debugging purposes let's print every reminder title to LogCat, then delete the reminder
                     for (Reminder reminder : reminders) {
                         String oldTitle = reminder.getReminderTitle();
                         String newTitle = oldTitle.replace(oldName, plant.getDisplayName());
@@ -238,6 +234,17 @@ public class PlantInBedEditAdapter extends RecyclerView.Adapter<PlantInBedEditAd
 
                 }
             });
+        }
+
+        private void openCloseOptions(){
+            if(expandableLayoutOptions.isExpanded()) {
+                Glide.with(context).load(R.drawable.rightarrow).into(ivArrow);
+                expandableLayoutOptions.collapse();
+            }
+            else{
+                Glide.with(context).load(R.drawable.downarrow).into(ivArrow);
+                expandableLayoutOptions.expand();
+            }
         }
     }
 }

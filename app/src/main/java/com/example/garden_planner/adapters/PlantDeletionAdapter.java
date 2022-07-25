@@ -24,6 +24,7 @@ import com.example.garden_planner.R;
 import com.example.garden_planner.databinding.ItemPlantInBedBinding;
 import com.example.garden_planner.databinding.ItemPlantInBedExpandableBinding;
 import com.example.garden_planner.models.PlantInBed;
+import com.example.garden_planner.models.PushNotification;
 import com.example.garden_planner.models.Reminder;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -228,7 +229,7 @@ public class PlantDeletionAdapter  extends RecyclerView.Adapter<PlantDeletionAda
                 public void done(List<Reminder> reminders, ParseException e) {
                     // check for errors
                     if (e != null) {
-                        Log.e("Detail Activity", "Issue with getting gardens", e);
+                        Log.e("renaming", "Issue with getting reminders", e);
                         return;
                     }
 
@@ -239,6 +240,21 @@ public class PlantDeletionAdapter  extends RecyclerView.Adapter<PlantDeletionAda
                         String newTitle = oldTitle.replace(oldName, plant.getDisplayName());
                         reminder.setReminderTitle(newTitle);
                         reminder.saveInBackground();
+
+                        ParseQuery<PushNotification> query = ParseQuery.getQuery(PushNotification.class);
+                        query.whereEqualTo(PushNotification.KEY_REMINDER, reminder);
+                        query.include(PushNotification.KEY_TITLE);
+                        query.findInBackground(new FindCallback<PushNotification>() {
+                            @Override
+                            public void done(List<PushNotification> pushNotifications, ParseException e) {
+                                for (PushNotification pushNotification : pushNotifications){
+                                String oldTitle = pushNotification.getPushTitle();
+                                String newTitle = oldTitle.replace(oldName, plant.getDisplayName());
+                                pushNotification.setPushTitle(newTitle);
+                                pushNotification.saveInBackground();
+                            }}
+                        });
+
                     }
 
                 }

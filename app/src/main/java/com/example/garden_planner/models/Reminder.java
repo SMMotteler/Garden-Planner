@@ -1,11 +1,17 @@
 package com.example.garden_planner.models;
 
+import android.util.Log;
+
 import com.example.garden_planner.GardenMethodHelper;
+import com.parse.FindCallback;
 import com.parse.ParseClassName;
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @ParseClassName("Reminder")
@@ -76,7 +82,7 @@ public class Reminder extends ParseObject {
 
             pushNotification.setReminder(this);
 
-            pushNotification.setPushTitle(this);
+            pushNotification.setPushTitle(this.getReminderTitle());
 
             pushNotification.setPushToUser(this);
 
@@ -84,5 +90,27 @@ public class Reminder extends ParseObject {
         }
 
 
+    }
+
+    public void deletePushes() {
+        ParseQuery<PushNotification> query = ParseQuery.getQuery(PushNotification.class);
+        query.whereEqualTo(PushNotification.KEY_REMINDER, this);
+        query.findInBackground(new FindCallback<PushNotification>() {
+            @Override
+            public void done(List<PushNotification> pushNotifications, ParseException e) {
+                if (e != null) {
+                    Log.e("Detail Activity", "Issue with getting pushes", e);
+                    return;
+                }
+                for (PushNotification notification : pushNotifications){
+                    try {
+                        notification.delete();
+                    } catch (ParseException ex) {
+                        ex.printStackTrace();
+                    }
+
+                }
+            }
+        });
     }
 }

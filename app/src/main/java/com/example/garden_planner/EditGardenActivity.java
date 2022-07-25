@@ -24,6 +24,7 @@ import com.example.garden_planner.databinding.ActivityEditGardenNewBinding;
 import com.example.garden_planner.models.Garden;
 import com.example.garden_planner.models.Plant;
 import com.example.garden_planner.models.PlantInBed;
+import com.example.garden_planner.models.PushNotification;
 import com.example.garden_planner.models.Reminder;
 import com.parse.DeleteCallback;
 import com.parse.FindCallback;
@@ -234,12 +235,13 @@ public class EditGardenActivity extends AppCompatActivity {
             public void done(List<Reminder> reminders, ParseException e) {
                 // check for errors
                 if (e != null) {
-                    Log.e("Detail Activity", "Issue with getting gardens", e);
+                    Log.e("Edit Garden", "Issue with getting reminders", e);
                     return;
                 }
 
                 // for debugging purposes let's print every reminder title to LogCat, then delete the reminder
                 for (Reminder reminder : reminders) {
+                    reminder.deletePushes();
                     Log.i("Reminder Query", "Reminder: " + reminder.getReminderTitle());
                     try {
                         reminder.delete();

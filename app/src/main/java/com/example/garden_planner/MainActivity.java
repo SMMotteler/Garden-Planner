@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
         ParseInstallation installation = ParseInstallation.getCurrentInstallation();
 
         installation.put("user", ParseUser.getCurrentUser());
-        installation.put("deviceID", installation.getDeviceToken());
         ParseUser.getCurrentUser().put("installationID", installation.getInstallationId());
 
         ParseUser.getCurrentUser().saveInBackground();

@@ -48,7 +48,6 @@ public class PictureHandlerActivity extends AppCompatActivity {
     ImageView ivGardenPhoto;
     TextView tvYourPhoto;
     Button btUpload;
-    TextView tvOr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +64,6 @@ public class PictureHandlerActivity extends AppCompatActivity {
         ivGardenPhoto = binding.ivGardenPhoto;
         tvYourPhoto = binding.tvYourPhoto;
         btUpload = binding.btUpload;
-        tvOr = binding.tvOr;
 
         if (getIntent().hasExtra("garden")){
             garden = getIntent().getParcelableExtra("garden");

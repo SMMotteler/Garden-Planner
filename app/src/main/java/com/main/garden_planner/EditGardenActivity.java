@@ -85,7 +85,9 @@ public class EditGardenActivity extends AppCompatActivity {
         btSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String plantName = etPlantType.getText().toString();
+                elPlantInfo.collapse();
+                etNewPlantName.setText("");
+                String plantName = etPlantType.getText().toString().toLowerCase();
 
                 if (plantName.isEmpty()){
                     Toast.makeText(EditGardenActivity.this, "Please enter something into the text box!", Toast.LENGTH_SHORT).show();
@@ -93,7 +95,7 @@ public class EditGardenActivity extends AppCompatActivity {
                 }
 
                 ParseQuery<Plant> query = ParseQuery.getQuery(Plant.class);
-                query.whereEqualTo(Plant.KEY_NAME, plantName);
+                query.whereContains(Plant.KEY_NAME, plantName);
                 query.addAscendingOrder("createdAt");
 
                 try {

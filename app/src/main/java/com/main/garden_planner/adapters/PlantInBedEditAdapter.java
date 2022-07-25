@@ -211,8 +211,17 @@ public class PlantInBedEditAdapter extends RecyclerView.Adapter<PlantInBedEditAd
                     }
 
                     for (Reminder reminder : reminders) {
-                        String oldTitle = reminder.getReminderTitle();
-                        String newTitle = oldTitle.replace(oldName, plant.getDisplayName());
+                        String newTitle;
+                        if (reminder.getReminderType() == "plant"){
+                            newTitle = "Plant "+plant.getDisplayName();
+                        }
+                        else if (reminder.getReminderType() == "harvest"){
+                            newTitle = "Harvest "+plant.getDisplayName();
+                        }
+                        else{
+                            String oldTitle = reminder.getReminderTitle();
+                            newTitle = oldTitle.replace(oldName, plant.getDisplayName());
+                        }
                         reminder.setReminderTitle(newTitle);
                         reminder.saveInBackground();
 
@@ -223,8 +232,6 @@ public class PlantInBedEditAdapter extends RecyclerView.Adapter<PlantInBedEditAd
                             @Override
                             public void done(List<PushNotification> pushNotifications, ParseException e) {
                                 for (PushNotification pushNotification : pushNotifications){
-                                String oldTitle = pushNotification.getPushTitle();
-                                String newTitle = oldTitle.replace(oldName, plant.getDisplayName());
                                 pushNotification.setPushTitle(newTitle);
                                 pushNotification.saveInBackground();
                             }}

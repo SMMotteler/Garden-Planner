@@ -1,14 +1,23 @@
 package com.main.garden_planner;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.AnimationDrawable;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
+import android.provider.Settings;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,9 +28,23 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+import com.example.garden_planner.BuildConfig;
 import com.example.garden_planner.databinding.ActivityCreateGardenBinding;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
+import com.main.garden_planner.adapters.PlacesAutoCompleteAdapter;
 import com.main.garden_planner.models.FrostDateClient;
 import com.main.garden_planner.models.Garden;
 import com.main.garden_planner.models.GeocodingClient;
@@ -43,12 +66,15 @@ import com.parse.SaveCallback;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 import okhttp3.Headers;
 
-public class CreateGardenActivity extends AppCompatActivity {
+public class CreateGardenActivity extends AppCompatActivity implements PlacesAutoCompleteAdapter.ClickListener {
     private ActivityCreateGardenBinding binding;
 
     private EditText etGardenName;
@@ -63,16 +89,23 @@ public class CreateGardenActivity extends AppCompatActivity {
     public Date frostDate;
     private GeocodingClient geocodingClient;
     private FrostDateClient frostDateClient;
+    private boolean isPermissionGranted;
 
     AnimationDrawable animationDrawable;
 
     LocationRequest locationRequest;
+
+    private PlacesAutoCompleteAdapter mAutoCompleteAdapter;
+    private RecyclerView rvPlaceOption;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityCreateGardenBinding.inflate(getLayoutInflater());
         frostDateClient = new FrostDateClient();
+
+        Places.initialize(this, BuildConfig.MAPS_API_KEY);
+
 
         View view = binding.getRoot();
         setContentView(view);
@@ -84,6 +117,7 @@ public class CreateGardenActivity extends AppCompatActivity {
         gettingLocationTextView = binding.GettingLocationTextView;
         loadingImageView = binding.LoadingImageView;
         animationDrawable = (AnimationDrawable)loadingImageView.getDrawable();
+        rvPlaceOption = binding.rvPlaceOption;
 
         // while not fetching location, set visibility of loadingImageView and gettingLocationTextView to GONE
         makeLoadingGone();
@@ -97,6 +131,15 @@ public class CreateGardenActivity extends AppCompatActivity {
 
         frostDate = new Date();
 
+        etGardenLocation.addTextChangedListener(filterTextWatcher);
+
+        mAutoCompleteAdapter = new PlacesAutoCompleteAdapter(this);
+        rvPlaceOption.setLayoutManager(new LinearLayoutManager(this));
+        mAutoCompleteAdapter.setClickListener(this);
+        rvPlaceOption.setAdapter(mAutoCompleteAdapter);
+        mAutoCompleteAdapter.notifyDataSetChanged();
+
+
         btCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -109,7 +152,15 @@ public class CreateGardenActivity extends AppCompatActivity {
                     return;
                 }
 
-                    geocodingClient.forwardGeocoding(gardenLocation, new JsonHttpResponseHandler() {
+                Geocoder geocoder = new Geocoder(CreateGardenActivity.this, Locale.getDefault());
+                try {
+                    List<Address> listAddress = geocoder.getFromLocationName(gardenLocation, 1);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                geocodingClient.forwardGeocoding(gardenLocation, new JsonHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Headers headers, JSON json) {
                             try {
@@ -222,12 +273,81 @@ public class CreateGardenActivity extends AppCompatActivity {
         btFindLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                findLocation();
+                checkLocationPermission();
+                if(true){
+                    if (checkGooglePlayServices()){
+                        Toast.makeText(CreateGardenActivity.this, "Google Playservices available", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        Toast.makeText(CreateGardenActivity.this, "Google Playservices not available", Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+                // findLocation();
             }
         });
 
 
     }
+
+    @Override
+    public void click(Place place) {
+        Toast.makeText(this, place.getAddress()+", "+place.getLatLng().latitude+place.getLatLng().longitude, Toast.LENGTH_SHORT).show();
+    }
+
+    private boolean checkGooglePlayServices() {
+        GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
+        int result = googleApiAvailability.isGooglePlayServicesAvailable(this);
+        if (result == ConnectionResult.SUCCESS){
+            return true;
+        }
+        else if (googleApiAvailability.isUserResolvableError(result)){
+            Dialog dialog = googleApiAvailability.getErrorDialog(this, result, 201, new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+
+                }
+            });
+            dialog.show();
+        }
+        return false;
+    }
+
+    private void checkLocationPermission() {
+        Dexter.withContext(this).withPermission(Manifest.permission.ACCESS_FINE_LOCATION).withListener(new PermissionListener() {
+            @Override
+            public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+                isPermissionGranted = true;
+            }
+
+            @Override
+            public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+                Intent intent = new Intent();
+                intent.setAction(Settings.ACTION_APPLICATION_SETTINGS);
+                Uri uri = Uri.fromParts("package", getPackageName(),"");
+                intent.setData(uri);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+                permissionToken.continuePermissionRequest();
+            }
+        }).check();
+    }
+
+    private TextWatcher filterTextWatcher = new TextWatcher() {
+        public void afterTextChanged(Editable s) {
+            if (!s.toString().equals("")) {
+                mAutoCompleteAdapter.getFilter().filter(s.toString());
+                if (rvPlaceOption.getVisibility() == View.GONE) {rvPlaceOption.setVisibility(View.VISIBLE);}
+            } else {
+                if (rvPlaceOption.getVisibility() == View.VISIBLE) {rvPlaceOption.setVisibility(View.GONE);}
+            }
+        }
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+        public void onTextChanged(CharSequence s, int start, int before, int count) { }
+    };
 
     public void findLocation() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
@@ -239,41 +359,9 @@ public class CreateGardenActivity extends AppCompatActivity {
                     animationDrawable.start();
                     animationDrawable.setFilterBitmap(false);
 
-                    LocationServices.getFusedLocationProviderClient(this).requestLocationUpdates(locationRequest, new LocationCallback() {
-                        @Override
-                        public void onLocationResult(@NonNull LocationResult locationResult) {
-                            super.onLocationResult(locationResult);
+                    // get location
 
-                            LocationServices.getFusedLocationProviderClient(CreateGardenActivity.this)
-                                    .removeLocationUpdates(this);
-
-                            if(locationResult != null && locationResult.getLocations().size()>0){
-                                int index = locationResult.getLocations().size() -1;
-                                latitude = locationResult.getLocations().get(index).getLatitude();
-                                longitude = locationResult.getLocations().get(index).getLongitude();
-
-
-                                geocodingClient.reverseGeocoding(latitude, longitude, new JsonHttpResponseHandler() {
-                                    @Override
-                                    public void onSuccess(int statusCode, Headers headers, JSON json) {
-                                        try {
-                                            String address = json.jsonObject.getJSONArray("data")
-                                                    .getJSONObject(0).getString("label");
-                                            etGardenLocation.setText(address);
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                                        throwable.printStackTrace();
-                                    }
-                                });
-                                makeLoadingGone();
-                            }
-                        }
-                    }, Looper.getMainLooper());
+                    makeLoadingGone();
 
                 }else{
                     turnOnGPS();

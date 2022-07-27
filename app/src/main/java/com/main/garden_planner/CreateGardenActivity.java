@@ -158,87 +158,87 @@ public class CreateGardenActivity extends AppCompatActivity implements PlacesAut
                         public void onSuccess(int statusCode, Headers headers, JSON json) {
                             try {
                                 latitude = json.jsonObject.getJSONArray("results").getJSONObject(0).getJSONObject("geometry").getJSONObject("location").getDouble("lat");
-                                longitude = json.jsonObject.getJSONArray("data").getJSONObject(0).getJSONObject("geometry").getJSONObject("location").getDouble("lng");
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
+                                longitude = json.jsonObject.getJSONArray("results").getJSONObject(0).getJSONObject("geometry").getJSONObject("location").getDouble("lng");
+                                btCreate.setClickable(false);
+                                Garden garden = new Garden();
+                                garden.setLocation(gardenLocation);
+                                garden.setName(gardenName);
+                                garden.setUser(ParseUser.getCurrentUser());
+                                garden.setLatLong(latitude, longitude);
 
-                        @Override
-                        public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                            throwable.printStackTrace();
-                        }
-                    });
-
-                    btCreate.setClickable(false);
-                    Garden garden = new Garden();
-                    garden.setLocation(gardenLocation);
-                    garden.setName(gardenName);
-                    garden.setUser(ParseUser.getCurrentUser());
-                    garden.setLatLong(latitude, longitude);
-
-                    frostDateClient.getStations(latitude, longitude, new JsonHttpResponseHandler() {
-                        @Override
-                        public void onSuccess(int statusCode, Headers headers, JSON json) {
-                            // the API for the stations list them in order of increasing distance, so we can always
-                            // take the first JSONObject
-                            try {
-                                JSONObject station = json.jsonArray.getJSONObject(0);
-
-                                frostDateClient.getFrostDate(station.getString("id"), 1, new JsonHttpResponseHandler() {
+                                frostDateClient.getStations(latitude, longitude, new JsonHttpResponseHandler() {
                                     @Override
                                     public void onSuccess(int statusCode, Headers headers, JSON json) {
-                                        // the API for the frost dates has the 32 deg. threshold as the second entry in
-                                        // the array every time, which we are using as the temperature where no more frost
-                                        // will occur
-
+                                        // the API for the stations list them in order of increasing distance, so we can always
+                                        // take the first JSONObject
                                         try {
+                                            JSONObject station = json.jsonArray.getJSONObject(0);
 
-                                            Date today = new Date();
-                                            JSONObject lastFrostDateInfo = json.jsonArray.getJSONObject(1);
-                                            String frostDateDayMonth = lastFrostDateInfo.getString("prob_50");
-
-                                            // today.getMonth() has January = 0, so we need to add 1 to month to make it match to frostDateDayMonth
-                                            String todayMonth;
-                                            if (today.getMonth() < 9) {
-                                                todayMonth = "0"+(today.getMonth() + 1);
-                                            }
-                                            else{
-                                                todayMonth = ""+(today.getMonth()+1);
-                                            }
-                                            String todayDate;
-                                            if (today.getDate() < 9) {
-                                                todayDate = "0"+(today.getDate());
-                                            }
-                                            else{
-                                                todayDate = ""+(today.getDate());
-                                            }
-                                            String todayDayMonth = todayMonth+todayDate;
-                                            String year;
-                                            if (Integer.valueOf(todayDayMonth) > Integer.valueOf(frostDateDayMonth)){
-                                                year = String.valueOf(today.getYear()+1901);
-                                            }
-                                            else{
-                                                year = String.valueOf(today.getYear()+1900);
-                                            }
-                                            String lastFrostDateDay = lastFrostDateInfo.getString("prob_50")+year;
-
-                                            // return the last frost date
-                                            SimpleDateFormat formatter = new SimpleDateFormat("MMddyyyy");
-                                            frostDate = formatter.parse(lastFrostDateDay);
-                                            garden.setLastFrostDate(frostDate);
-                                            garden.saveInBackground(new SaveCallback() {
+                                            frostDateClient.getFrostDate(station.getString("id"), 1, new JsonHttpResponseHandler() {
                                                 @Override
-                                                public void done(ParseException e) {
-                                                    if(e != null){
-                                                        Toast.makeText(CreateGardenActivity.this, "Error in making a garden!!", Toast.LENGTH_SHORT).show();
-                                                        return;
+                                                public void onSuccess(int statusCode, Headers headers, JSON json) {
+                                                    // the API for the frost dates has the 32 deg. threshold as the second entry in
+                                                    // the array every time, which we are using as the temperature where no more frost
+                                                    // will occur
+
+                                                    try {
+
+                                                        Date today = new Date();
+                                                        JSONObject lastFrostDateInfo = json.jsonArray.getJSONObject(1);
+                                                        String frostDateDayMonth = lastFrostDateInfo.getString("prob_50");
+
+                                                        // today.getMonth() has January = 0, so we need to add 1 to month to make it match to frostDateDayMonth
+                                                        String todayMonth;
+                                                        if (today.getMonth() < 9) {
+                                                            todayMonth = "0"+(today.getMonth() + 1);
+                                                        }
+                                                        else{
+                                                            todayMonth = ""+(today.getMonth()+1);
+                                                        }
+                                                        String todayDate;
+                                                        if (today.getDate() < 9) {
+                                                            todayDate = "0"+(today.getDate());
+                                                        }
+                                                        else{
+                                                            todayDate = ""+(today.getDate());
+                                                        }
+                                                        String todayDayMonth = todayMonth+todayDate;
+                                                        String year;
+                                                        if (Integer.valueOf(todayDayMonth) > Integer.valueOf(frostDateDayMonth)){
+                                                            year = String.valueOf(today.getYear()+1901);
+                                                        }
+                                                        else{
+                                                            year = String.valueOf(today.getYear()+1900);
+                                                        }
+                                                        String lastFrostDateDay = lastFrostDateInfo.getString("prob_50")+year;
+
+                                                        // return the last frost date
+                                                        SimpleDateFormat formatter = new SimpleDateFormat("MMddyyyy");
+                                                        frostDate = formatter.parse(lastFrostDateDay);
+                                                        garden.setLastFrostDate(frostDate);
+                                                        garden.saveInBackground(new SaveCallback() {
+                                                            @Override
+                                                            public void done(ParseException e) {
+                                                                if(e != null){
+                                                                    Toast.makeText(CreateGardenActivity.this, "Error in making a garden!!", Toast.LENGTH_SHORT).show();
+                                                                    return;
+                                                                }
+                                                                finish();
+                                                            }
+                                                        });
+                                                    } catch (JSONException | java.text.ParseException e) {
+                                                        e.printStackTrace();
                                                     }
-                                                    finish();
+                                                }
+
+                                                @Override
+                                                public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                                                    throwable.printStackTrace();
                                                 }
                                             });
-                                        } catch (JSONException | java.text.ParseException e) {
+                                        } catch (JSONException e) {
                                             e.printStackTrace();
+
                                         }
                                     }
 
@@ -249,8 +249,9 @@ public class CreateGardenActivity extends AppCompatActivity implements PlacesAut
                                 });
                             } catch (JSONException e) {
                                 e.printStackTrace();
-
                             }
+
+
                         }
 
                         @Override
@@ -258,6 +259,8 @@ public class CreateGardenActivity extends AppCompatActivity implements PlacesAut
                             throwable.printStackTrace();
                         }
                     });
+
+
 
 
                 }

@@ -17,7 +17,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.garden_planner.R;
-import com.example.garden_planner.databinding.ItemGardenBinding;
 import com.example.garden_planner.databinding.ItemPredictionBinding;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnFailureListener;

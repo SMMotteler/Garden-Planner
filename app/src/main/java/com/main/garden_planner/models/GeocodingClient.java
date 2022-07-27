@@ -8,8 +8,9 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 public class GeocodingClient {
-    private static final String API_BASE_URL = "http://api.positionstack.com/v1/";
-    private static final String ACCESS_KEY = BuildConfig.API_ACCESS_KEY;
+    private static final String API_BASE_URL =  "https://maps.googleapis.com/maps/api/geocode/json?";
+
+    private static final String ACCESS_KEY = BuildConfig.MAPS_KEY;
     private AsyncHttpClient client;
 
     public GeocodingClient()
@@ -21,19 +22,23 @@ public class GeocodingClient {
         return API_BASE_URL + relativeUrl;
     }
 
-    public void forwardGeocoding(String address, JsonHttpResponseHandler handler) {
+    public void forwardGeocoding(String address, JsonHttpResponseHandler handler)  {
+            String url = getApiUrl("address="+address+"&key="+ACCESS_KEY);
         try {
-            String url = getApiUrl("forward?access_key="+ACCESS_KEY+"&query=");
-            client.get(url + URLEncoder.encode(address, "utf-8"), handler);
+            String encodedURL = URLEncoder.encode(url, "utf-8");
+            client.get(encodedURL, handler);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
     }
 
-    public void reverseGeocoding(double latitude, double longitude, JsonHttpResponseHandler handler){
-
-            String url = getApiUrl("reverse?access_key="+ACCESS_KEY+"&query=");
-            client.get(url + latitude+","+longitude+"&limit=1", handler);
-
+    public void reverseGeocoding(double latitude, double longitude, JsonHttpResponseHandler handler) {
+            String url = getApiUrl("latlng="+latitude+","+longitude+"&key="+ACCESS_KEY);
+        try {
+            String encodedURL = URLEncoder.encode(url, "utf-8");
+            client.get(encodedURL, handler);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 }

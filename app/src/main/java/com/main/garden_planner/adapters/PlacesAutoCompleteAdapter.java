@@ -158,7 +158,6 @@ public class PlacesAutoCompleteAdapter extends RecyclerView.Adapter<PlacesAutoCo
     @Override
     public void onBindViewHolder(@NonNull PredictionHolder mPredictionHolder, final int i) {
         mPredictionHolder.address.setText(mResultList.get(i).address);
-        mPredictionHolder.area.setText(mResultList.get(i).area);
     }
 
     @Override
@@ -176,7 +175,6 @@ public class PlacesAutoCompleteAdapter extends RecyclerView.Adapter<PlacesAutoCo
 
         PredictionHolder(View itemView) {
             super(itemView);
-            area = binding.placeArea;
             address = binding.placeAddress;
             mRow = binding.mRow;
             itemView.setOnClickListener(this);
@@ -189,7 +187,7 @@ public class PlacesAutoCompleteAdapter extends RecyclerView.Adapter<PlacesAutoCo
 
                 String placeId = String.valueOf(item.placeId);
 
-                List<Place.Field> placeFields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS);
+                List<Place.Field> placeFields = Arrays.asList(Place.Field.ADDRESS);
                 FetchPlaceRequest request = FetchPlaceRequest.builder(placeId, placeFields).build();
                 placesClient.fetchPlace(request).addOnSuccessListener(new OnSuccessListener<FetchPlaceResponse>() {
                     @Override
@@ -225,7 +223,7 @@ public class PlacesAutoCompleteAdapter extends RecyclerView.Adapter<PlacesAutoCo
 
         @Override
         public String toString() {
-            return area.toString();
+            return address.toString();
         }
     }
 }

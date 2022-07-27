@@ -34,11 +34,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.garden_planner.BuildConfig;
+import com.example.garden_planner.R;
 import com.example.garden_planner.databinding.ActivityCreateGardenBinding;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.api.Status;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.model.TypeFilter;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -69,13 +74,14 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import okhttp3.Headers;
 
-public class CreateGardenActivity extends AppCompatActivity implements PlacesAutoCompleteAdapter.ClickListener {
+public class CreateGardenActivity extends AppCompatActivity implements PlacesAutoCompleteAdapter.ClickListener{
     private ActivityCreateGardenBinding binding;
 
     private EditText etGardenName;
@@ -91,13 +97,12 @@ public class CreateGardenActivity extends AppCompatActivity implements PlacesAut
     private GeocodingClient geocodingClient;
     private FrostDateClient frostDateClient;
     private boolean isPermissionGranted;
+    private PlacesAutoCompleteAdapter mAutoCompleteAdapter;
+    private RecyclerView rvPlaceOption;
 
     AnimationDrawable animationDrawable;
 
     LocationRequest locationRequest;
-
-    private PlacesAutoCompleteAdapter mAutoCompleteAdapter;
-    private RecyclerView rvPlaceOption;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,13 +137,27 @@ public class CreateGardenActivity extends AppCompatActivity implements PlacesAut
 
         frostDate = new Date();
 
-        etGardenLocation.addTextChangedListener(filterTextWatcher);
-
+        Places.initialize(this, BuildConfig.MAPS_API_KEY);
         mAutoCompleteAdapter = new PlacesAutoCompleteAdapter(this);
         rvPlaceOption.setLayoutManager(new LinearLayoutManager(this));
         mAutoCompleteAdapter.setClickListener(this);
         rvPlaceOption.setAdapter(mAutoCompleteAdapter);
         mAutoCompleteAdapter.notifyDataSetChanged();
+
+
+        etGardenLocation.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                if (!s.toString().equals("")) {
+                    mAutoCompleteAdapter.getFilter().filter(s.toString());
+                    if (rvPlaceOption.getVisibility() == View.GONE) {rvPlaceOption.setVisibility(View.VISIBLE);}
+                } else {
+                    if (rvPlaceOption.getVisibility() == View.VISIBLE) {rvPlaceOption.setVisibility(View.GONE);}
+                }
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+
+        });
 
 
         btCreate.setOnClickListener(new View.OnClickListener() {
@@ -283,13 +302,6 @@ public class CreateGardenActivity extends AppCompatActivity implements PlacesAut
 
             }
         });
-
-
-    }
-
-    @Override
-    public void click(Place place) {
-        Toast.makeText(this, place.getAddress()+", "+place.getLatLng().latitude+place.getLatLng().longitude, Toast.LENGTH_SHORT).show();
     }
 
     private boolean checkGooglePlayServices() {
@@ -333,19 +345,6 @@ public class CreateGardenActivity extends AppCompatActivity implements PlacesAut
         }).check();
     }
 
-    private TextWatcher filterTextWatcher = new TextWatcher() {
-        public void afterTextChanged(Editable s) {
-            if (!s.toString().equals("")) {
-                mAutoCompleteAdapter.getFilter().filter(s.toString());
-                if (rvPlaceOption.getVisibility() == View.GONE) {rvPlaceOption.setVisibility(View.VISIBLE);}
-            } else {
-                if (rvPlaceOption.getVisibility() == View.VISIBLE) {rvPlaceOption.setVisibility(View.GONE);}
-            }
-        }
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-        public void onTextChanged(CharSequence s, int start, int before, int count) { }
-    };
-
     @SuppressLint("MissingPermission")
     public void findLocation() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
@@ -379,6 +378,7 @@ public class CreateGardenActivity extends AppCompatActivity implements PlacesAut
                                             String address = json.jsonObject.getJSONArray("results")
                                                     .getJSONObject(0).getString("formatted_address");
                                             etGardenLocation.setText(address);
+                                            rvPlaceOption.setVisibility(View.GONE);
                                         } catch (JSONException e) {
                                             e.printStackTrace();
                                         }
@@ -456,6 +456,11 @@ public class CreateGardenActivity extends AppCompatActivity implements PlacesAut
         loadingImageView.setVisibility(View.GONE);
         gettingLocationTextView.setVisibility(View.GONE);
         animationDrawable.stop();
+    }
+    @Override
+    public void click(Place place) {
+        etGardenLocation.setText(place.getAddress());
+        rvPlaceOption.setVisibility(View.GONE);
     }
 
 }

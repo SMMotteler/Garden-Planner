@@ -23,10 +23,9 @@ public class GeocodingClient {
     }
 
     public void forwardGeocoding(String address, JsonHttpResponseHandler handler)  {
-            String url = getApiUrl("address="+address+"&key="+ACCESS_KEY);
         try {
-            String encodedURL = URLEncoder.encode(url, "utf-8");
-            client.get(encodedURL, handler);
+            String url = getApiUrl("address="+URLEncoder.encode(address, "utf-8")+"&key="+ACCESS_KEY);
+            client.get(url, handler);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -34,11 +33,6 @@ public class GeocodingClient {
 
     public void reverseGeocoding(double latitude, double longitude, JsonHttpResponseHandler handler) {
             String url = getApiUrl("latlng="+latitude+","+longitude+"&key="+ACCESS_KEY);
-        try {
-            String encodedURL = URLEncoder.encode(url, "utf-8");
-            client.get(encodedURL, handler);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+            client.get(url, handler);
     }
 }

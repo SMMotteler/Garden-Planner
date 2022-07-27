@@ -1,6 +1,7 @@
 package com.main.garden_planner;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -152,20 +153,12 @@ public class CreateGardenActivity extends AppCompatActivity implements PlacesAut
                     return;
                 }
 
-                Geocoder geocoder = new Geocoder(CreateGardenActivity.this, Locale.getDefault());
-                try {
-                    List<Address> listAddress = geocoder.getFromLocationName(gardenLocation, 1);
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
                 geocodingClient.forwardGeocoding(gardenLocation, new JsonHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Headers headers, JSON json) {
                             try {
-                                latitude = json.jsonObject.getJSONArray("data").getJSONObject(0).getDouble("latitude");
-                                longitude = json.jsonObject.getJSONArray("data").getJSONObject(0).getDouble("longitude");
+                                latitude = json.jsonObject.getJSONArray("results").getJSONObject(0).getJSONObject("geometry").getJSONObject("location").getDouble("lat");
+                                longitude = json.jsonObject.getJSONArray("data").getJSONObject(0).getJSONObject("geometry").getJSONObject("location").getDouble("lng");
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -277,13 +270,14 @@ public class CreateGardenActivity extends AppCompatActivity implements PlacesAut
                 if(true){
                     if (checkGooglePlayServices()){
                         Toast.makeText(CreateGardenActivity.this, "Google Playservices available", Toast.LENGTH_SHORT).show();
+                        findLocation();
                     }
                     else{
                         Toast.makeText(CreateGardenActivity.this, "Google Playservices not available", Toast.LENGTH_SHORT).show();
 
                     }
                 }
-                // findLocation();
+
             }
         });
 
@@ -349,9 +343,11 @@ public class CreateGardenActivity extends AppCompatActivity implements PlacesAut
         public void onTextChanged(CharSequence s, int start, int before, int count) { }
     };
 
+    @SuppressLint("MissingPermission")
     public void findLocation() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+            && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
                 if (isGPSEnabled(this)){
                     loadingImageView.setVisibility(View.VISIBLE);
@@ -359,9 +355,41 @@ public class CreateGardenActivity extends AppCompatActivity implements PlacesAut
                     animationDrawable.start();
                     animationDrawable.setFilterBitmap(false);
 
-                    // get location
+                    LocationServices.getFusedLocationProviderClient(this).requestLocationUpdates(locationRequest, new LocationCallback() {
+                        @Override
+                        public void onLocationResult(@NonNull LocationResult locationResult) {
+                            super.onLocationResult(locationResult);
 
-                    makeLoadingGone();
+                            LocationServices.getFusedLocationProviderClient(CreateGardenActivity.this)
+                                    .removeLocationUpdates(this);
+
+                            if(locationResult != null && locationResult.getLocations().size()>0){
+                                int index = locationResult.getLocations().size() -1;
+                                latitude = locationResult.getLocations().get(index).getLatitude();
+                                longitude = locationResult.getLocations().get(index).getLongitude();
+
+
+                                geocodingClient.reverseGeocoding(latitude, longitude, new JsonHttpResponseHandler() {
+                                    @Override
+                                    public void onSuccess(int statusCode, Headers headers, JSON json) {
+                                        try {
+                                            String address = json.jsonObject.getJSONArray("results")
+                                                    .getJSONObject(0).getString("formatted_address");
+                                            etGardenLocation.setText(address);
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                                        throwable.printStackTrace();
+                                    }
+                                });
+                                makeLoadingGone();
+                            }
+                        }
+                    }, Looper.getMainLooper());
 
                 }else{
                     turnOnGPS();

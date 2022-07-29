@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.main.garden_planner.EditGardenActivity;
 import com.main.garden_planner.GardenMethodHelper;
 import com.main.garden_planner.ImageActivity;
@@ -41,15 +42,17 @@ public class GardenDetailFragment extends Fragment {
     List<Reminder> userReminders;
 
     private TextView tvGardenName;
-    private ImageView ivGardenImage;
+    public static ImageView ivGardenImage;
     private RecyclerView rvPlants;
     private TextView tvGardenLocation;
     private RecyclerView rvReminders;
     private Button btEditGarden;
     private Button changeGardenPhotoButton;
     public static View modalGreyLayer;
+    public static final int REQUEST_CODE = 1;
+    public final static int RESULT_OK = -1;
 
-    public GardenDetailFragment(){
+    public GardenDetailFragment() {
 
     }
 
@@ -139,7 +142,7 @@ public class GardenDetailFragment extends Fragment {
             }
         });
 
-        ivGardenImage.setOnLongClickListener(new View.OnLongClickListener(){
+        ivGardenImage.setOnLongClickListener(new View.OnLongClickListener() {
 
             @Override
             public boolean onLongClick(View v) {
@@ -151,6 +154,7 @@ public class GardenDetailFragment extends Fragment {
 
         });
     }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -165,6 +169,8 @@ public class GardenDetailFragment extends Fragment {
 
         GardenMethodHelper.queryPlantInBed(somePlants, plantInBedAdapter, garden);
 
+        Glide.with(getContext()).load(garden.getPhoto().getUrl()).into(ivGardenImage);
+
         userReminders = new ArrayList<>();
         reminderAdapter = new ReminderAdapter(getContext(), userReminders, rvReminders, Reminder.KEY_REMIND_WHAT, garden);
 
@@ -175,16 +181,22 @@ public class GardenDetailFragment extends Fragment {
 
         GardenMethodHelper.queryReminders(userReminders, reminderAdapter, Reminder.KEY_REMIND_WHAT, garden);
 
-        Glide.with(getContext()).load(garden.getPhoto().getUrl()).into(ivGardenImage);
         hideGrey();
     }
 
-    public static void showGrey(){
+    public static void showGrey() {
         modalGreyLayer.setVisibility(View.VISIBLE);
     }
 
     public static void hideGrey() {
         modalGreyLayer.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+            Bundle bundle = data.getExtras();
+            GardenMethodHelper.changePic((MainActivity) getContext(), "garden", ivGardenImage, bundle);
     }
 
 }

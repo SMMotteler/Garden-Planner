@@ -1,5 +1,7 @@
 package com.main.garden_planner.fragments;
 
+import static com.main.garden_planner.fragments.GardenDetailFragment.ivGardenImage;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.main.garden_planner.GardenMethodHelper;
 import com.main.garden_planner.ImageActivity;
 import com.main.garden_planner.MainActivity;
 import com.main.garden_planner.PictureHandlerActivity;
@@ -21,12 +24,15 @@ public class PhotoBottomDialogFragment extends BottomSheetDialogFragment {
     private TextView viewModalText;
     private TextView editImageText;
     private FragmentPhotoDialogBinding binding;
+    public static final int REQUEST_CODE = 1;
+    public final static int RESULT_OK = -1;
 
-    public PhotoBottomDialogFragment(){
+
+    public PhotoBottomDialogFragment() {
 
     }
 
-    public static PhotoBottomDialogFragment newInstance(Garden garden){
+    public static PhotoBottomDialogFragment newInstance(Garden garden) {
         PhotoBottomDialogFragment fragment = new PhotoBottomDialogFragment();
         Bundle args = new Bundle();
         args.putParcelable("garden", garden);
@@ -72,9 +78,18 @@ public class PhotoBottomDialogFragment extends BottomSheetDialogFragment {
                 MainActivity activity = (MainActivity) getContext();
                 Intent i = new Intent(getContext(), PictureHandlerActivity.class);
                 i.putExtra("garden", garden);
-                activity.startActivity(i);
+                activity.startActivityForResult(i, 1);
                 dismiss();
             }
         });
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+            Bundle bundle = data.getExtras();
+            GardenMethodHelper.changePic((MainActivity)getContext(), "garden", ivGardenImage, bundle);
+
     }
 }

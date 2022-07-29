@@ -28,7 +28,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-
+                android:layout_gravity="center"
                 android:id="@+id/btNewGarden"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

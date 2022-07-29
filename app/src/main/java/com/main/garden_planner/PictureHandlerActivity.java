@@ -39,6 +39,7 @@ public class PictureHandlerActivity extends AppCompatActivity {
     public File photoFile;
     private Garden garden = null;
     public final static int RESULT_OK = -1;
+    public static final int REQUEST_CODE = 1;
 
     private ActivityPictureHandlerBinding binding;
     TextView tvPhotoText;
@@ -215,8 +216,11 @@ public class PictureHandlerActivity extends AppCompatActivity {
             btUpload.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Intent i = new Intent();
+
                     if (garden != null) {
-                        garden.setPhoto(new ParseFile(resizedFile));
+                        ParseFile gardenPic = new ParseFile(resizedFile);
+                        garden.setPhoto(gardenPic);
                         garden.saveInBackground(new SaveCallback() {
                             @Override
                             public void done(ParseException e) {
@@ -225,13 +229,16 @@ public class PictureHandlerActivity extends AppCompatActivity {
                                     Toast.makeText(PictureHandlerActivity.this, "Error in changing profile pic!", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
+                                setResult(RESULT_OK);
+                                i.putExtra("garden",gardenPic);
                                 finish();
                             }
                         });
                     }
                     else{
-                        ParseUser.getCurrentUser().put("profilePic", new ParseFile(resizedFile));
-                        ParseUser.getCurrentUser().saveInBackground(new SaveCallback() {
+                        ParseFile profilePic = new ParseFile(resizedFile);
+                        ParseUser.getCurrentUser().put("profilePic", profilePic);
+                        ParseUser.getCurrentUser().saveInBackground((new SaveCallback() {
                             @Override
                             public void done(ParseException e) {
                                 if(e != null){
@@ -239,9 +246,11 @@ public class PictureHandlerActivity extends AppCompatActivity {
                                     Toast.makeText(PictureHandlerActivity.this, "Error in changing profile pic!", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
+                                setResult(RESULT_OK);
+                                i.putExtra("profilePic",profilePic);
                                 finish();
                             }
-                        });
+                        }));
                     }
 
                 }

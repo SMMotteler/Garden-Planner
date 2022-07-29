@@ -34,16 +34,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.garden_planner.BuildConfig;
-import com.example.garden_planner.R;
 import com.example.garden_planner.databinding.ActivityCreateGardenBinding;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.common.api.Status;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
-import com.google.android.libraries.places.api.model.TypeFilter;
-import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
-import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -291,11 +286,11 @@ public class CreateGardenActivity extends AppCompatActivity implements PlacesAut
                 checkLocationPermission();
                 if(true){
                     if (checkGooglePlayServices()){
-                        Toast.makeText(CreateGardenActivity.this, "Google Playservices available", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(CreateGardenActivity.this, "Google Playservices available", Toast.LENGTH_SHORT).show();
                         findLocation();
                     }
                     else{
-                        Toast.makeText(CreateGardenActivity.this, "Google Playservices not available", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(CreateGardenActivity.this, "Google Playservices not available", Toast.LENGTH_SHORT).show();
 
                     }
                 }

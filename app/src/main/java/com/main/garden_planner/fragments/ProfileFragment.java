@@ -1,7 +1,7 @@
 package com.main.garden_planner.fragments;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import static com.main.garden_planner.fragments.GardenDetailFragment.ivGardenImage;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,9 +25,6 @@ import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
-import com.parse.FunctionCallback;
-import com.parse.ParseCloud;
-import java.util.HashMap;
 
 public class ProfileFragment extends Fragment {
 
@@ -38,8 +34,11 @@ public class ProfileFragment extends Fragment {
     private TextView tvUserSince;
     private ImageView ivProfilePic;
     public ParseUser user = ParseUser.getCurrentUser();
+    public static final int REQUEST_CODE = 1;
+    public final static int RESULT_OK = -1;
 
-    public ProfileFragment(){
+
+    public ProfileFragment() {
 
     }
 
@@ -74,16 +73,15 @@ public class ProfileFragment extends Fragment {
             public void done(ParseObject object, ParseException e) {
                 user = (ParseUser) object;
                 displayUserInfo();
-                if(user.hasSameId(ParseUser.getCurrentUser())){
+                if (user.hasSameId(ParseUser.getCurrentUser())) {
                     btLogout.setVisibility(View.VISIBLE);
                     ivProfilePic.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             // allow user to change their profile photo
-                            MainActivity activity = (MainActivity)getContext();
+                            MainActivity activity = (MainActivity) getContext();
                             Intent i = new Intent(getContext(), PictureHandlerActivity.class);
-                            activity.startActivity(i);
-                            // Glide.with(getContext()).load(GardenMethodHelper.profilePic(user)).transform(new CircleCrop()).into(ivProfilePic);
+                            activity.startActivityForResult(i, REQUEST_CODE);
 
                         }
                     });
@@ -104,14 +102,14 @@ public class ProfileFragment extends Fragment {
     }
 
     private void goLoginActivity() {
-        MainActivity activity = (MainActivity)getContext();
+        MainActivity activity = (MainActivity) getContext();
         activity.performLogout();
     }
 
-    public void displayUserInfo(){
+    public void displayUserInfo() {
         tvUsername.setText(user.getUsername());
         Glide.with(getContext()).load(GardenMethodHelper.profilePic(user)).transform(new CircleCrop()).into(ivProfilePic);
-        tvUserSince.setText("User since "+ (user.getUpdatedAt().getYear()+1900));
+        tvUserSince.setText("User since " + (user.getUpdatedAt().getYear() + 1900));
 
     }
 

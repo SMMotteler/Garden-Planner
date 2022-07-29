@@ -2,10 +2,14 @@ package com.main.garden_planner;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.example.garden_planner.R;
 import com.main.garden_planner.adapters.GardenListAdapter;
 import com.main.garden_planner.adapters.ReminderAdapter;
@@ -156,6 +160,16 @@ public class GardenMethodHelper {
 
     public static Date convertToDate(LocalDate localDateToConvert){
         return Date.from(localDateToConvert.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    }
+
+    public static void changePic(MainActivity activity, String picName, ImageView imageView, Bundle bundle){;
+        ParseFile photo = bundle.getParcelable(picName);
+        if (picName.equals("profilePic")){
+            Glide.with(activity.getBaseContext()).load(photo.getUrl()).transform(new CircleCrop()).into(imageView);
+        }
+        else{
+            Glide.with(activity.getBaseContext()).load(photo.getUrl()).into(imageView);
+        }
     }
 
 }

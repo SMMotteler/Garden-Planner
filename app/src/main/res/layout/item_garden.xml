@@ -3,12 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/back"
+    android:layout_margin="10dp"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="10dp">
         <ImageView
             android:id="@+id/ivGardenIcon"
             android:layout_width="75dp"
@@ -40,10 +44,11 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvPlants"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:padding="1dp"/>
 
     <TextView
-
+        android:padding="10dp"
         android:id="@+id/tvGardenLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

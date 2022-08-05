@@ -28,23 +28,19 @@ This app allows you to plan out a garden and gives you reminders for maintenance
 
 **Required Must-have Stories**
 
-* User can register an account
-* User can log in
-* User can view current garden beds.
-* User can create a garden bed.
-* User can view a detailed view of a garden bed.
-* User can enter "edit mode" for a garden bed.
-* User can add a plant to a garden bed based on a list of crops.
-* User can view all reminders for all beds.
+* User can register an account.
+* User can log in.
+* User can view current gardens.
+* User can create a garden.
+* User can view a detailed view of a garden.
+* User can enter "edit mode" for a garden.
+* User can add a plant to a garden based on a list of crops.
+* User can view all reminders for all gardens.
 
 **Optional Nice-to-have Stories**
 
-* User can view their profile, including stats on how long they've used the apps, the crops they've planted, etc.
-* User can view a timeline of a garden bed's growth.
-* User can view the profiles of other users.
-    * User can see other users' garden beds.
-* User can access a "recommended" crops list (based on location and perhaps surrounding crops in a bed).
-* Users can receive push notifications on their beds.
+* User can view their profile and change their profile picture.
+* Users can receive push notifications on their gardens.
 
 ### 2. Screen Archetypes
 
@@ -108,9 +104,8 @@ Detailed Wireframes
 <img src="https://i.imgur.com/M4G2qk5.jpg" width=600>
 <img src="https://i.imgur.com/Cqtaioy.jpg" width=600>
 
-### [BONUS] Digital Wireframes & Mockups
-
-### [BONUS] Interactive Prototype
+### [BONUS] Walkthrough
+![gif walkthrough](app_gif.gif)
 
 ## Schema
 ### Models

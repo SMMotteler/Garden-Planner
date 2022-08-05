@@ -11,8 +11,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.garden_planner.BuildConfig;
 import com.example.garden_planner.R;
 import com.example.garden_planner.databinding.ActivityMainBinding;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.net.PlacesClient;
 import com.main.garden_planner.fragments.GardenDetailFragment;
 import com.main.garden_planner.fragments.GardenFeedFragment;
 import com.main.garden_planner.fragments.ProfileFragment;
@@ -57,6 +60,9 @@ public class MainActivity extends AppCompatActivity {
 
         View view = binding.getRoot();
         setContentView(view);
+
+        Places.initialize(getApplicationContext(), BuildConfig.MAPS_API_KEY);
+        PlacesClient placesClient = Places.createClient(this);
 
         bottomNavigationView = binding.bottomNavigation;
         flContainer = binding.flContainer;

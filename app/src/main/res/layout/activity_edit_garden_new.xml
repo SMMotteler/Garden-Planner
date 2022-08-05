@@ -12,22 +12,23 @@
         app:layout_constraintLeft_toLeftOf="parent">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="fill_parent">
+            android:layout_height="fill_parent"
+            >
 
             <TextView
                 android:id="@+id/tvGardenName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                 android:textSize="34sp"
+                android:layout_margin="10dp"
                 tools:text="Garden Name (Edit View)"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"/>
 
             <androidx.recyclerview.widget.RecyclerView
+                android:layout_margin="10dp"
                 android:id="@+id/rvCurrentPlants"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -35,6 +36,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tvGardenName" />
 
             <TextView
+                android:layout_marginLeft="20dp"
                 android:id="@+id/tvAddAPlant"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -62,6 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Save"
+                android:layout_margin="10dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/elPlantInfo" />
 
@@ -129,7 +132,6 @@
                         android:layout_width="50dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="10dp"
                         android:background="@drawable/check" />
 
                 </LinearLayout>

@@ -1,14 +1,24 @@
 package com.main.garden_planner;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.AnimationDrawable;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
+import android.provider.Settings;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,9 +29,23 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+import com.example.garden_planner.BuildConfig;
 import com.example.garden_planner.databinding.ActivityCreateGardenBinding;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
+import com.main.garden_planner.adapters.PlacesAutoCompleteAdapter;
 import com.main.garden_planner.models.FrostDateClient;
 import com.main.garden_planner.models.Garden;
 import com.main.garden_planner.models.GeocodingClient;
@@ -43,12 +67,16 @@ import com.parse.SaveCallback;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 import okhttp3.Headers;
 
-public class CreateGardenActivity extends AppCompatActivity {
+public class CreateGardenActivity extends AppCompatActivity implements PlacesAutoCompleteAdapter.ClickListener{
     private ActivityCreateGardenBinding binding;
 
     private EditText etGardenName;
@@ -63,6 +91,9 @@ public class CreateGardenActivity extends AppCompatActivity {
     public Date frostDate;
     private GeocodingClient geocodingClient;
     private FrostDateClient frostDateClient;
+    private boolean isPermissionGranted;
+    private PlacesAutoCompleteAdapter mAutoCompleteAdapter;
+    private RecyclerView rvPlaceOption;
 
     AnimationDrawable animationDrawable;
 
@@ -74,6 +105,9 @@ public class CreateGardenActivity extends AppCompatActivity {
         binding = ActivityCreateGardenBinding.inflate(getLayoutInflater());
         frostDateClient = new FrostDateClient();
 
+        Places.initialize(this, BuildConfig.MAPS_API_KEY);
+
+
         View view = binding.getRoot();
         setContentView(view);
 
@@ -84,6 +118,7 @@ public class CreateGardenActivity extends AppCompatActivity {
         gettingLocationTextView = binding.GettingLocationTextView;
         loadingImageView = binding.LoadingImageView;
         animationDrawable = (AnimationDrawable)loadingImageView.getDrawable();
+        rvPlaceOption = binding.rvPlaceOption;
 
         // while not fetching location, set visibility of loadingImageView and gettingLocationTextView to GONE
         makeLoadingGone();
@@ -97,6 +132,29 @@ public class CreateGardenActivity extends AppCompatActivity {
 
         frostDate = new Date();
 
+        Places.initialize(this, BuildConfig.MAPS_API_KEY);
+        mAutoCompleteAdapter = new PlacesAutoCompleteAdapter(this);
+        rvPlaceOption.setLayoutManager(new LinearLayoutManager(this));
+        mAutoCompleteAdapter.setClickListener(this);
+        rvPlaceOption.setAdapter(mAutoCompleteAdapter);
+        mAutoCompleteAdapter.notifyDataSetChanged();
+
+
+        etGardenLocation.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                if (!s.toString().equals("")) {
+                    mAutoCompleteAdapter.getFilter().filter(s.toString());
+                    if (rvPlaceOption.getVisibility() == View.GONE) {rvPlaceOption.setVisibility(View.VISIBLE);}
+                } else {
+                    if (rvPlaceOption.getVisibility() == View.VISIBLE) {rvPlaceOption.setVisibility(View.GONE);}
+                }
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+
+        });
+
+
         btCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -109,92 +167,92 @@ public class CreateGardenActivity extends AppCompatActivity {
                     return;
                 }
 
-                    geocodingClient.forwardGeocoding(gardenLocation, new JsonHttpResponseHandler() {
+                geocodingClient.forwardGeocoding(gardenLocation, new JsonHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Headers headers, JSON json) {
                             try {
-                                latitude = json.jsonObject.getJSONArray("data").getJSONObject(0).getDouble("latitude");
-                                longitude = json.jsonObject.getJSONArray("data").getJSONObject(0).getDouble("longitude");
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
+                                latitude = json.jsonObject.getJSONArray("results").getJSONObject(0).getJSONObject("geometry").getJSONObject("location").getDouble("lat");
+                                longitude = json.jsonObject.getJSONArray("results").getJSONObject(0).getJSONObject("geometry").getJSONObject("location").getDouble("lng");
+                                btCreate.setClickable(false);
+                                Garden garden = new Garden();
+                                garden.setLocation(gardenLocation);
+                                garden.setName(gardenName);
+                                garden.setUser(ParseUser.getCurrentUser());
+                                garden.setLatLong(latitude, longitude);
 
-                        @Override
-                        public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                            throwable.printStackTrace();
-                        }
-                    });
-
-                    btCreate.setClickable(false);
-                    Garden garden = new Garden();
-                    garden.setLocation(gardenLocation);
-                    garden.setName(gardenName);
-                    garden.setUser(ParseUser.getCurrentUser());
-                    garden.setLatLong(latitude, longitude);
-
-                    frostDateClient.getStations(latitude, longitude, new JsonHttpResponseHandler() {
-                        @Override
-                        public void onSuccess(int statusCode, Headers headers, JSON json) {
-                            // the API for the stations list them in order of increasing distance, so we can always
-                            // take the first JSONObject
-                            try {
-                                JSONObject station = json.jsonArray.getJSONObject(0);
-
-                                frostDateClient.getFrostDate(station.getString("id"), 1, new JsonHttpResponseHandler() {
+                                frostDateClient.getStations(latitude, longitude, new JsonHttpResponseHandler() {
                                     @Override
                                     public void onSuccess(int statusCode, Headers headers, JSON json) {
-                                        // the API for the frost dates has the 32 deg. threshold as the second entry in
-                                        // the array every time, which we are using as the temperature where no more frost
-                                        // will occur
-
+                                        // the API for the stations list them in order of increasing distance, so we can always
+                                        // take the first JSONObject
                                         try {
+                                            JSONObject station = json.jsonArray.getJSONObject(0);
 
-                                            Date today = new Date();
-                                            JSONObject lastFrostDateInfo = json.jsonArray.getJSONObject(1);
-                                            String frostDateDayMonth = lastFrostDateInfo.getString("prob_50");
-
-                                            // today.getMonth() has January = 0, so we need to add 1 to month to make it match to frostDateDayMonth
-                                            String todayMonth;
-                                            if (today.getMonth() < 9) {
-                                                todayMonth = "0"+(today.getMonth() + 1);
-                                            }
-                                            else{
-                                                todayMonth = ""+(today.getMonth()+1);
-                                            }
-                                            String todayDate;
-                                            if (today.getDate() < 9) {
-                                                todayDate = "0"+(today.getDate());
-                                            }
-                                            else{
-                                                todayDate = ""+(today.getDate());
-                                            }
-                                            String todayDayMonth = todayMonth+todayDate;
-                                            String year;
-                                            if (Integer.valueOf(todayDayMonth) > Integer.valueOf(frostDateDayMonth)){
-                                                year = String.valueOf(today.getYear()+1901);
-                                            }
-                                            else{
-                                                year = String.valueOf(today.getYear()+1900);
-                                            }
-                                            String lastFrostDateDay = lastFrostDateInfo.getString("prob_50")+year;
-
-                                            // return the last frost date
-                                            SimpleDateFormat formatter = new SimpleDateFormat("MMddyyyy");
-                                            frostDate = formatter.parse(lastFrostDateDay);
-                                            garden.setLastFrostDate(frostDate);
-                                            garden.saveInBackground(new SaveCallback() {
+                                            frostDateClient.getFrostDate(station.getString("id"), 1, new JsonHttpResponseHandler() {
                                                 @Override
-                                                public void done(ParseException e) {
-                                                    if(e != null){
-                                                        Toast.makeText(CreateGardenActivity.this, "Error in making a garden!!", Toast.LENGTH_SHORT).show();
-                                                        return;
+                                                public void onSuccess(int statusCode, Headers headers, JSON json) {
+                                                    // the API for the frost dates has the 32 deg. threshold as the second entry in
+                                                    // the array every time, which we are using as the temperature where no more frost
+                                                    // will occur
+
+                                                    try {
+
+                                                        Date today = new Date();
+                                                        JSONObject lastFrostDateInfo = json.jsonArray.getJSONObject(1);
+                                                        String frostDateDayMonth = lastFrostDateInfo.getString("prob_50");
+
+                                                        // today.getMonth() has January = 0, so we need to add 1 to month to make it match to frostDateDayMonth
+                                                        String todayMonth;
+                                                        if (today.getMonth() < 9) {
+                                                            todayMonth = "0"+(today.getMonth() + 1);
+                                                        }
+                                                        else{
+                                                            todayMonth = ""+(today.getMonth()+1);
+                                                        }
+                                                        String todayDate;
+                                                        if (today.getDate() < 9) {
+                                                            todayDate = "0"+(today.getDate());
+                                                        }
+                                                        else{
+                                                            todayDate = ""+(today.getDate());
+                                                        }
+                                                        String todayDayMonth = todayMonth+todayDate;
+                                                        String year;
+                                                        if (Integer.valueOf(todayDayMonth) > Integer.valueOf(frostDateDayMonth)){
+                                                            year = String.valueOf(today.getYear()+1901);
+                                                        }
+                                                        else{
+                                                            year = String.valueOf(today.getYear()+1900);
+                                                        }
+                                                        String lastFrostDateDay = lastFrostDateInfo.getString("prob_50")+year;
+
+                                                        // return the last frost date
+                                                        SimpleDateFormat formatter = new SimpleDateFormat("MMddyyyy");
+                                                        frostDate = formatter.parse(lastFrostDateDay);
+                                                        garden.setLastFrostDate(frostDate);
+                                                        garden.saveInBackground(new SaveCallback() {
+                                                            @Override
+                                                            public void done(ParseException e) {
+                                                                if(e != null){
+                                                                    Toast.makeText(CreateGardenActivity.this, "Error in making a garden!!", Toast.LENGTH_SHORT).show();
+                                                                    return;
+                                                                }
+                                                                finish();
+                                                            }
+                                                        });
+                                                    } catch (JSONException | java.text.ParseException e) {
+                                                        e.printStackTrace();
                                                     }
-                                                    finish();
+                                                }
+
+                                                @Override
+                                                public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                                                    throwable.printStackTrace();
                                                 }
                                             });
-                                        } catch (JSONException | java.text.ParseException e) {
+                                        } catch (JSONException e) {
                                             e.printStackTrace();
+
                                         }
                                     }
 
@@ -205,8 +263,9 @@ public class CreateGardenActivity extends AppCompatActivity {
                                 });
                             } catch (JSONException e) {
                                 e.printStackTrace();
-
                             }
+
+
                         }
 
                         @Override
@@ -216,22 +275,76 @@ public class CreateGardenActivity extends AppCompatActivity {
                     });
 
 
+
+
                 }
             });
 
         btFindLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                findLocation();
+                checkLocationPermission();
+                if(true){
+                    if (checkGooglePlayServices()){
+                        //Toast.makeText(CreateGardenActivity.this, "Google Playservices available", Toast.LENGTH_SHORT).show();
+                        findLocation();
+                    }
+                    else{
+                        //Toast.makeText(CreateGardenActivity.this, "Google Playservices not available", Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+
             }
         });
-
-
     }
 
+    private boolean checkGooglePlayServices() {
+        GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
+        int result = googleApiAvailability.isGooglePlayServicesAvailable(this);
+        if (result == ConnectionResult.SUCCESS){
+            return true;
+        }
+        else if (googleApiAvailability.isUserResolvableError(result)){
+            Dialog dialog = googleApiAvailability.getErrorDialog(this, result, 201, new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+
+                }
+            });
+            dialog.show();
+        }
+        return false;
+    }
+
+    private void checkLocationPermission() {
+        Dexter.withContext(this).withPermission(Manifest.permission.ACCESS_FINE_LOCATION).withListener(new PermissionListener() {
+            @Override
+            public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+                isPermissionGranted = true;
+            }
+
+            @Override
+            public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+                Intent intent = new Intent();
+                intent.setAction(Settings.ACTION_APPLICATION_SETTINGS);
+                Uri uri = Uri.fromParts("package", getPackageName(),"");
+                intent.setData(uri);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+                permissionToken.continuePermissionRequest();
+            }
+        }).check();
+    }
+
+    @SuppressLint("MissingPermission")
     public void findLocation() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+            && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
                 if (isGPSEnabled(this)){
                     loadingImageView.setVisibility(View.VISIBLE);
@@ -257,9 +370,10 @@ public class CreateGardenActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(int statusCode, Headers headers, JSON json) {
                                         try {
-                                            String address = json.jsonObject.getJSONArray("data")
-                                                    .getJSONObject(0).getString("label");
+                                            String address = json.jsonObject.getJSONArray("results")
+                                                    .getJSONObject(0).getString("formatted_address");
                                             etGardenLocation.setText(address);
+                                            rvPlaceOption.setVisibility(View.GONE);
                                         } catch (JSONException e) {
                                             e.printStackTrace();
                                         }
@@ -337,6 +451,11 @@ public class CreateGardenActivity extends AppCompatActivity {
         loadingImageView.setVisibility(View.GONE);
         gettingLocationTextView.setVisibility(View.GONE);
         animationDrawable.stop();
+    }
+    @Override
+    public void click(Place place) {
+        etGardenLocation.setText(place.getAddress());
+        rvPlaceOption.setVisibility(View.GONE);
     }
 
 }

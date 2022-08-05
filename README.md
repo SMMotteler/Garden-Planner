@@ -22,6 +22,9 @@ This app allows you to plan out a garden and gives you reminders for maintenance
 - **Habit:** The app uses push notifications to remind the users to keep up with their garden and to check in to confirm that they've completed these activities.
 - **Scope:** The scope is relatively focused to avoid being too complicated - the main functionality is to add garden beds and add plants to these garden beds, then to give reminders based on these plants.
 
+## Video Walkthrough
+https://drive.google.com/file/d/1-osCrVcB12lAOB_wkbfqfv8CM5kPII57/view?usp=sharing 
+
 ## Product Spec
 
 ### 1. User Stories (Required and Optional)

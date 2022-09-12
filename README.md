@@ -12,7 +12,7 @@ Original App Design Project - README
 
 ## Overview
 ### Description
-This app allows you to plan out a garden and gives you reminders for maintenance - ex. when to plant or harvest - through push notifications.
+This app allows you to plan out a garden and gives you reminders for maintenance - when to plant or harvest - through push notifications.
 
 ### App Evaluation
 - **Category:** Lifestyle/Productivity
@@ -27,9 +27,8 @@ https://drive.google.com/file/d/1-osCrVcB12lAOB_wkbfqfv8CM5kPII57/view?usp=shari
 
 ## Product Spec
 
-### 1. User Stories (Required and Optional)
+### 1. User Stories 
 
-**Required Must-have Stories**
 
 * User can register an account.
 * User can log in.
@@ -39,9 +38,6 @@ https://drive.google.com/file/d/1-osCrVcB12lAOB_wkbfqfv8CM5kPII57/view?usp=shari
 * User can enter "edit mode" for a garden.
 * User can add a plant to a garden based on a list of crops.
 * User can view all reminders for all gardens.
-
-**Optional Nice-to-have Stories**
-
 * User can view their profile and change their profile picture.
 * Users can receive push notifications on their gardens.
 
@@ -97,15 +93,6 @@ https://drive.google.com/file/d/1-osCrVcB12lAOB_wkbfqfv8CM5kPII57/view?usp=shari
 
 * Profile 1 - Profile
     * Detail 3 - Change Profile Picture Photo
-## Wireframes
-Navigation Diagram
-
-<img src="https://i.imgur.com/qj0F4XA.jpg" width=600>
-
-Detailed Wireframes
-
-<img src="https://i.imgur.com/M4G2qk5.jpg" width=600>
-<img src="https://i.imgur.com/Cqtaioy.jpg" width=600>
 
 ### [BONUS] Walkthrough
 ![gif walkthrough](app_gif.gif)
@@ -210,6 +197,3 @@ Detailed Wireframes
   * (Create/POST) Create a new Garden object
 * Change Photo Screen
   * (Edit/POST) Replace the current profile picture/garden photo
-
-- [Create basic snippets for each Parse network request]
-- [OPTIONAL: List endpoints if using existing API such as Yelp]
